@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/signup.dart';
 
 void main() {
-  runApp(const Test());
+  runApp(const SignUpPage());
 }
 
 class Test extends StatelessWidget {
@@ -10,9 +10,12 @@ class Test extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("This is a test"),
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text("This is a test"),
+        ),
+        body: const Text("This is a test"),
       ),
     );
   }
