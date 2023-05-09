@@ -1,27 +1,39 @@
-import 'package:flutter/material.dart';
 
-class AdminSignupandLogin extends StatefulWidget {
-  const AdminSignupandLogin({super.key});
+import 'package:flutter/material.dart';
+import 'package:frontend/custom_widgets/header_banner.dart';
+
+import '../custom_widgets/password_form_field.dart';
+
+class AdminSignupAndLogin extends StatefulWidget {
+  const AdminSignupAndLogin({super.key});
 
   @override
-  State<AdminSignupandLogin> createState() => AdminSignupandLoginState();
+  State<AdminSignupAndLogin> createState() => AdminSignupAndLoginState();
 }
 
-class AdminSignupandLoginState extends State<AdminSignupandLogin> {
+class AdminSignupAndLoginState extends State<AdminSignupAndLogin> {
   int triesLeft = 3;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "app",
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text("Admin Signup/Login Page"),
-          centerTitle: true,
-        ),
+
         body: SingleChildScrollView(
           child: Column(
             children: [
+              const HeaderBanner(),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 10),
+                child: Text(
+                  "Admin Signup/Login Page",
+                  style: TextStyle(
+                    fontSize: 40,
+                  ),
+                ),
+              ),
               const Padding(
                 padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
                 child: Text(
@@ -40,13 +52,18 @@ class AdminSignupandLoginState extends State<AdminSignupandLogin> {
               ),
               Container(
                 padding: const EdgeInsets.symmetric(
-                    vertical: 10.0, horizontal: 25.0),
-                child: TextField(),
+                    vertical: 10.0, horizontal: 39.5),
+                child: PasswordFormField(
+              controller: TextEditingController(),
+              labelText: 'Secret Code',
+              hintText: '',
+            ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 40.0, bottom: 10.0),
+                padding: const EdgeInsets.only(top: 40.0, bottom: 15.0),
                 child: Text(
                   "You have $triesLeft tries left",
+                  softWrap: true,
                 ),
               ),
               ElevatedButton(
