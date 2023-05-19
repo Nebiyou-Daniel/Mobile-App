@@ -1,4 +1,7 @@
+
 import 'package:flutter/material.dart';
+import '../../Custom_Widgets/header_banner.dart';
+import '../../custom_widgets/login_field_form.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -10,22 +13,20 @@ class Login extends StatefulWidget {
 class LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Login Page"),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text("Login Page"),
-            ElevatedButton(
-              child: const Text("Go to Sign Up Page"),
-              onPressed: () {
-                print("Button clicked");
-              },
-            )
-          ],
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              const HeaderBanner(),
+              Container(
+                padding: const EdgeInsets.all(39.5),
+                child: const LoginFieldForm(),
+              ),
+              // Below is the signup form.
+            ],
+          ),
         ),
       ),
     );

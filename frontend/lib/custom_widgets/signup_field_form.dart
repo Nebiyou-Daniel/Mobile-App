@@ -55,6 +55,18 @@ class SignUpFieldForm extends StatelessWidget {
                 ),
               ),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const Text("Already have an account?"),
+                TextButton(
+                  onPressed: () {
+                    print("Login button clicked");
+                  },
+                  child: const Text('Login'),
+                ),
+              ],
+            ),
           ],
         ),
       ),
