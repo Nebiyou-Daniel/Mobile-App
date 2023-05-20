@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:frontend/custom_widgets/header_banner.dart';
 
@@ -69,6 +68,7 @@ class AdminSignupAndLoginState extends State<AdminSignupAndLogin> {
               ElevatedButton(
                 onPressed: () {
                   print("your data is submitted");
+
                 },
                 child: const Text("Submit"),
               )
