@@ -5,9 +5,8 @@ class HeaderBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return
-        // how do I set a limited height for a widget?
-        // https://stackoverflow.com/questions/51188268/how-do-i-set-a-limited-height-for-a-widget
         SizedBox(
       height: MediaQuery.of(context).size.height / 5,
       child: Stack(
@@ -39,6 +38,7 @@ class HeaderBanner extends StatelessWidget {
           )
         ],
       ),
+
     );
   }
 }
