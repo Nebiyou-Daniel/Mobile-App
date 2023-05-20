@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:frontend/Custom_Widgets/role_dropdown_selection.dart';
+
 import 'password_form_field.dart';
 
 class SignUpFieldForm extends StatelessWidget {
@@ -21,6 +21,7 @@ class SignUpFieldForm extends StatelessWidget {
               ),
             ),
             Container(margin: const EdgeInsets.only(top: 20.0)),
+
             const TextField(
               decoration: InputDecoration(
                 icon: Icon(Icons.person_rounded),
@@ -28,18 +29,22 @@ class SignUpFieldForm extends StatelessWidget {
                 hintText: "Enter your full name",
               ),
             ),
+
             Container(margin: const EdgeInsets.only(top: 20.0)),
+
             PasswordFormField(
               controller: TextEditingController(),
               labelText: 'Password',
               hintText: 'Enter your password',
             ),
             Container(margin: const EdgeInsets.only(top: 20.0)),
+
             PasswordFormField(
               controller: TextEditingController(),
               labelText: 'Confirm Password',
               hintText: 'Confirm your password',
             ),
+
             Container(margin: const EdgeInsets.only(top: 20.0)),
             const RoleSelection(),
             Container(margin: const EdgeInsets.only(top: 20.0)),
