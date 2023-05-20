@@ -67,6 +67,7 @@ class AdminSignupAndLoginState extends State<AdminSignupAndLogin> {
               ),
               ElevatedButton(
                 onPressed: () {
+                  print("your data is submitted");
 
                 },
                 child: const Text("Submit"),
