@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'Gap.dart';
 import 'password_form_field.dart';
 
 class LoginFieldForm extends StatelessWidget {
@@ -13,24 +12,26 @@ class LoginFieldForm extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Padding(
-                padding: const EdgeInsets.all(15),
-                child: Row(
-                  children: const <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(right: 21),
-                      child: Icon(Icons.info),
-                    ),
-                    Text("Enter your username and password."),
-                  ],
-                )),
+              padding: const EdgeInsets.all(15),
+              child: Row(
+                children: const <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(right: 21),
+                    child: Icon(Icons.info),
+                  ),
+                  Text("Enter your username and password."),
+                ],
+              ),
+            ),
             const TextField(
+              keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 icon: Icon(Icons.email),
                 label: Text("Email"),
                 hintText: 'Enter your email',
               ),
             ),
-            const Gap(height: 20.0),
+            Container(margin: const EdgeInsets.only(top: 20.0)),
             const TextField(
               decoration: InputDecoration(
                 icon: Icon(Icons.person_rounded),
@@ -38,13 +39,13 @@ class LoginFieldForm extends StatelessWidget {
                 hintText: "Enter your full name",
               ),
             ),
-            const Gap(height: 20.0),
+            Container(margin: const EdgeInsets.only(top: 20.0)),
             PasswordFormField(
               controller: TextEditingController(),
               labelText: 'Password',
               hintText: 'Enter your password',
             ),
-            const Gap(height: 20.0),
+            Container(margin: const EdgeInsets.only(top: 20.0)),
             Center(
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -56,7 +57,7 @@ class LoginFieldForm extends StatelessWidget {
                 ),
               ),
             ),
-            const Gap(height: 40.0),
+            Container(margin: const EdgeInsets.only(top: 40.0)),
             // Ask if don't have an account and when clicked  redirect to the signup page
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -70,7 +71,6 @@ class LoginFieldForm extends StatelessWidget {
                 ),
               ],
             ),
-            
           ],
         ),
       ),
