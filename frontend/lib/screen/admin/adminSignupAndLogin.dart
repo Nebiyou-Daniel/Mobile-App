@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/custom_widgets/header_banner.dart';
 
-import '../custom_widgets/password_form_field.dart';
+import '../../custom_widgets/password_form_field.dart';
 
 class AdminSignupAndLogin extends StatefulWidget {
   const AdminSignupAndLogin({super.key});

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/Custom_Widgets/role_dropdown_selection.dart';
-
 import 'password_form_field.dart';
 
-class SignUpFieldForm extends StatelessWidget {
-  const SignUpFieldForm({super.key});
+class LoginFieldForm extends StatelessWidget {
+  const LoginFieldForm({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +11,20 @@ class SignUpFieldForm extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(15),
+              child: Row(
+                children: const <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(right: 21),
+                    child: Icon(Icons.info),
+                  ),
+                  Text("Enter your username and password."),
+                ],
+              ),
+            ),
             const TextField(
+              keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 icon: Icon(Icons.email),
                 label: Text("Email"),
@@ -21,7 +32,6 @@ class SignUpFieldForm extends StatelessWidget {
               ),
             ),
             Container(margin: const EdgeInsets.only(top: 20.0)),
-
             const TextField(
               decoration: InputDecoration(
                 icon: Icon(Icons.person_rounded),
@@ -29,24 +39,12 @@ class SignUpFieldForm extends StatelessWidget {
                 hintText: "Enter your full name",
               ),
             ),
-
             Container(margin: const EdgeInsets.only(top: 20.0)),
-
             PasswordFormField(
               controller: TextEditingController(),
               labelText: 'Password',
               hintText: 'Enter your password',
             ),
-            Container(margin: const EdgeInsets.only(top: 20.0)),
-
-            PasswordFormField(
-              controller: TextEditingController(),
-              labelText: 'Confirm Password',
-              hintText: 'Confirm your password',
-            ),
-
-            Container(margin: const EdgeInsets.only(top: 20.0)),
-            const RoleSelection(),
             Container(margin: const EdgeInsets.only(top: 20.0)),
             Center(
               child: Padding(
@@ -55,19 +53,21 @@ class SignUpFieldForm extends StatelessWidget {
                   onPressed: () {
                     // validation for email,
                   },
-                  child: const Text('Create Account'),
+                  child: const Text('LOGIN'),
                 ),
               ),
             ),
+            Container(margin: const EdgeInsets.only(top: 40.0)),
+            // Ask if don't have an account and when clicked  redirect to the signup page
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                const Text("Already have an account?"),
+                const Text("Don't have an account?"),
                 TextButton(
                   onPressed: () {
-                    print("Login button clicked");
+                    print("Sign Up button clicked");
                   },
-                  child: const Text('Login'),
+                  child: const Text('Sign Up'),
                 ),
               ],
             ),
