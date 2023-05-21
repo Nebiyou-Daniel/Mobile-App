@@ -46,7 +46,9 @@ class SignUpFieldForm extends StatelessWidget {
             ),
 
             Container(margin: const EdgeInsets.only(top: 20.0)),
+            // Role selection dropdown here
             const RoleSelection(),
+            
             Container(margin: const EdgeInsets.only(top: 20.0)),
             Center(
               child: Padding(

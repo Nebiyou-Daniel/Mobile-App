@@ -11,13 +11,14 @@ class RoleSelection extends StatefulWidget {
 
 class _RoleSelectionState extends State<RoleSelection> {
   // hold a state of the currently selected role
-  String? SelectedRole;
+  String? selectedRole;
 
   @override
   Widget build(BuildContext context) {
     return DropdownButton<String>(
-      value: SelectedRole,
-      icon: const Icon(Icons.arrow_downward),
+      hint: const Text("Select Role"),
+      value: selectedRole,
+      icon: const Icon(Icons.arrow_drop_down),
       iconSize: 24,
       elevation: 16,
       style: const TextStyle(color: Colors.deepPurple),
@@ -26,11 +27,13 @@ class _RoleSelectionState extends State<RoleSelection> {
         color: Colors.deepPurpleAccent,
       ),
       onChanged: (String? newValue) {
-        setState(() {
-          SelectedRole = newValue;
-        });
+        setState(
+          () {
+            selectedRole = newValue;
+          },
+        );
       },
-      items: <String>['Student', 'Teacher', 'Parent', 'Admin']
+      items: <String>['Trainer', 'Trainee', 'Admin']
           .map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
@@ -40,6 +43,5 @@ class _RoleSelectionState extends State<RoleSelection> {
         );
       }).toList(),
     );
-    // return const Padding(padding: EdgeInsets.all(234.4));
   }
 }
