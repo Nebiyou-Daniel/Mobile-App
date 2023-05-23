@@ -12,14 +12,14 @@ class LoginFieldForm extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.all(15),
+              padding: const EdgeInsets.only(bottom: 15, left: 20),
               child: Row(
                 children: const <Widget>[
                   Padding(
                     padding: EdgeInsets.only(right: 21),
                     child: Icon(Icons.info),
                   ),
-                  Text("Enter your username and password."),
+                  Text("Fill the following information to sign up."),
                 ],
               ),
             ),
@@ -46,15 +46,14 @@ class LoginFieldForm extends StatelessWidget {
               hintText: 'Enter your password',
             ),
             Container(margin: const EdgeInsets.only(top: 20.0)),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    // validation for email,
-                  },
-                  child: const Text('LOGIN'),
-                ),
+            SizedBox(
+              width: 300,
+              height: 38,
+              child: ElevatedButton(
+                onPressed: () {
+                  // validation for email,
+                },
+                child: const Text('LOGIN'),
               ),
             ),
             Container(margin: const EdgeInsets.only(top: 40.0)),

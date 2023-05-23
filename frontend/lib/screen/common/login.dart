@@ -1,16 +1,15 @@
-
 import 'package:flutter/material.dart';
 import '../../Custom_Widgets/header_banner.dart';
 import '../../custom_widgets/login_field_form.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
   LoginState createState() => LoginState();
 }
 
-class LoginState extends State<Login> {
+class LoginState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

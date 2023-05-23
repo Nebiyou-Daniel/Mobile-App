@@ -18,7 +18,6 @@ class SignUpPage extends StatelessWidget {
                 padding: const EdgeInsets.all(39.5),
                 child: const SignUpFieldForm(),
               ),
-              // Below is the signup form.
             ],
           ),
         ),

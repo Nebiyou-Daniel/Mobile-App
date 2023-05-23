@@ -13,6 +13,19 @@ class SignUpFieldForm extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(bottom: 15, left: 20),
+              child: Row(
+                children: const <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(right: 21),
+                    child: Icon(Icons.info),
+                  ),
+                  Text("Fill the following information to sign up."),
+                ],
+              ),
+            ),
+
             const TextField(
               decoration: InputDecoration(
                 icon: Icon(Icons.email),
@@ -37,6 +50,7 @@ class SignUpFieldForm extends StatelessWidget {
               labelText: 'Password',
               hintText: 'Enter your password',
             ),
+
             Container(margin: const EdgeInsets.only(top: 20.0)),
 
             PasswordFormField(
@@ -45,22 +59,37 @@ class SignUpFieldForm extends StatelessWidget {
               hintText: 'Confirm your password',
             ),
 
-            Container(margin: const EdgeInsets.only(top: 20.0)),
-            // Role selection dropdown here
-            const RoleSelection(),
-            
-            Container(margin: const EdgeInsets.only(top: 20.0)),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    // validation for email,
-                  },
-                  child: const Text('Create Account'),
-                ),
+            Container(margin: const EdgeInsets.only(top: 40.0)),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 15, left: 20),
+              child: Row(
+                children: const <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(right: 21),
+                    child: Icon(Icons.info),
+                  ),
+                  Text("Select your role"),
+                ],
               ),
             ),
+
+            // Role selection dropdown here
+            const RoleSelection(),
+
+            Container(margin: const EdgeInsets.only(top: 20.0)),
+            SizedBox(
+              width: 300,
+              height: 38,
+              child: ElevatedButton(
+                onPressed: () {
+                  // validation for email,
+                },
+                child: const Text('Create Account'),
+              ),
+            ),
+
+            Container(margin: const EdgeInsets.only(top: 20.0)),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
