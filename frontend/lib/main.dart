@@ -6,7 +6,7 @@ import 'package:frontend/screen/trainee/trainee_profile.dart';
 import 'package:frontend/screen/common/login.dart';
 import 'package:frontend/screen/common/settings.dart';
 import 'package:frontend/screen/common/signup.dart';
-import 'package:frontend/screen/trainee/traineeProgressPage.dart';
+import 'package:frontend/screen/trainer/traineeProgressPage.dart';
 import 'package:frontend/screen/trainer/workoutPlanCreationPage.dart';
 
 void main() {
