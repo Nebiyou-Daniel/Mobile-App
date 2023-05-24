@@ -13,9 +13,9 @@ void main() {
   // runApp(const WorkoutPlanCreationPage());
   // runApp(const AboutPage());
   // runApp(const TraineeProfile());
-  // runApp(const SignUpPage());
+  runApp(const SignUpPage());
   // runApp(const AdminSignupAndLogin());
-  runApp(const TraineeProgressPage());
+  // runApp(const TraineeProgressPage());
   // runApp(const Settings());
   // runApp(const Login());
 }
