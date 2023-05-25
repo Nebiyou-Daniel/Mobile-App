@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import {ConfigModule} from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { TraineeModule } from './trainee/trainee.module';
 import { TrainerModule } from './trainer/trainer.module';
@@ -10,6 +11,6 @@ import { WeightModule } from './weight/weight.module';
 import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
-  imports: [AuthModule, TraineeModule, TrainerModule, AdminModule, TaskModule, ReviewModule, NotificationModule, WeightModule, PrismaModule],
+  imports: [AuthModule, ConfigModule.forRoot({isGlobal: true}) ,TraineeModule, TrainerModule, AdminModule, TaskModule, ReviewModule, NotificationModule, WeightModule, PrismaModule],
 })
 export class AppModule {}
