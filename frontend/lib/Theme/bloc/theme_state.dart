@@ -1,24 +1,14 @@
 import 'package:equatable/equatable.dart';
-<<<<<<< HEAD
-import '../app_themes.dart';
-
-
-class ThemeState extends Equatable {
-  final AppTheme theme;
-=======
 import 'package:flutter/material.dart';
 
 class ThemeState extends Equatable {
   final ThemeData theme;
->>>>>>> Nathnael-Dereje
 
   const ThemeState({required this.theme});
 
   @override
   List<Object> get props => [theme];
 }
-<<<<<<< HEAD
-=======
 
 class DarkTheme extends ThemeState {
   DarkTheme()
@@ -91,4 +81,3 @@ class LightTheme extends ThemeState {
           ),
         ));
 }
->>>>>>> Nathnael-Dereje
