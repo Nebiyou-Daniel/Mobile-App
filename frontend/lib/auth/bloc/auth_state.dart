@@ -1,41 +1,95 @@
-abstract class AuthState {}
+import 'package:equatable/equatable.dart';
 
-class AuthInitial extends AuthState {}
+abstract class AuthState extends Equatable{}
 
-class AuthLoading extends AuthState {}
+class AuthInitial extends AuthState {
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
+}
 
-class AuthSuccess extends AuthState {}
+class AuthLoading extends AuthState {
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
+}
+
+class AuthSuccess extends AuthState {
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
+}
 
 class AuthFailure extends AuthState {
   final String message;
   AuthFailure({required this.message});
+  
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
 }
 
-class AuthSignUpSuccess extends AuthState {}
+class AuthSignUpSuccess extends AuthState {
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
+}
 
 class AuthSignUpFailure extends AuthState {
   final String message;
 
   AuthSignUpFailure({required this.message});
+  
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
 }
 
-class AuthSignUpLoading extends AuthState {}
+class AuthSignUpLoading extends AuthState {
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
+}
 
-class AuthLoginSuccess extends AuthState {}
+class AuthLoginSuccess extends AuthState {
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
+}
 
 class AuthLoginFailure extends AuthState {
   final String message;
   AuthLoginFailure({required this.message});
+  
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
 }
 
-class AuthLoginLoading extends AuthState {}
+class AuthLoginLoading extends AuthState {
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
+}
 
-class AuthLogoutSuccess extends AuthState {}
+class AuthLogoutSuccess extends AuthState {
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
+}
 
 class AuthLogoutFailure extends AuthState {
   final String message;
 
   AuthLogoutFailure({required this.message});
+  
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
 }
 
-class AuthLogoutLoading extends AuthState {}
+class AuthLogoutLoading extends AuthState {
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
+}
