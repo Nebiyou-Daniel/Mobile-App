@@ -10,20 +10,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthInitial()) {
     ApiDataProvider apiDataProvider = ApiDataProvider();
 
-    // on<UserLoginEvent>((event, emit) {
-    //   // ...loggin in ...
-    //   emit(AuthLoggingIn());
-    //   print("logging in ...");
-    //   print(event);
-    //   // ... try logging in
-    //   apiDataProvider
-    //       .login(email: event.email, password: event.password)
-    //       .then((user) {
-    //     emit(AuthLoginSuccess(user: user));
-    //   }).catchError((error) {
-    //     emit(AuthLoginError(error: error.toString()));
-    //   });
-    // });
 
     on<UserLoginEvent>((event, emit) async {
       // ...loggin in ...
