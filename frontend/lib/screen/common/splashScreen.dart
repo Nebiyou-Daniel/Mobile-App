@@ -44,14 +44,12 @@ class SplashScreenState extends State<SplashScreen> {
                       "Workout Warriors",
                       style: TextStyle(
                         fontSize: 45,
-                        // a stylish font that looks like a warrior will use it
                         fontFamily: 'Bangers',
                         color: Color.fromRGBO(214, 0, 0, 1),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  // beautiful slogan text that says "Unleash your inner warrior with workout warriot"
                   const Text(
                     "Unleash your inner warrior with Workout Warriors",
                     style: TextStyle(

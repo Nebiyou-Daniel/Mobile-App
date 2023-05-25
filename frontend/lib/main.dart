@@ -8,6 +8,8 @@ import 'package:frontend/screen/traineeProgressPage.dart';
 import 'package:frontend/screen/workoutPlanCreationPage.dart';
 import 'package:go_router/go_router.dart';
 
+
+
 void main() {
   runApp(MyApp());
 }
@@ -17,6 +19,7 @@ class MyApp extends StatelessWidget {
 
   final _router = GoRouter(
     routes: [
+      // common routes
       GoRoute(
         path: '/',
         builder: (context, state) => const SplashScreen(),
@@ -41,21 +44,28 @@ class MyApp extends StatelessWidget {
         path: '/traineeProgressPage',
         builder: (context, state) => const TraineeProgressPage(),
       ),
+      // request sent page
+      GoRoute(
+        path: '/requestSent',
+        builder: (context, state) => const RequestSentPage(),
+      ),
       GoRoute(
         path: '/workoutPlanCreationPage',
         builder: (context, state) => const WorkoutPlanCreationPage(),
       ),
+
+      // admin routes
       GoRoute(
         path: '/admin/homePage',
         builder: (context, state) => const AdminHomePage(),
       ),
       GoRoute(
         path: '/admin/listOfTrainees',
-        builder: (context, state) => const AdminListOfTrainees(),
+        builder: (context, state) => const AdminListOfTraineesPage(),
       ),
       GoRoute(
         path: '/admin/listOfTrainers',
-        builder: (context, state) => const AdminListOfTrainers(),
+        builder: (context, state) => const AdminListOfTrainersPage(),
       ),
       GoRoute(
         path: '/admin/approvalPage',
@@ -66,12 +76,27 @@ class MyApp extends StatelessWidget {
         builder: (context, state) => const AdminNotifications(),
       ),
       GoRoute(
+        path: '/admin/enterCode',
+        builder: (context, state) => const AdminEnterCodePage(),
+      ),
+      // watch trainer profile
+      GoRoute(
+        path: '/admin/trainer_profile',
+        builder: (context, state) => const AdminTrainerProfilePage(),
+      ),
+      GoRoute(
+        path: '/admin/trainee_profile',
+        builder: (context, state) => const AdminTraineeProfilePage(),
+      ),
+
+      // trainer routes
+      GoRoute(
         path: '/trainer/homePage',
         builder: (context, state) => const TrainerHomePage(),
       ),
       GoRoute(
         path: '/trainer/profile',
-        builder: (context, state) => const TrainerProfile(),
+        builder: (context, state) => const TrainerProfilePage(),
       ),
       GoRoute(
         path: '/trainer/createPlan',
@@ -79,19 +104,17 @@ class MyApp extends StatelessWidget {
       ),
       GoRoute(
         path: '/trainer/listOfTrainees',
-        builder: (context, state) => const TrainerListOfTrainees(),
+        builder: (context, state) => const TrainerListOfTraineesPage(),
       ),
       GoRoute(
         path: '/trainer/notifications',
-        builder: (context, state) => const TrainerNotifications(),
+        builder: (context, state) => const TrainerNotificationsPage(),
       ),
+
+      // trainee routes
       GoRoute(
         path: '/trainee/homePage',
         builder: (context, state) => const TraineeHomePage(),
-      ),
-      GoRoute(
-        path: '/trainee/applyAsTrainer',
-        builder: (context, state) => const TraineeApplyAsTrainer(),
       ),
       GoRoute(
         path: '/trainee/profile',
@@ -99,19 +122,33 @@ class MyApp extends StatelessWidget {
       ),
       GoRoute(
         path: '/trainee/progress',
-        builder: (context, state) => const TraineeProgress(),
+        builder: (context, state) => const TraineeProgressPage(),
       ),
       GoRoute(
         path: '/trainee/workoutPlan',
-        builder: (context, state) => const TraineeWorkoutPlan(),
+        builder: (context, state) => const TraineeWorkoutPlanPage(),
       ),
       GoRoute(
         path: '/trainee/chooseTrainer',
-        builder: (context, state) => const TraineeChooseTrainer(),
+        builder: (context, state) => const TraineeChooseTrainerPage(),
       ),
       GoRoute(
         path: '/trainee/notifications',
-        builder: (context, state) => const TraineeNotifications(),
+        builder: (context, state) => const TraineeNotificationsPage(),
+      ),
+      GoRoute(
+        path: '/trainee/applyAsTrainer',
+        builder: (context, state) => const TraineeApplyAsTrainerPage(),
+      ),
+      // trainer application submitted page
+      GoRoute(
+        path: 'trainee/request_sent',
+        builder: (context, state) => const TraineeRequestSentPage(),
+      ),
+      // view trainer's profile
+      GoRoute(
+        path: '/trainee/trainer_profile',
+        builder: (context, state) => const TraineeTrainerProfilePage(),
       ),
     ],
   );
@@ -125,8 +162,9 @@ class MyApp extends StatelessWidget {
   }
 }
 
-/**
 
+
+/*
     A list of possible routes in our application.
       `/`                    => shows splash screen
       `/login`               => shows login page
@@ -142,7 +180,9 @@ class MyApp extends StatelessWidget {
       `/admin/listOfTrainees`  => list of trainers for the admin to see
       `/admin/approvalPage`    => page to approve or disapprove requests from users that admin should handle
       `/admin/notifications`   => notifications for the admin
-      `/admin/`
+      `/admin/enter_code`  => the page to enter the login code for the admin
+      // router for admin to watch trainee profile
+      `/admin/trainee_profile` => the profile of trainee
 
       ########__trainer_routes__########
       `trainer/home_page`      => trainer home page
@@ -161,4 +201,6 @@ class MyApp extends StatelessWidget {
       `trainee/workout_plan`       => the workout plan of trainee
       `trainee/choose_trainer`     => the page to choose trainer
       `trainee/notifications`      => notifications for the trainee
+      `trainee/request_sent`       => the page to show that the request has been sent
+
 */
