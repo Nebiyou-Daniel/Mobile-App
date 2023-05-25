@@ -1,6 +1,6 @@
-part of 'trainer_bloc.dart';
 
-@immutable
+import 'package:equatable/equatable.dart';
+
 abstract class TrainerState extends Equatable{}
 
 class TrainerInitial extends TrainerState {

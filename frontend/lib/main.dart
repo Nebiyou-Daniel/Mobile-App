@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/auth/bloc/auth_bloc.dart';
 import 'package:frontend/screen/common/splashScreen.dart';
 import 'package:frontend/screen/common/about.dart';
 import 'package:frontend/screen/admin/adminSignupAndLogin.dart';
@@ -9,8 +11,6 @@ import 'package:frontend/screen/common/signup.dart';
 import 'package:frontend/screen/traineeProgressPage.dart';
 import 'package:frontend/screen/workoutPlanCreationPage.dart';
 import 'package:go_router/go_router.dart';
-
-
 
 void main() {
   runApp(MyApp());
@@ -157,12 +157,27 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerDelegate: _router.routerDelegate,
-      routeInformationParser: _router.routeInformationParser,
+    // using bloc multiProvider to provide the router to all the widgets in the app
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthBloc>(
+          create: (context) => AuthBloc(),
+        ),
+        BlocProvider<>(
+          create: (context) => SubjectBloc(),
+        ),
+      ],
+      child: MaterialApp.router(
+        routerDelegate: _router.routerDelegate,
+        routeInformationParser: _router.routeInformationParser,
+      ),
     );
-  }
 
+    // return MaterialApp.router(
+    //   routerDelegate: _router.routerDelegate,
+    //   routeInformationParser: _router.routeInformationParser,
+    // );
+  }
 }
 
 
