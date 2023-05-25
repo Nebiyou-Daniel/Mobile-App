@@ -4,7 +4,6 @@ import 'package:frontend/Theme/bloc/theme_bloc.dart';
 import 'package:frontend/auth/bloc/auth_bloc.dart';
 import 'package:frontend/UI/common/splashScreen.dart';
 import 'package:frontend/UI/common/about.dart';
-import 'package:frontend/UI/admin/adminSignupAndLogin.dart';
 import 'package:frontend/UI/trainee/trainee_profile.dart';
 import 'package:frontend/UI/common/login.dart';
 import 'package:frontend/UI/common/settings.dart';
@@ -126,7 +125,7 @@ class MyApp extends StatelessWidget {
       ),
       GoRoute(
         path: '/trainee/progress',
-        builder: (context, state) => const TraineeProgressPage(),
+        builder: (context, state) => TraineeProgressPage(),
       ),
       GoRoute(
         path: '/trainee/workoutPlan',
@@ -168,9 +167,6 @@ class MyApp extends StatelessWidget {
         BlocProvider<ThemeBloc>(
           create: (context) => ThemeBloc(),
         ),
-        // BlocProvider<>(
-        // create: (context) => (),
-        // ),
       ],
       child: MaterialApp.router(
         routerDelegate: _router.routerDelegate,

@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:frontend/custom_widgets/date_picker.dart';
 import 'package:frontend/custom_widgets/line_chart.dart';
 
-  const TraineeProgressPage({super.key});
+
 class TraineeProgressPage extends StatelessWidget {
+  const TraineeProgressPage({super.key});
 
   @override
   Widget build(BuildContext context) {

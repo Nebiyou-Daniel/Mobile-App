@@ -4,6 +4,7 @@ import 'package:frontend/auth/bloc/auth_bloc.dart';
 import 'package:frontend/auth/bloc/auth_state.dart';
 import 'package:go_router/go_router.dart';
 import '../../Custom_Widgets/header_banner.dart';
+import '../../auth/bloc/auth_event.dart';
 import '../../custom_widgets/login_field_form.dart';
 import 'loading.dart';
 
@@ -73,7 +74,17 @@ class LoginWidget extends StatelessWidget {
         // return const Text("Trainee login Success");
       }
     }
+    if (state is AuthSignupError) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final snackBar = SnackBar(
+          content: Text(state.error),
+          backgroundColor: Colors.red,
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      });
+    }
 
+    // bloc.add(AuthInitialEvent());
     return const Text("Login Failed");
   }
 }

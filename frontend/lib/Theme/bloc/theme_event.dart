@@ -1,4 +1,3 @@
-import '../app_themes.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class ThemeEvent extends Equatable {
@@ -7,12 +6,12 @@ abstract class ThemeEvent extends Equatable {
 }
 
 class ThemeChangedEvent extends ThemeEvent {
-  final AppTheme theme;
+  final bool isDarkThemeOn;
 
-  ThemeChangedEvent(this.theme);
+  ThemeChangedEvent(this.isDarkThemeOn);
 
   @override
-  List<Object> get props => [theme];
+  List<Object> get props => [isDarkThemeOn];
 }
 
 
