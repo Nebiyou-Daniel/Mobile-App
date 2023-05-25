@@ -64,7 +64,7 @@ class WorkoutPlanCreationPageState extends State<WorkoutPlanCreationPage> {
                         "Pick a Date:"), // THIS IS BECAUSE THE TEXT KEPT ALIGNING CENTER FOR SOME REASON
                   ]),
 
-                  const CustomDatePicker(),
+                  const CustomDatePicker("write"),
 
                   Padding(
                     padding: EdgeInsets.all(defaultPadding),
