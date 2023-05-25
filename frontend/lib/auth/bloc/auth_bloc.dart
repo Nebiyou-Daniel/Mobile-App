@@ -8,6 +8,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthInitial()) {
     ApiDataProvider apiDataProvider = ApiDataProvider();
 
+    // on<AuthInitialEvent>((event, emit) {
+    //   emit(AuthInitial());
+    // });
+
     // logging in ...
     on<UserLoginEvent>((event, emit) {
       // ...loggin in ...

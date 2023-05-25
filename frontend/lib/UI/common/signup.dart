@@ -4,6 +4,7 @@ import 'package:frontend/Custom_Widgets/header_banner.dart';
 import 'package:frontend/Custom_Widgets/signup_field_form.dart';
 import 'package:go_router/go_router.dart';
 import '../../auth/bloc/auth_bloc.dart';
+import '../../auth/bloc/auth_event.dart';
 import '../../auth/bloc/auth_state.dart';
 import 'loading.dart';
 
@@ -55,12 +56,13 @@ class SignupHandler extends StatelessWidget {
     if (state is AuthSignupSuccess) {
       if (state.user.role == "trainer") {
         context.go("/trainer/homePage");
-        return const Text("Trainer Signup Success");
+        // return const Text("Trainer Signup Success");
       } else if (state.user.role == "trainee") {
         context.go("/trainee/homePage");
         // return const Text("Trainee Signup Success");
       }
     }
+
     if (state is AuthSignupError) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         final snackBar = SnackBar(
