@@ -15,15 +15,13 @@ class TraineeProfile extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: Container(
-          child: SingleChildScrollView(
-            child: Column(
-              // crossAxisAlignment: CrossAxisAlignment.center,
-              children: const [
-                HeaderBanner(),
-                ProfileForm(),
-              ],
-            ),
+        body: SingleChildScrollView(
+          child: Column(
+            // crossAxisAlignment: CrossAxisAlignment.center,
+            children: const [
+              HeaderBanner(),
+              ProfileForm(),
+            ],
           ),
         ),
       ),
