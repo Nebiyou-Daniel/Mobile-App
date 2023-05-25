@@ -1,12 +1,12 @@
 // This a dataprovidor that will be used to make api calls to the backend
 
 import 'dart:convert';
-import 'package:http/http.dart' show post, get, put, delete, Client;
+import 'package:http/http.dart' show post, get, put, delete;
+
+import '../../User/Model/user_profile.dart';
 
 class ApiDataProvider {
-  final Client httpClient;
-
-  ApiDataProvider({required this.httpClient});
+  ApiDataProvider();
 
   login({required String email, required String password}) async {
     final response = await post(
@@ -18,10 +18,9 @@ class ApiDataProvider {
     );
 
     if (response.statusCode == 200) {
-      return jsonDecode(response.body);
-    } else {
-      throw Exception('Failed to login');
+      return User.fromJson(jsonDecode(response.body));
     }
+    throw Exception('Failed to login');
   }
 
   signUp({
@@ -29,6 +28,8 @@ class ApiDataProvider {
     required String password,
     required String name,
     required String phoneNumber,
+    required String username,
+    required String role ,
   }) async {
     final response = await post(
       Uri.parse('http://localhost:3000/api/auth/signup'),
@@ -40,6 +41,8 @@ class ApiDataProvider {
         'password': password,
         'name': name,
         'phoneNumber': phoneNumber,
+        'Username': username,
+        'role': role,
       }),
     );
 

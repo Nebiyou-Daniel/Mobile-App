@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/Theme/bloc/theme_bloc.dart';
 import 'package:frontend/auth/bloc/auth_bloc.dart';
-import 'package:frontend/screen/common/splashScreen.dart';
-import 'package:frontend/screen/common/about.dart';
-import 'package:frontend/screen/admin/adminSignupAndLogin.dart';
-import 'package:frontend/screen/trainee/trainee_profile.dart';
-import 'package:frontend/screen/common/login.dart';
-import 'package:frontend/screen/common/settings.dart';
-import 'package:frontend/screen/common/signup.dart';
-import 'package:frontend/screen/traineeProgressPage.dart';
-import 'package:frontend/screen/workoutPlanCreationPage.dart';
+import 'package:frontend/UI/common/splashScreen.dart';
+import 'package:frontend/UI/common/about.dart';
+import 'package:frontend/UI/admin/adminSignupAndLogin.dart';
+import 'package:frontend/UI/trainee/trainee_profile.dart';
+import 'package:frontend/UI/common/login.dart';
+import 'package:frontend/UI/common/settings.dart';
+import 'package:frontend/UI/common/signup.dart';
 import 'package:go_router/go_router.dart';
+
+import 'UI/trainee/traineeProgressPage.dart';
+import 'UI/trainer/workoutPlanCreationPage.dart';
 
 void main() {
   runApp(MyApp());
@@ -44,7 +46,7 @@ class MyApp extends StatelessWidget {
       ),
       GoRoute(
         path: '/traineeProgressPage',
-        builder: (context, state) => const TraineeProgressPage(),
+        builder: (context, state) => TraineeProgressPage(),
       ),
       // request sent page
       GoRoute(
@@ -163,22 +165,89 @@ class MyApp extends StatelessWidget {
         BlocProvider<AuthBloc>(
           create: (context) => AuthBloc(),
         ),
-        BlocProvider<>(
-          create: (context) => SubjectBloc(),
+        BlocProvider<ThemeBloc>(
+          create: (context) => ThemeBloc(),
         ),
+        // BlocProvider<>(
+        // create: (context) => (),
+        // ),
       ],
       child: MaterialApp.router(
         routerDelegate: _router.routerDelegate,
         routeInformationParser: _router.routeInformationParser,
       ),
     );
-
-    // return MaterialApp.router(
-    //   routerDelegate: _router.routerDelegate,
-    //   routeInformationParser: _router.routeInformationParser,
-    // );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
