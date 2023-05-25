@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:frontend/auth/bloc/auth_event.dart';
 import 'package:frontend/auth/bloc/auth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,27 +10,35 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthInitial()) {
     ApiDataProvider apiDataProvider = ApiDataProvider();
 
-    // on<AuthInitialEvent>((event, emit) {
-    //   emit(AuthInitial());
+    // on<UserLoginEvent>((event, emit) {
+    //   // ...loggin in ...
+    //   emit(AuthLoggingIn());
+    //   print("logging in ...");
+    //   print(event);
+    //   // ... try logging in
+    //   apiDataProvider
+    //       .login(email: event.email, password: event.password)
+    //       .then((user) {
+    //     emit(AuthLoginSuccess(user: user));
+    //   }).catchError((error) {
+    //     emit(AuthLoginError(error: error.toString()));
+    //   });
     // });
 
-    // logging in ...
-    on<UserLoginEvent>((event, emit) {
+    on<UserLoginEvent>((event, emit) async {
       // ...loggin in ...
       emit(AuthLoggingIn());
-      // ... try logging in
-      apiDataProvider
-          .login(email: event.email, password: event.password)
-          .then((user) {
-        emit(AuthLoginSuccess(user: user));
-      }).catchError((error) {
+        // ... try logging in
+      try {
+        await apiDataProvider.login(email: event.email, password: event.password);
+      } catch (error) {
         emit(AuthLoginError(error: error.toString()));
-      });
+      }
     });
 
     // login success
     on<UserLoginSuccessEvent>((event, emit) {
-      emit(AuthLoginSuccess(user: event.user as User));
+      emit(AuthLoginSuccess(user: event.user));
     });
 
     // login Error
@@ -42,33 +52,33 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
 
     // logout Error
-    on<UserLogoutEvent>((event, emit) {
+    on<UserLogoutErrorEvent>((event, emit) {
       emit(AuthLoggingOut());
     });
 
     // logout success
-    on<UserLogoutEvent>((event, emit) {
+    on<UserLogoutSuccessEvent>((event, emit) {
       emit(AuthLoggingOut());
     });
 
     // signing up ...
-    on<UserSignUpEvent>((event, emit) {
+// signing up ...
+    on<UserSignUpEvent>((event, emit) async {
       emit(AuthSigningUp());
-      apiDataProvider
-          .signUp(
-              username: event.username,
-              email: event.email,
-              password: event.password,
-              name: event.name,
-              phoneNumber: event.phoneNumber,
-              role: event.role)
-          .then((user) {
-        emit(AuthSignupSuccess(user: user));
-      }).catchError((error) {
-        emit(AuthSignupError(error: error.toString()));
-      });
-    });
+      print("signing up ...");
 
+      try {
+        await apiDataProvider.signUp(
+            name: event.name,
+            username: event.username,
+            email: event.email,
+            phoneNumber: event.phoneNumber,
+            password: event.password,
+            role: event.role);
+      } catch (error) {
+        emit(AuthSignupError(error: error.toString()));
+      }
+    });
     // signup Success
     on<UserSignUpSuccessEvent>((event, emit) {
       emit(AuthSignupSuccess(user: event.user as User));
