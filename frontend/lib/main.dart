@@ -48,77 +48,76 @@ class MyApp extends StatelessWidget {
         builder: (context, state) => TraineeProgressPage(),
       ),
       // request sent page
-      GoRoute(
-        path: '/requestSent',
-        builder: (context, state) => const RequestSentPage(),
-      ),
+      // GoRoute(
+      //   path: '/requestSent',
+      //   builder: (context, state) => const RequestSentPage(),
+      // ),
       GoRoute(
         path: '/workoutPlanCreationPage',
         builder: (context, state) => const WorkoutPlanCreationPage(),
       ),
 
       // admin routes
-      GoRoute(
-        path: '/admin/homePage',
-        builder: (context, state) => const AdminHomePage(),
-      ),
-      GoRoute(
-        path: '/admin/listOfTrainees',
-        builder: (context, state) => const AdminListOfTraineesPage(),
-      ),
-      GoRoute(
-        path: '/admin/listOfTrainers',
-        builder: (context, state) => const AdminListOfTrainersPage(),
-      ),
-      GoRoute(
-        path: '/admin/approvalPage',
-        builder: (context, state) => const AdminApprovalPage(),
-      ),
-      GoRoute(
-        path: '/admin/notifications',
-        builder: (context, state) => const AdminNotifications(),
-      ),
-      GoRoute(
-        path: '/admin/enterCode',
-        builder: (context, state) => const AdminEnterCodePage(),
-      ),
-      // watch trainer profile
-      GoRoute(
-        path: '/admin/trainer_profile',
-        builder: (context, state) => const AdminTrainerProfilePage(),
-      ),
-      GoRoute(
-        path: '/admin/trainee_profile',
-        builder: (context, state) => const AdminTraineeProfilePage(),
-      ),
-
+      // GoRoute(
+      //   path: '/admin/homePage',
+      //   builder: (context, state) => const AdminHomePage(),
+      // ),
+      // GoRoute(
+      //   path: '/admin/listOfTrainees',
+      //   builder: (context, state) => const AdminListOfTraineesPage(),
+      // ),
+      // GoRoute(
+      //   path: '/admin/listOfTrainers',
+      //   builder: (context, state) => const AdminListOfTrainersPage(),
+      // ),
+      // GoRoute(
+      //   path: '/admin/approvalPage',
+      //   builder: (context, state) => const AdminApprovalPage(),
+      // ),
+      // GoRoute(
+      //   path: '/admin/notifications',
+      //   builder: (context, state) => const AdminNotifications(),
+      // ),
+      // GoRoute(
+      //   path: '/admin/enterCode',
+      //   builder: (context, state) => const AdminEnterCodePage(),
+      // ),
+      // // watch trainer profile
+      // GoRoute(
+      //   path: '/admin/trainer_profile',
+      //   builder: (context, state) => const AdminTrainerProfilePage(),
+      // ),
+      // GoRoute(
+      //   path: '/admin/trainee_profile',
+      //   builder: (context, state) => const AdminTraineeProfilePage(),
+      // ),
       // trainer routes
-      GoRoute(
-        path: '/trainer/homePage',
-        builder: (context, state) => const TrainerHomePage(),
-      ),
-      GoRoute(
-        path: '/trainer/profile',
-        builder: (context, state) => const TrainerProfilePage(),
-      ),
-      GoRoute(
-        path: '/trainer/createPlan',
-        builder: (context, state) => const TrainerCreatePlan(),
-      ),
-      GoRoute(
-        path: '/trainer/listOfTrainees',
-        builder: (context, state) => const TrainerListOfTraineesPage(),
-      ),
-      GoRoute(
-        path: '/trainer/notifications',
-        builder: (context, state) => const TrainerNotificationsPage(),
-      ),
+      // GoRoute(
+      //   path: '/trainer/homePage',
+      //   builder: (context, state) => const TrainerHomePage(),
+      // ),
+      // GoRoute(
+      //   path: '/trainer/profile',
+      //   builder: (context, state) => const TrainerProfilePage(),
+      // ),
+      // GoRoute(
+      //   path: '/trainer/createPlan',
+      //   builder: (context, state) => const TrainerCreatePlan(),
+      // ),
+      // GoRoute(
+      //   path: '/trainer/listOfTrainees',
+      //   builder: (context, state) => const TrainerListOfTraineesPage(),
+      // ),
+      // GoRoute(
+      //   path: '/trainer/notifications',
+      //   builder: (context, state) => const TrainerNotificationsPage(),
+      // ),
 
       // trainee routes
-      GoRoute(
-        path: '/trainee/homePage',
-        builder: (context, state) => const TraineeHomePage(),
-      ),
+      // GoRoute(
+      //   path: '/trainee/homePage',
+      //   builder: (context, state) => const TraineeHomePage(),
+      // ),
       GoRoute(
         path: '/trainee/profile',
         builder: (context, state) => const TraineeProfile(),
@@ -127,32 +126,32 @@ class MyApp extends StatelessWidget {
         path: '/trainee/progress',
         builder: (context, state) => TraineeProgressPage(),
       ),
-      GoRoute(
-        path: '/trainee/workoutPlan',
-        builder: (context, state) => const TraineeWorkoutPlanPage(),
-      ),
-      GoRoute(
-        path: '/trainee/chooseTrainer',
-        builder: (context, state) => const TraineeChooseTrainerPage(),
-      ),
-      GoRoute(
-        path: '/trainee/notifications',
-        builder: (context, state) => const TraineeNotificationsPage(),
-      ),
-      GoRoute(
-        path: '/trainee/applyAsTrainer',
-        builder: (context, state) => const TraineeApplyAsTrainerPage(),
-      ),
-      // trainer application submitted page
-      GoRoute(
-        path: 'trainee/request_sent',
-        builder: (context, state) => const TraineeRequestSentPage(),
-      ),
-      // view trainer's profile
-      GoRoute(
-        path: '/trainee/trainer_profile',
-        builder: (context, state) => const TraineeTrainerProfilePage(),
-      ),
+      // GoRoute(
+      //   path: '/trainee/workoutPlan',
+      //   builder: (context, state) => const TraineeWorkoutPlanPage(),
+      // ),
+      // GoRoute(
+      //   path: '/trainee/chooseTrainer',
+      //   builder: (context, state) => const TraineeChooseTrainerPage(),
+      // ),
+      // GoRoute(
+      //   path: '/trainee/notifications',
+      //   builder: (context, state) => const TraineeNotificationsPage(),
+      // ),
+      // GoRoute(
+      //   path: '/trainee/applyAsTrainer',
+      //   builder: (context, state) => const TraineeApplyAsTrainerPage(),
+      // ),
+      // // trainer application submitted page
+      // GoRoute(
+      //   path: 'trainee/request_sent',
+      //   builder: (context, state) => const TraineeRequestSentPage(),
+      // ),
+      // // view trainer's profile
+      // GoRoute(
+      //   path: '/trainee/trainer_profile',
+      //   builder: (context, state) => const TraineeTrainerProfilePage(),
+      // ),
     ],
   );
 

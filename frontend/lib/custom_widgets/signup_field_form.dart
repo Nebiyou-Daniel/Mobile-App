@@ -27,6 +27,8 @@ class SignUpFieldFormState extends State<SignUpFieldForm> {
     _fullNameController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
+    _userNameController.dispose();
+    _phoneNumberController.dispose();
     super.dispose();
   }
 
