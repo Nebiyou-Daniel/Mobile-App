@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/Custom_Widgets/header_banner.dart';
-import 'package:frontend/Custom_Widgets/signup_field_form.dart';
+import 'package:frontend/custom_widgets/header_banner.dart';
+import 'package:frontend/custom_widgets/signup_field_form.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({Key? key}) : super(key: key);

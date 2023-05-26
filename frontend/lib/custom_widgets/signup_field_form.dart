@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/Custom_Widgets/role_dropdown_selection.dart';
+import 'package:frontend/custom_widgets/role_dropdown_selection.dart';
 
 import 'password_form_field.dart';
 
