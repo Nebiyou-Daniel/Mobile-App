@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/auth/bloc/auth_bloc.dart';
 import 'package:frontend/auth/bloc/auth_state.dart';
 import 'package:go_router/go_router.dart';
-import '../../Custom_Widgets/header_banner.dart';
+import '../../custom_widgets/header_banner.dart';
 import '../../auth/bloc/auth_event.dart';
 import '../../custom_widgets/login_field_form.dart';
 import 'loading.dart';

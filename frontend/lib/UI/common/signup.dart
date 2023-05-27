@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frontend/Custom_Widgets/header_banner.dart';
-import 'package:frontend/Custom_Widgets/signup_field_form.dart';
+import 'package:frontend/custom_widgets/header_banner.dart';
+import 'package:frontend/custom_widgets/signup_field_form.dart';
 import 'package:go_router/go_router.dart';
 import '../../auth/bloc/auth_bloc.dart';
 import '../../auth/bloc/auth_event.dart';
