@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-// import user profile
 import '../../User/Model/user_profile.dart';
 
 abstract class AuthState extends Equatable {}

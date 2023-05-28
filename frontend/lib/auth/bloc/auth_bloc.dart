@@ -1,36 +1,20 @@
-import 'dart:async';
 
 import 'package:frontend/auth/bloc/auth_event.dart';
 import 'package:frontend/auth/bloc/auth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../User/Model/user_profile.dart';
 import '../data_provider/api_data_providor.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthInitial()) {
     ApiDataProvider apiDataProvider = ApiDataProvider();
 
-    // on<UserLoginEvent>((event, emit) {
-    //   // ...loggin in ...
-    //   emit(AuthLoggingIn());
-    //   print("logging in ...");
-    //   print(event);
-    //   // ... try logging in
-    //   apiDataProvider
-    //       .login(email: event.email, password: event.password)
-    //       .then((user) {
-    //     emit(AuthLoginSuccess(user: user));
-    //   }).catchError((error) {
-    //     emit(AuthLoginError(error: error.toString()));
-    //   });
-    // });
-
     on<UserLoginEvent>((event, emit) async {
       // ...loggin in ...
       emit(AuthLoggingIn());
-        // ... try logging in
+      // ... try logging in
       try {
-        await apiDataProvider.login(email: event.email, password: event.password);
+        await apiDataProvider.login(
+            email: event.email, password: event.password);
       } catch (error) {
         emit(AuthLoginError(error: error.toString()));
       }
@@ -62,11 +46,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
 
     // signing up ...
-// signing up ...
     on<UserSignUpEvent>((event, emit) async {
       emit(AuthSigningUp());
-      print("signing up ...");
-
       try {
         await apiDataProvider.signUp(
             name: event.name,
@@ -79,9 +60,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthSignupError(error: error.toString()));
       }
     });
+
     // signup Success
     on<UserSignUpSuccessEvent>((event, emit) {
-      emit(AuthSignupSuccess(user: event.user as User));
+      emit(AuthSignupSuccess(user: event.user));
     });
 
     // signup Error

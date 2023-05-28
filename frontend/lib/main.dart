@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frontend/Theme/bloc/theme_bloc.dart';
+import 'package:frontend/theme/bloc/theme_bloc.dart';
 import 'package:frontend/auth/bloc/auth_bloc.dart';
 import 'package:frontend/UI/common/splashScreen.dart';
 import 'package:frontend/UI/common/about.dart';
