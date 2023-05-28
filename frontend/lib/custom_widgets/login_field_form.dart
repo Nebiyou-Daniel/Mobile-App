@@ -1,26 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/auth/bloc/auth_event.dart';
+import 'package:frontend/auth/bloc/auth_state.dart';
 
-class LoginFormField extends StatelessWidget {
+import '../auth/bloc/auth_bloc.dart';
+
+class LoginFormField extends StatefulWidget {
   const LoginFormField({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: LoginPage(),
-    );
-  }
+  LoginFormFieldState createState() => LoginFormFieldState();
 }
 
-
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
-
-  @override
-  LoginPageState createState() => LoginPageState();
-}
-
-class LoginPageState extends State<LoginPage> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+class LoginFormFieldState extends State<LoginFormField> {
+  final GlobalKey<FormState> _loginformKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -48,39 +41,38 @@ class LoginPageState extends State<LoginPage> {
   }
 
   void _submitForm() {
-    if (_formKey.currentState!.validate()) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Login Successful'),
-            content: Text('Welcome, ${_emailController.text}!'),
-            actions: <Widget>[
-              TextButton(
-                child: const Text('OK'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
+    if (_loginformKey.currentState!.validate()) {
+    final AuthBloc bloc = BlocProvider.of<AuthBloc>(context);
+
+      bloc.add(UserLoginEvent(
+        email: _emailController.text,
+        password: _passwordController.text,
+      ));
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login Page'),
-      ),
-      body: Padding(
+    return BlocProvider(
+      create: (context) => AuthBloc(),
+      child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
-          key: _formKey,
+          key: _loginformKey,
           child: Column(
             children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(bottom: 15, left: 20),
+                child: Row(
+                  children: const <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(right: 21),
+                      child: Icon(Icons.info),
+                    ),
+                    Text("Fill the following information to Login."),
+                  ],
+                ),
+              ),
               TextFormField(
                 controller: _emailController,
                 decoration: const InputDecoration(
@@ -102,8 +94,8 @@ class LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 16.0),
               ElevatedButton(
-                onPressed: _submitForm,
-                child: const Text('Submit'),
+                onPressed: () => _submitForm(),
+                child: const Text('Login'),
               ),
             ],
           ),
