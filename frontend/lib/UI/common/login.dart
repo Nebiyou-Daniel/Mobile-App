@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/auth/bloc/auth_bloc.dart';
 import 'package:frontend/auth/bloc/auth_state.dart';
 import 'package:go_router/go_router.dart';
-import '../../Custom_Widgets/header_banner.dart';
+import '../../custom_widgets/header_banner.dart';
+import '../../auth/bloc/auth_event.dart';
 import '../../custom_widgets/login_field_form.dart';
 import 'loading.dart';
 
@@ -27,7 +28,7 @@ class LoginState extends State<LoginPage> {
               const HeaderBanner(),
               Container(
                 padding: const EdgeInsets.all(39.5),
-                child: const LoginWidget(),
+                child: const LoginHandeler(),
               ),
               Container(
                   padding: const EdgeInsets.all(39.5),
@@ -47,8 +48,8 @@ class LoginState extends State<LoginPage> {
   }
 }
 
-class LoginWidget extends StatelessWidget {
-  const LoginWidget({super.key});
+class LoginHandeler extends StatelessWidget {
+  const LoginHandeler({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +75,18 @@ class LoginWidget extends StatelessWidget {
       }
     }
 
-    return const Text("Login Failed");
+    if (state is AuthLoginError) {
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final snackBar = SnackBar(
+          content: Text(state.error),
+          backgroundColor: Colors.red,
+          behavior: SnackBarBehavior.floating,
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      });
+    }
+
+    return const LoginFormField();
   }
 }

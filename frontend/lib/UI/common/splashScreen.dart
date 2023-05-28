@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // This is the timer for the splash screen
+
     Timer(
       const Duration(seconds: 3),
       () => GoRouter.of(context).go('/login'),
@@ -28,7 +29,7 @@ class SplashScreenState extends State<SplashScreen> {
         theme: ThemeData(
             colorScheme: ColorScheme.fromSwatch().copyWith(
                 primary: Colors.black12,
-                secondary: const Color.fromRGBO(255, 215, 0, 1))),
+                secondary: Color.fromARGB(255, 176, 155, 37))),
         debugShowCheckedModeBanner: false,
         home: Scaffold(
             backgroundColor: Colors.white,
@@ -44,7 +45,6 @@ class SplashScreenState extends State<SplashScreen> {
                       "Workout Warriors",
                       style: TextStyle(
                         fontSize: 45,
-                        fontFamily: 'Bangers',
                         color: Color.fromRGBO(214, 0, 0, 1),
                         fontWeight: FontWeight.bold,
                       ),
@@ -54,7 +54,7 @@ class SplashScreenState extends State<SplashScreen> {
                     "Unleash your inner warrior with Workout Warriors",
                     style: TextStyle(
                       fontSize: 16,
-                      color: Color.fromRGBO(255, 215, 0, 1),
+                      color: Color.fromRGBO(245, 102, 0, 1),
                       fontFamily: 'Roboto',
                     ),
                   ),
@@ -62,7 +62,7 @@ class SplashScreenState extends State<SplashScreen> {
                   Expanded(
                     child: ClipRect(
                       // make borders rounded
-                      clipBehavior: Clip.antiAlias,
+                      clipBehavior: Clip.hardEdge,
                       child: Container(
                         color: Colors.black,
                         child: Image.asset(
@@ -75,8 +75,12 @@ class SplashScreenState extends State<SplashScreen> {
 
                   Container(height: 50),
 
-                  const CircularProgressIndicator(
-                    color: Colors.red,
+                  // loading circle for ios
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: CupertinoActivityIndicator(
+                      radius: 20,
+                    ),
                   ),
                   Container(height: 50)
                 ],

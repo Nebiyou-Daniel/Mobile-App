@@ -1,6 +1,9 @@
-import '../../User/Model/user.dart';
+import '../../User/Model/user_profile.dart';
 
 abstract class AuthEvent {}
+
+
+class AuthInitialEvent extends AuthEvent {}
 
 class UserLoginEvent extends AuthEvent {
   final String email;
