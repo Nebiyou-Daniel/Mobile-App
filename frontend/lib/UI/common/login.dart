@@ -74,7 +74,9 @@ class LoginHandeler extends StatelessWidget {
         // return const Text("Trainee login Success");
       }
     }
+
     if (state is AuthLoginError) {
+
       WidgetsBinding.instance.addPostFrameCallback((_) {
         final snackBar = SnackBar(
           content: Text(state.error),
