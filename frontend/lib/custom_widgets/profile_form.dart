@@ -23,6 +23,7 @@ class _ProfileFormState extends State<ProfileForm> {
   TextEditingController bioController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
+  
 
   @override
   void initState() {
@@ -96,6 +97,7 @@ class _ProfileFormState extends State<ProfileForm> {
               ? Row(
                   children: [
                     const Icon(Icons.person),
+                    Container(margin: const EdgeInsets.only(left: 20.0)),
                     Expanded(
                       child: TextField(
                         controller: nameController,
@@ -110,6 +112,7 @@ class _ProfileFormState extends State<ProfileForm> {
               : Row(
                   children: [
                     const Icon(Icons.person),
+                    Container(margin: const EdgeInsets.only(left: 20.0)),
                     Expanded(child: Text(name)),
                     IconButton(
                       icon: const Icon(Icons.edit),
@@ -127,6 +130,7 @@ class _ProfileFormState extends State<ProfileForm> {
               ? Row(
                   children: [
                     const Icon(Icons.info),
+                    Container(margin: const EdgeInsets.only(left: 20.0)),
                     Expanded(
                       child: TextField(
                         controller: bioController,
@@ -141,6 +145,7 @@ class _ProfileFormState extends State<ProfileForm> {
               : Row(
                   children: [
                     const Icon(Icons.info),
+                    Container(margin: const EdgeInsets.only(left: 20.0)),
                     Expanded(child: Text(bio)),
                     IconButton(
                       icon: const Icon(Icons.edit),
@@ -158,6 +163,7 @@ class _ProfileFormState extends State<ProfileForm> {
               ? Row(
                   children: [
                     const Icon(Icons.email),
+                    Container(margin: const EdgeInsets.only(left: 20.0)),
                     Expanded(
                       child: TextField(
                         controller: emailController,
@@ -172,6 +178,7 @@ class _ProfileFormState extends State<ProfileForm> {
               : Row(
                   children: [
                     const Icon(Icons.email),
+                    Container(margin: const EdgeInsets.only(left: 20.0)),
                     const Expanded(child: Text("Email")),
                     IconButton(
                       icon: const Icon(Icons.edit),
@@ -189,6 +196,7 @@ class _ProfileFormState extends State<ProfileForm> {
               ? Row(
                   children: [
                     const Icon(Icons.phone),
+                    Container(margin: const EdgeInsets.only(left: 20.0)),
                     Expanded(
                       child: TextField(
                         controller: phoneNumberController,
@@ -203,6 +211,7 @@ class _ProfileFormState extends State<ProfileForm> {
               : Row(
                   children: [
                     const Icon(Icons.phone),
+                    Container(margin: const EdgeInsets.only(left: 20.0)),
                     const Expanded(child: Text("Phone Number")),
                     IconButton(
                       icon: const Icon(Icons.edit),
@@ -215,27 +224,35 @@ class _ProfileFormState extends State<ProfileForm> {
                     ),
                   ],
                 ),
-          const SizedBox(height: 10),
-          ElevatedButton(
-            style: const ButtonStyle(
-                backgroundColor:
-                    MaterialStatePropertyAll(Color.fromARGB(255, 255, 163, 26))),
-            child: const Text('Log Out'),
-            onPressed: () {
-              // Log out logic here
-            },
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            style: const ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll(Colors.red)),
-            child: const Text(
-              'Terminate Account',
-              // style: TextStyle(color: Colors.red),
+          Container(height: 20),
+          const Divider(),
+          SizedBox(
+            width: 300,
+            height: 38,
+            child: ElevatedButton(
+              style: const ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll(
+                      Color.fromARGB(255, 255, 163, 26))),
+              child: const Text('Log Out'),
+              onPressed: () {
+                // Log out logic here
+              },
             ),
-            onPressed: () {
-              // Terminate account logic here
-            },
+          ),
+          Container(height: 20),
+          SizedBox(
+            width: 300,
+            height: 38,
+            child: ElevatedButton(
+              style: ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll(Colors.red[900])),
+              child: const Text(
+                'Terminate Account',
+              ),
+              onPressed: () {
+                // Terminate account logic here
+              },
+            ),
           ),
         ],
       ),

@@ -9,34 +9,42 @@ class HeaderBannerWithIcons extends StatelessWidget {
     return Column(
       children: <Widget>[
         Stack(
-          alignment: Alignment.topCenter,
+          alignment: Alignment.center,
           children: <Widget>[
             const HeaderBanner(),
-            Container(
-              padding: const EdgeInsets.fromLTRB(18, 2, 18, 2),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 12, 12, 4),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  // A button eith a account_circle as a child that takes to the user's profile onpressed
+                  // A button with an account_circle icon that takes the user to their profile when pressed
                   FloatingActionButton(
                     onPressed: () {
                       print("profile pressed");
                     },
+                    backgroundColor: Colors.white,
+                    elevation: 4,
+                    mini: true,
                     child: const Icon(
                       Icons.account_circle_outlined,
-                      size: 35,
+                      size: 28,
+                      color: Colors.blue,
                     ),
                   ),
-                  // a notification icon that takes to the user's notifications on press
+                  const SizedBox(width: 8),
+                  // A button with a notification icon that takes the user to their notifications when pressed
                   FloatingActionButton(
                     onPressed: () {
                       print("notification pressed");
                     },
+                    backgroundColor: Colors.white,
+                    elevation: 4,
+                    mini: true,
                     child: const Icon(
                       Icons.notifications_none_outlined,
-                      grade: 2.0,
-                      size: 35,
+                      size: 28,
+                      color: Colors.blue,
                     ),
                   ),
                 ],
