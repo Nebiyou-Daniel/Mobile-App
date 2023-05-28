@@ -1,6 +1,6 @@
-import { IsEmail, IsNumber, IsOptional, IsString } from "class-validator"
+import { IsEmail, IsOptional, IsString } from "class-validator"
 
-export class EditTraineeDto{
+export class EditTrainerDto{
     @IsString()
     @IsOptional()
     fullName?: string
@@ -16,8 +16,5 @@ export class EditTraineeDto{
     @IsString()
     @IsOptional()
     bio?: string
-    
-    @IsNumber()
-    @IsOptional()
-    trainerId?: number
+
 }

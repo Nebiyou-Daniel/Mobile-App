@@ -4,9 +4,10 @@ import * as argon from 'argon2';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { NewTrainerApprovalDto } from './dto/new-trainer-approval.dto';
 
 export enum Role{
-    trianee,
+    trainee,
     trainer,
     admin
 }
@@ -36,7 +37,7 @@ export class AuthService {
             })
             // return saved user
             delete trainee.password;
-            return this.signToken(trainee.id, trainee.email, Role.trianee);;
+            return this.signToken(trainee.id, trainee.email, Role.trainee);;
 
         } catch (error) {
             throw new ForbiddenException(
@@ -100,7 +101,7 @@ export class AuthService {
         delete trainee.password;
 
         // return user
-        return this.signToken(trainee.id, trainee.email, Role.trianee);
+        return this.signToken(trainee.id, trainee.email, Role.trainee);
     }
 
 
@@ -135,6 +136,33 @@ export class AuthService {
     }
 
 
+    async adminSignup(dto: signupDto){
+        // generate password hash
+        const passwordHash = await argon.hash(dto.password);
+
+        //save new user in the database
+        try {
+            const admin = await this.prisma.admin.create({
+                data: {
+                    email: dto.email,
+                    password: passwordHash,
+                    fullName: dto.fullName,
+                    role: dto.role,
+                }
+            })
+            delete admin.password;
+
+            // return saved user
+            return this.signToken(admin.id, admin.email, Role.admin);
+
+        } catch (error) {
+            throw new ForbiddenException(
+                `the ${error.meta.target} credential has been taken`,
+            );
+        }
+    }
+
+
     async adminLogin(dto: loginDto){
         // find user by email
         const admin = await this.prisma.admin.findUnique({
@@ -165,6 +193,7 @@ export class AuthService {
         return this.signToken(admin.id, admin.email, Role.admin);
     }
 
+    
     async signToken(
         id: number, 
         email: string, 
@@ -179,9 +208,53 @@ export class AuthService {
         const secret = this.config.get('JWT_SECRET')
 
         const token = await this.jwt.signAsync(payload, {
-            expiresIn: '2h',
+            expiresIn: '24h',
             secret: secret,
         })
         return {access_token: token};
+    }
+
+
+    async logout(){
+        return {token: ''};
+    }
+    
+
+    async approveNewTrainer(
+        traineeId: number, 
+        dto1: NewTrainerApprovalDto, 
+        dto2: signupDto
+    ){
+
+        const trainee = await this.prisma.trainee.findUnique({
+            where: {
+                id: traineeId
+            }
+        })
+        if (!trainee){
+            throw new ForbiddenException('Access to resource denied')
+        }
+        const passwordHash = await argon.hash(dto2.password);
+
+        const newTrainer = await this.prisma.trainer.create({
+            data: {
+                email: dto2.email,
+                password: passwordHash,
+                fullName: dto2.fullName,
+                role: dto2.role,
+                previousJobXp: dto1.previousJobXp,
+                yearsOfXp: dto1.yearsOfXp,
+                previousWorkPlace: dto1.previousWorkPlace
+            }
+        })
+        delete newTrainer.password;
+
+        await this.prisma.trainee.delete({
+            where: {
+                id: traineeId
+            }
+        })
+        // return saved user
+        return this.signToken(newTrainer.id, newTrainer.email, Role.trainer);
     }
 }

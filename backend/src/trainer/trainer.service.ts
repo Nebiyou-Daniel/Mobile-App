@@ -1,46 +1,46 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
+import { EditTrainerDto } from './dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { EditTraineeDto } from './dto';
 import { PasswordUpdateDto } from './dto/passwordUpdate.dto';
 import * as argon from 'argon2'
 
 
 @Injectable()
-export class TraineeService {
+export class TrainerService {
     constructor(private prisma: PrismaService){}
 
-    async updateTrainee(traineeId: number, dto: EditTraineeDto){
-        const trainee = await this.prisma.trainee.update({
+    async updateTrainer(trainerId: number, dto: EditTrainerDto){
+        const trainer = await this.prisma.trainer.update({
             where: {
-                id: traineeId,
+                id: trainerId,
             },
             data: {
                 ...dto,
             }
         });
-        delete trainee.password;
+        delete trainer.password;
 
-        return trainee;
+        return trainer;
     }
-
-    async updatePassword(traineeId: number, dto: PasswordUpdateDto){
-        if(traineeId == null){
+    
+    async updatePassword(trainerId: number, dto: PasswordUpdateDto){
+        if(trainerId == null){
             throw new ForbiddenException('Not authenticated')
           }
         const pass: string = await argon.hash(dto.newPassword)
           //verify if password is correct
-        const use=await this.prisma.trainee.findFirst({
+        const use=await this.prisma.trainer.findFirst({
             where:{
-                id: traineeId
+                id: trainerId
             }
         })
         const correct = await argon.verify(use.password,dto.oldPassword)
 
         if(correct){
 
-            const returnObj= await this.prisma.trainee.update({
+            const returnObj= await this.prisma.trainer.update({
                 where:{
-                    id: traineeId
+                    id: trainerId
                 },
                 data:{
                     password: pass
@@ -53,20 +53,19 @@ export class TraineeService {
             throw new ForbiddenException('Old password is wrong')
         }
     }
-
-    async deleteTrainee(traineeId: number){
-        const trainee = await this.prisma.trainee.findUnique({
+    async deleteTrainer(trainerId: number){
+        const trainer = await this.prisma.trainer.findUnique({
             where: {
-                id: traineeId
+                id: trainerId
             }
 
         })
-        if (!trainee){
+        if (!trainer){
             throw new ForbiddenException('Access to resource denied')
         }
-        await this.prisma.trainee.delete({
+        await this.prisma.trainer.delete({
             where: {
-                id: traineeId
+                id: trainerId
             }
         })
     }
