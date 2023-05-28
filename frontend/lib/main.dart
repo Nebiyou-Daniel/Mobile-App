@@ -12,6 +12,10 @@ import 'package:go_router/go_router.dart';
 
 import 'UI/trainee/traineeProgressPage.dart';
 import 'UI/trainer/workoutPlanCreationPage.dart';
+import 'package:frontend/UI/common/contacts.dart';
+import 'package:frontend/UI/common/notification.dart';
+import 'package:frontend/UI/trainee/new_trainer.dart';
+import 'package:frontend/UI/trainer/trainees.dart';
 
 void main() {
   runApp(MyApp());
