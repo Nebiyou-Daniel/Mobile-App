@@ -2,10 +2,22 @@ import { ForbiddenException, Injectable } from '@nestjs/common';
 import { loginDto, signupDto } from './dto';
 import * as argon from 'argon2';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
+
+export enum Role{
+    trianee,
+    trainer,
+    admin
+}
 
 @Injectable()
 export class AuthService {
-    constructor(private prisma: PrismaService){}
+    constructor(
+        private prisma: PrismaService, 
+        private jwt: JwtService,
+        private config: ConfigService
+        ){}
 
 
     async traineeSignup(dto: signupDto){
@@ -24,7 +36,7 @@ export class AuthService {
             })
             // return saved user
             delete trainee.password;
-            return trainee;
+            return this.signToken(trainee.id, trainee.email, Role.trianee);;
 
         } catch (error) {
             throw new ForbiddenException(
@@ -51,7 +63,7 @@ export class AuthService {
             delete trainer.password;
 
             // return saved user
-            return trainer;
+            return this.signToken(trainer.id, trainer.email, Role.trainer);
 
         } catch (error) {
             throw new ForbiddenException(
@@ -88,7 +100,7 @@ export class AuthService {
         delete trainee.password;
 
         // return user
-        return trainee;
+        return this.signToken(trainee.id, trainee.email, Role.trianee);
     }
 
 
@@ -119,7 +131,7 @@ export class AuthService {
         delete trainer.password;
 
         // return user
-        return trainer;
+        return this.signToken(trainer.id, trainer.email, Role.trainer);
     }
 
 
@@ -150,6 +162,26 @@ export class AuthService {
         delete admin.password;
 
         // return user
-        return admin;
+        return this.signToken(admin.id, admin.email, Role.admin);
+    }
+
+    async signToken(
+        id: number, 
+        email: string, 
+        role: Role): Promise<{access_token: String}> {
+        const payload = {
+            // 'sub' means id. (it's a convention in the jwt environment)
+            sub: id,
+            email: email,  
+            role: role          
+        };
+
+        const secret = this.config.get('JWT_SECRET')
+
+        const token = await this.jwt.signAsync(payload, {
+            expiresIn: '2h',
+            secret: secret,
+        })
+        return {access_token: token};
     }
 }
