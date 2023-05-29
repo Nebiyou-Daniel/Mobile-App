@@ -49,5 +49,14 @@ export class TaskController {
         return this.taskService.deleteTaskById(trainerId, taskId);
     }
 
+    @Patch('taskDone/:id')
+    setTaskAsDone(
+        @GetTrainee('id') traineeId: number,
+        @Param('id', ParseIntPipe) taskId: number,
+        @Body() dto: EditTaskDto
+    ){
+        return this.taskService.setTaskAsDone(traineeId, taskId, dto);
+    }
+
 
 }
