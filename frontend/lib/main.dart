@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:frontend/notifications/Model/notification_model.dart';
 import 'package:frontend/notifications/views/notification_screen.dart';
 import 'package:frontend/theme/bloc/theme_bloc.dart';
+
 import 'package:frontend/auth/bloc/auth_bloc.dart';
 import 'package:frontend/UI/common/splashScreen.dart';
 import 'package:frontend/UI/trainee/trainee_profile.dart';
@@ -15,9 +17,11 @@ import 'package:go_router/go_router.dart';
 import 'package:frontend/trainee/trainee.dart';
 
 import 'UI/trainee/traineeProgressPage.dart';
+
 import 'UI/trainee/traineeHomePage.dart';
 import 'UI/trainee/trainer_choosing_page.dart';
 import 'trainer/views/trainerHomePage.dart';
+
 import 'UI/trainer/workoutPlanCreationPage.dart';
 
 void main() {
@@ -36,7 +40,7 @@ class MyApp extends StatelessWidget {
       ),
       GoRoute(
         path: '/login',
-        builder: (context, state) => const LoginPage(),
+        builder: (context, state) => const TraineeTrainerDetail(),
       ),
       GoRoute(
         path: '/signup',
@@ -148,10 +152,10 @@ class MyApp extends StatelessWidget {
       //   builder: (context, state) => const TraineeRequestSentPage(),
       // ),
       // // view trainer's profile
-      // GoRoute(
-      //   path: '/trainee/trainer_profile',
-      //   builder: (context, state) => const TraineeTrainerProfilePage(),
-      // ),
+      GoRoute(
+        path: '/trainee/trainer_profile',
+        builder: (context, state) => const TrainerProfile(),
+      ),
     ],
   );
 
@@ -174,6 +178,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
         routerDelegate: _router.routerDelegate,
         routeInformationParser: _router.routeInformationParser,
       ),

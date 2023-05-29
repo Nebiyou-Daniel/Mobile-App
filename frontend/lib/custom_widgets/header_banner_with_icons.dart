@@ -6,53 +6,45 @@ class HeaderBannerWithIcons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Stack(
-          alignment: Alignment.center,
-          children: <Widget>[
-            const HeaderBanner(),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(12, 12, 12, 4),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return Builder(
+      builder: (context) {
+        return SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            children: <Widget>[
+              Stack(
+                alignment: Alignment.center,
                 children: <Widget>[
-                  // A button with an account_circle icon that takes the user to their profile when pressed
-                  FloatingActionButton(
-                    onPressed: () {
-                      print("profile pressed");
-                    },
-                    backgroundColor: Colors.white,
-                    elevation: 4,
-                    mini: true,
-                    child: const Icon(
-                      Icons.account_circle_outlined,
-                      size: 28,
-                      color: Colors.blue,
+                  const HeaderBanner(),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(12, 5, 12, 4),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        // A button with a notification icon that takes the user to their notifications when pressed
+                        TextButton(
+                          onPressed: () {
+                            print("notification pressed");
+                          },
+                          // backgroundColor: Colors.white,
+                          // elevation: 4,
+                          // mini: true,
+                          child: const Icon(
+                            Icons.notifications_none_outlined,
+                            size: 28,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  // A button with a notification icon that takes the user to their notifications when pressed
-                  FloatingActionButton(
-                    onPressed: () {
-                      print("notification pressed");
-                    },
-                    backgroundColor: Colors.white,
-                    elevation: 4,
-                    mini: true,
-                    child: const Icon(
-                      Icons.notifications_none_outlined,
-                      size: 28,
-                      color: Colors.blue,
-                    ),
-                  ),
+                  )
                 ],
               ),
-            )
-          ],
-        ),
-      ],
+            ],
+          ),
+        );
+      }
     );
   }
 }
