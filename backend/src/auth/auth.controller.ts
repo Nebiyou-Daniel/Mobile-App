@@ -54,4 +54,5 @@ export class AuthController {
     ){
         return this.authService.approveNewTrainer(traineeId, dto1, dto2);
     }
+
 }
