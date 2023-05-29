@@ -11,16 +11,73 @@ class TraineeBloc extends Bloc<TraineeEvent, TraineeState> {
   TraineeBloc() : super(TraineeInitial()) {
     ApiDataProvider apiDataProvider = ApiDataProvider();
 
+    // on<TraineeLoadEvent>((event, emit) async {
+    //   emit(TraineeLoading());
+
+    //   try {
+    //     final trainees = await apiDataProvider.getTraineeList();
+    //     emit(TraineeLoadSuccess(trainees: trainees));
+    //   } catch (error) {
+    //     // else emit the error state
+    //     emit(TraineeOperationFailure(error: "Error: ${error.toString()}"));
+    //   }
+    // });
+    on<TraineesListLoadEvent>((event, emit) async {
+      emit(TraineeLoading());
+      await Future.delayed(const Duration(seconds: 3));
+
+      // simulate a fake successfull respponse
+      final List<Trainee> trainees = [
+        Trainee(
+          id: 1,
+          name: "Ahmed",
+          email: "ahmed@gmail.com",
+          phone: "+251988173671",
+          address: "22 iraq street",
+          photo: "This is a fake photo",
+        ),
+        Trainee(
+          id: 2,
+          name: "Abdulaziz",
+          email: "abds@gmail.com",
+          phone: "+251988173671",
+          address: "22 iraq street",
+          photo: "This is a fake photo",
+        ),
+        Trainee(
+          id: 3,
+          name: "Asmaa",
+          email: "asmakd@gmail.com",
+          phone: "+251988173631",
+          address: "22 iraq sreet",
+          photo: "This is a fake photo",
+        )
+      ];
+      emit(trainees.isNotEmpty
+          ? TraineeListLoadSuccess(trainees: trainees)
+          : TraineeListEmpty());
+    });
     on<TraineeLoadEvent>((event, emit) async {
       emit(TraineeLoading());
+      await Future.delayed(const Duration(seconds: 3));
 
-      try {
-        final trainees = await apiDataProvider.getTraineeList();
-        emit(TraineeLoadSuccess(trainees: trainees));
-      } catch (error) {
-        // else emit the error state
-        emit(TraineeOperationFailure(error: "Error: ${error.toString()}"));
-      }
+      emit(TraineeLoadSuccess(
+        trainee: Trainee(
+          id: 1,
+          name: "Ahmed",
+          email: "ahmed@gmail.com",
+          phone: "+251988173671",
+          address: "22 iraq street",
+          photo: "This is a fake photo",
+        ),
+      ));
+    });
+
+    on<TraineeDeleteEvent> ((event, emit) async {
+      emit(TraineeLoading());
+      await Future.delayed(const Duration(seconds: 3));
+
+      // emit(TraineeOperationSuccess());
     });
   }
 }

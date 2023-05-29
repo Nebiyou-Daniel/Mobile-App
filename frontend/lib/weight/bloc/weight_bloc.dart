@@ -27,6 +27,6 @@ class WeightBloc extends Bloc<WeightEvent, WeightState> {
       }
     });
 
-    on<WeightAddEvent>((event, emit) {});
+    on<WeightAddEvent>((event, emit) {});    
   }
 }
