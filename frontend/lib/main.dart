@@ -16,7 +16,7 @@ import 'package:frontend/trainee/trainee.dart';
 
 import 'UI/trainee/traineeProgressPage.dart';
 import 'UI/trainee/traineeHomePage.dart';
-import 'UI/trainee/trainer_choosing_page.dart';
+import 'trainee/views/trainer_choosing_page.dart';
 import 'trainer/views/trainerHomePage.dart';
 import 'UI/trainer/workoutPlanCreationPage.dart';
 

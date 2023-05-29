@@ -47,3 +47,12 @@ class TraineeAddToTraineeListErrorEvent extends TrainerEvent {}
 class TraineeRemoveFromTraineeListSuccessEvent extends TrainerEvent {}
 
 class TraineeRemoveFromTraineeListErrorEvent extends TrainerEvent {}
+
+class TraineeLoadListOfTrainersEvent extends TrainerEvent {}
+
+
+// sorting the trainers by some criteria
+class TraineeSortTrainersEvent extends TrainerEvent {
+  final String criteria;
+  TraineeSortTrainersEvent({required this.criteria});
+}

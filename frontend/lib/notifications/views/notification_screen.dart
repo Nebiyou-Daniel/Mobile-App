@@ -5,8 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/UI/common/loading_paragraph.dart';
 import '../notification.dart';
 
-// this class must have a screen that has a list of notifications that are wrapped inside a gesture detector that when swipe to the right it will mark the notification as done
-
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({Key? key}) : super(key: key);
 
@@ -34,8 +32,16 @@ class NotificationScreen extends StatelessWidget {
                         NotificationMarkAsDoneEvent(notification: notification),
                       );
                     },
-                    child: ListTile(
+                    // an expandable tile
+                    child: ExpansionTile(
                       title: Text(notification.message),
+                      subtitle: const Text("03-03-2021"),
+                      // subtitle: Text(notification.createdAt.toString()),
+                      children: [
+                        Text(notification.message),
+
+                        // Text(notification.createdAt.toString()),
+                      ],
                     ),
                   );
                 },
@@ -46,7 +52,8 @@ class NotificationScreen extends StatelessWidget {
               );
             } else {
               return const Center(
-                child: Text(" Something went wrong while loading your Notifications"),
+                child: Text(
+                    " Something went wrong while loading your Notifications"),
               );
             }
           },

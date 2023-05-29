@@ -3,6 +3,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../../trainee/model/trainee_model.dart';
+import '../model/trainer_model.dart';
 
 abstract class TrainerState extends Equatable {}
 
@@ -114,6 +115,33 @@ class TraineeRemoveFromTraineeListError extends TrainerState {
   final String error;
 
   TraineeRemoveFromTraineeListError({required this.error});
+
+  @override
+  List<Object?> get props => [];
+}
+
+
+class TrainerListLoading extends TrainerState {
+  @override
+  List<Object?> get props => [];
+}
+
+
+class TrainerListLoadingSuccess extends TrainerState {
+  final List<Trainer> traineeList;
+  final String criteria;
+
+  TrainerListLoadingSuccess({required this.traineeList, this.criteria = "None"});
+
+  @override
+  List<Object?> get props => [];
+}
+
+
+class TrainerListLoadingError extends TrainerState {
+  final String message;
+
+  TrainerListLoadingError({required this.message});
 
   @override
   List<Object?> get props => [];

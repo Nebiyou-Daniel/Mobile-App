@@ -19,15 +19,14 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
       }
     });
 
-
-    on <NotificationMarkAsDoneEvent>((event, emit) async {
+    on<NotificationMarkAsDoneEvent>((event, emit) async {
       try {
         await apiDataProvidor.markNotificationAsDone(event.notification);
-        emit(NotificationsLoading());
+        // emit(NotificationsLoading());
         final notifications = await apiDataProvidor.getNotifications();
-        emit(NotificationsLoadedSuccess(notifications: notifications));
+        // emit(NotificationsLoadedSuccess(notifications: notifications));
       } catch (e) {
-        emit(NotificationsLoadedError(message: e.toString()));
+        // emit(NotificationsLoadedError(message: e.toString()));
       }
     });
   }

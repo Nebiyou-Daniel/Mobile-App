@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../trainee/model/trainee_model.dart';
 import '../../trainer/bloc/trainer_state.dart';
 import '../data_provider/api_data_providor.dart';
+import '../model/trainer_model.dart';
 import 'trainer_event.dart';
 
 class TrainerBloc extends Bloc<TrainerEvent, TrainerState> {
@@ -49,6 +50,71 @@ class TrainerBloc extends Bloc<TrainerEvent, TrainerState> {
         emit(TraineeRemoveFromTraineeListError(error: error.toString()));
       }
     });
+    on<TraineeLoadListOfTrainersEvent>((event, emit) async {
+      emit(TrainerListLoading());
+      await Future.delayed(const Duration(seconds: 3));
+
+      // emit a fake list of trainers
+      final List<Trainer> trainers = [
+        Trainer(
+          name: "Ahmed",
+          speciality: "Fitness",
+          rating: 4.5,
+          numberOfTrainees: 10,
+        ),
+        Trainer(
+          name: "Abdulaziz",
+          speciality: "Fitness",
+          rating: 4.5,
+          numberOfTrainees: 10,
+        ),
+        Trainer(
+          name: "Robera",
+          speciality: "Weight loss",
+          rating: 4.5,
+          numberOfTrainees: 10,
+        ),
+        Trainer(
+          name: "Abebe",
+          speciality: " Weight gain",
+          rating: 4.5,
+          numberOfTrainees: 10,
+        ),
+        Trainer(
+          name: "Abdulaziz",
+          speciality: "Fitness",
+          rating: 4.5,
+          numberOfTrainees: 10,
+        ),
+        Trainer(
+          name: "Asmaa",
+          speciality: "Fitness",
+          rating: 4.5,
+          numberOfTrainees: 10,
+        ),
+        Trainer(
+          name: "Ahmed",
+          speciality: "Fitness",
+          rating: 4.5,
+          numberOfTrainees: 10,
+        ),
+        Trainer(
+          name: "Abdulaziz",
+          speciality: "Fitness",
+          rating: 4.5,
+          numberOfTrainees: 10,
+        ),
+        Trainer(
+          name: "Asmaa",
+          speciality: "Fitness",
+          rating: 4.5,
+          numberOfTrainees: 10,
+        ),
+      ];
+      emit(trainers.isNotEmpty
+          ? TrainerListLoadingSuccess(traineeList: trainers)
+          : TraineeListEmpty());
+    });
 
     // used in the trainer notifications for new trainee add me requests
     on<TraineeAddToTraineeListSuccessEvent>((event, emit) async {
@@ -65,6 +131,70 @@ class TrainerBloc extends Bloc<TrainerEvent, TrainerState> {
 
     on<TraineeRemoveFromTraineeListErrorEvent>((event, emit) async {
       // TODO: implement event handler
+    });
+
+    // sorting the trainee list
+    on<TraineeSortTrainersEvent>((event, emit) async {
+      // emit a loading state and request an api call with sorting parameters
+      emit(TrainerListLoading());
+      await Future.delayed(const Duration(seconds: 3));
+      final List<Trainer> trainers = [
+        Trainer(
+          name: "Ahmed",
+          speciality: "Fitness",
+          rating: 4.5,
+          numberOfTrainees: 10,
+        ),
+        Trainer(
+          name: "Abdulaziz",
+          speciality: "Fitness",
+          rating: 4.5,
+          numberOfTrainees: 10,
+        ),
+        Trainer(
+          name: "Robera",
+          speciality: "Weight loss",
+          rating: 4.5,
+          numberOfTrainees: 10,
+        ),
+        Trainer(
+          name: "Abebe",
+          speciality: " Weight gain",
+          rating: 4.5,
+          numberOfTrainees: 10,
+        ),
+        Trainer(
+          name: "Abdulaziz",
+          speciality: "Fitness",
+          rating: 4.5,
+          numberOfTrainees: 10,
+        ),
+        Trainer(
+          name: "Asmaa",
+          speciality: "Fitness",
+          rating: 4.5,
+          numberOfTrainees: 10,
+        ),
+        Trainer(
+          name: "Ahmed",
+          speciality: "Fitness",
+          rating: 4.5,
+          numberOfTrainees: 10,
+        ),
+        Trainer(
+          name: "Abdulaziz",
+          speciality: "Fitness",
+          rating: 4.5,
+          numberOfTrainees: 10,
+        ),
+        Trainer(
+          name: "Asmaa",
+          speciality: "Fitness",
+          rating: 4.5,
+          numberOfTrainees: 10,
+        ),
+      ];
+      emit(TrainerListLoadingSuccess(traineeList: trainers, criteria: event.criteria));
     });
   }
 }
