@@ -3,6 +3,7 @@ import { EditTrainerDto } from './dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { PasswordUpdateDto } from './dto/passwordUpdate.dto';
 import * as argon from 'argon2'
+import { Trainee } from '@prisma/client';
 
 
 @Injectable()
@@ -68,5 +69,35 @@ export class TrainerService {
                 id: trainerId
             }
         })
+    }
+    async getMyTrainees(trainerId: number){
+
+        const trainees = await this.prisma.trainee.findMany({
+            where: {
+                trainerId: trainerId,
+            },
+            select: {
+                id: true,
+                fullName: true,
+                email: true,
+                bio: true,
+                phoneNumber: true
+            }
+        });
+        return trainees;
+    }
+
+    async removeTraineeById(traineeId: number){
+        const trainee = await this.prisma.trainee.update({
+            where: {
+                id: traineeId,
+            },
+            data: {
+                trainerId: null,
+            }
+        });
+        delete trainee.password;
+
+        return trainee;        
     }
 }

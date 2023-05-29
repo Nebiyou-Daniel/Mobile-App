@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class CustomDatePicker extends StatelessWidget {
-  const CustomDatePicker(this.action, {super.key});
 
   final String action;
   final double defaultPadding = 10.0;
+  const CustomDatePicker(this.action, {super.key});
 
   void taskReader(BuildContext context) {
     showDialog(

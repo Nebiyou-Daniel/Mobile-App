@@ -1,7 +1,4 @@
-import '../../User/Model/user_profile.dart';
-
 abstract class AuthEvent {}
-
 
 class AuthInitialEvent extends AuthEvent {}
 
@@ -30,16 +27,18 @@ class UserSignUpEvent extends AuthEvent {
 }
 
 // logout
-class UserLogoutEvent extends AuthEvent {}
+class UserLogoutEvent extends AuthEvent {
+  UserLogoutEvent();
+}
 
 //delete account
 class UserDeleteAccountEvent extends AuthEvent {}
 
 // user login success
 class UserLoginSuccessEvent extends AuthEvent {
-  final User user;
+  final String role;
 
-  UserLoginSuccessEvent({required this.user});
+  UserLoginSuccessEvent({required this.role});
 }
 
 // user login error
@@ -51,9 +50,9 @@ class UserLoginErrorEvent extends AuthEvent {
 
 // user sign up success
 class UserSignUpSuccessEvent extends AuthEvent {
-  final User user;
+  final String role;
 
-  UserSignUpSuccessEvent({required this.user});
+  UserSignUpSuccessEvent({required this.role});
 }
 
 // user sign up error

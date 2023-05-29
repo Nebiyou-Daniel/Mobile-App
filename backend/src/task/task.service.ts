@@ -10,6 +10,7 @@ export class TaskService {
         const task = await this.prisma.task.create({
             data: {
                 trainerId,
+                traineeId: dto.traineeId,
                 ...dto
             }
         })
