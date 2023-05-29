@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Patch, UseGuards } from '@nestjs/common';
 import { JwtGuard } from 'src/auth/guard';
 import { TrainerService } from './trainer.service';
-import { GetTrainer } from 'src/auth/decorator';
+import { GetTrainee, GetTrainer } from 'src/auth/decorator';
 import { Trainer } from '@prisma/client';
 import { EditTrainerDto } from './dto';
 import { PasswordUpdateDto } from './dto/passwordUpdate.dto';
@@ -14,6 +14,16 @@ export class TrainerController {
     @Get('me')
     getMe(@GetTrainer() trainer: Trainer){ 
         return trainer;
+    }
+
+    @Get('/myTrainees')
+    getMyTrainees(@GetTrainer('id') trainerId: number){
+        return this.trainerService.getMyTrainees(trainerId);
+    }
+    
+    @Patch('/removeTrainee')
+    removeTraineeById(@GetTrainee('id') traineeId: number){
+        return this.trainerService.removeTraineeById(traineeId);
     }
 
     @Patch('/profile')
