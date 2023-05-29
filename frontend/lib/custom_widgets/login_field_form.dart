@@ -44,7 +44,7 @@ class LoginFormFieldState extends State<LoginFormField> {
     if (_loginformKey.currentState!.validate()) {
     final AuthBloc bloc = BlocProvider.of<AuthBloc>(context);
 
-      bloc.add(UserLoginEvent(
+      bloc.add(AuthLoginEvent(
         email: _emailController.text,
         password: _passwordController.text,
       ));

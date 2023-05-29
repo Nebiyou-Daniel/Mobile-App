@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+
 import 'package:go_router/go_router.dart';
 
 import '../../custom_widgets/bottom_navigation.dart';
 import '../../custom_widgets/header_banner_with_icons.dart';
+
 
 
 class TrainerProfile extends StatefulWidget {
@@ -22,14 +24,11 @@ class _TrainerProfileState extends State<TrainerProfile> {
   String trainerPhoneNo = "+25194567823";
   String image = "https://picsum.photos/200";
 
-
   final reviews =[{'name': 'abebe', 'review':'this is the review part', 'rate': '3'},
   {'name': 'chane', 'review':'this is the review part', 'rate': '2'},
   {'name': 'brad', 'review':'this is the review part', 'rate': '5'},
   {'name': 'john', 'review':'this is the review part', 'rate': '4'},];
-  
 
-  
   void updatePicture(){
     print('update picture clicked.');
   }
@@ -93,6 +92,7 @@ class _TrainerProfileState extends State<TrainerProfile> {
         );
       },
       );
+
   }  
 
 
@@ -286,6 +286,8 @@ class _TrainerProfileState extends State<TrainerProfile> {
            
             );
       }
+
+
     );
   }
 }

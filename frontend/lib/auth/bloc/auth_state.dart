@@ -1,6 +1,4 @@
 import 'package:equatable/equatable.dart';
-// import user profile
-import '../../User/Model/user_profile.dart';
 
 abstract class AuthState extends Equatable {}
 
@@ -35,8 +33,8 @@ class AuthLoggingIn extends AuthState {
 
 // login success
 class AuthLoginSuccess extends AuthState {
-  final User user;
-  AuthLoginSuccess({required this.user});
+  final String role;
+  AuthLoginSuccess({required this.role});
 
   @override
   List<Object?> get props => [];
@@ -60,8 +58,8 @@ class AuthSigningUp extends AuthState {
 
 // sign up success
 class AuthSignupSuccess extends AuthState {
-  final User user;
-  AuthSignupSuccess({required this.user});
+  final role;
+  AuthSignupSuccess({required this.role});
 
   @override
   List<Object?> get props => [];

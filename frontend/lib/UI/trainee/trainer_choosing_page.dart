@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+
 
 class TrainerChoosingPage extends StatefulWidget {
   const TrainerChoosingPage({super.key});
@@ -11,6 +13,7 @@ class TrainerChoosingPage extends StatefulWidget {
 }
 
 class _TrainerChoosingPageState extends State<TrainerChoosingPage> {
+
   final trainers = [{"name": "abebe", "speciality": "blabla", "rating": "4", "numberOfTrainees": "12"},
     {"name": "abebe", "speciality": "blabla", "rating": "3", "numberOfTrainees": "14" },
     {"name": "chala", "speciality": "blabla", "rating": "5", "numberOfTrainees": "9" },
