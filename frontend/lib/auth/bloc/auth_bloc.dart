@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:frontend/auth/bloc/auth_event.dart';
 import 'package:frontend/auth/bloc/auth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,11 +41,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       // get the id of the currently loggedin user from the shared preferences
       // String? userId = await sharedPrefDataProvider.getUserId();
       // if (userId != null) {
-        // send a request to the server to logout the user
-        // await apiDataProvider.logout(userId: userId);
-        // emit(AuthLogoutSuccess());
+      // send a request to the server to logout the user
+      // await apiDataProvider.logout(userId: userId);
+      // emit(AuthLogoutSuccess());
       // } else {
-        // emit(AuthLogoutError());
+      // emit(AuthLogoutError());
       // }
     });
 

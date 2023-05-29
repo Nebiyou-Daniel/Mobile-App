@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frontend/Custom_Widgets/header_banner.dart';
-import 'package:frontend/Custom_Widgets/signup_field_form.dart';
+import 'package:frontend/custom_widgets/header_banner.dart';
+import 'package:frontend/custom_widgets/signup_field_form.dart';
 import 'package:go_router/go_router.dart';
 import '../../auth/bloc/auth_bloc.dart';
 import '../../auth/bloc/auth_event.dart';
@@ -38,12 +38,19 @@ class SignUpPage extends StatelessWidget {
   }
 }
 
-class SignupHandler extends StatelessWidget {
+class SignupHandler extends StatefulWidget {
   const SignupHandler({super.key});
   static const signUpFieldForm = SignUpFieldForm();
   void navigateToPage(BuildContext context, String route) {
     context.go(route);
   }
+
+  @override
+  State<SignupHandler> createState() => _SignupHandlerState();
+}
+
+class _SignupHandlerState extends State<SignupHandler> {
+  static const signUpFieldForm = SignUpFieldForm();
 
   @override
   Widget build(BuildContext context) {
@@ -90,5 +97,9 @@ class SignupHandler extends StatelessWidget {
     }
 
     return signUpFieldForm;
+  }
+  
+  void navigateToPage(BuildContext context, String s) {
+    context.go(s);
   }
 }
