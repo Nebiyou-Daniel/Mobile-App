@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../Theme/bloc/theme_bloc.dart';
-import '../../Theme/bloc/theme_event.dart';
+import '../../theme/bloc/theme_bloc.dart';
+import '../../theme/bloc/theme_event.dart';
 import '../../custom_widgets/header_banner_with_icons.dart';
 
 class Settings extends StatelessWidget {
