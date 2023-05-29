@@ -3,6 +3,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { EditTraineeDto } from './dto';
 import { PasswordUpdateDto } from './dto/passwordUpdate.dto';
 import * as argon from 'argon2'
+import { NewTrainerDto } from './dto/new-trainer.dto';
 
 
 @Injectable()
@@ -69,5 +70,47 @@ export class TraineeService {
                 id: traineeId
             }
         })
+    }
+
+    async newTrainer(traineeId: number, dto: NewTrainerDto){
+        const trainee = await this.prisma.trainee.update({
+            where: {
+                id: traineeId,
+            },
+            data: {
+                ...dto,
+            }
+        });
+        delete trainee.password;
+
+        return trainee;
+    }
+
+    async getMyTrainerById(traineeId: number){
+        const trainee = await this.prisma.trainee.findFirst({
+            where: {
+                id: traineeId,
+            },
+            select: {
+                id: true,
+                trainerId: true
+            }
+        });
+
+        return trainee;
+    }
+
+    async removeTrainer(traineeId: number){
+        const trainee = await this.prisma.trainee.update({
+            where: {
+                id: traineeId,
+            },
+            data: {
+                trainerId: null,
+            }
+        });
+        delete trainee.password;
+
+        return trainee;        
     }
 }
