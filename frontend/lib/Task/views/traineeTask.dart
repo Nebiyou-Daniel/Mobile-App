@@ -122,7 +122,7 @@ class DatePicker extends StatelessWidget {
                   ),
                   const Padding(padding: EdgeInsets.all(10.0)),
                   if (taskBlocState is TaskLoading)
-                    const LoadingParagraphWidget(numberOfLines: 3)
+                    const LoadingParagraphWidget(numberOfLines: 3, message: "Loading task details.",)
                   else if (taskBlocState is TaskLoadedSuccessfully)
                     Text(taskBlocState.task.description)
                   else if (taskBlocState is TaskLoadingError)

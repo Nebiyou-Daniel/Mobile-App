@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/UI/common/loading_paragraph.dart';
 import 'package:go_router/go_router.dart';
-import '../../Task/task.dart';
-import '../../Task/views/traineeTask.dart';
-import '../../Task/views/trainerTask.dart';
-import '../../custom_widgets/date_picker.dart';
-import '../../custom_widgets/line_chart.dart';
 
 import 'package:frontend/auth/auth.dart';
 import 'package:frontend/trainee/trainee.dart';
@@ -23,9 +19,9 @@ class TrainerHomePage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthBloc>(create: (context) => AuthBloc()),
-        BlocProvider<ThemeBloc>(create: (context) => ThemeBloc()),
+        // BlocProvider<ThemeBloc>(create: (context) => ThemeBloc()),
         BlocProvider<TraineeBloc>(create: (context) => TraineeBloc()),
-        BlocProvider<WeightBloc>(create: (context) => WeightBloc()),
+        // BlocProvider<WeightBloc>(create: (context) => WeightBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -33,13 +29,9 @@ class TrainerHomePage extends StatelessWidget {
         home: Scaffold(
           body: SingleChildScrollView(
             child: Column(
-              children: <Widget>[
-                const HeaderBanner(),
-                const ListOfTrainees(),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width - 40,
-                  // child: const TaskDatePickerHandeler(),
-                )
+              children: const <Widget>[
+                HeaderBanner(),
+                ListOfTrainees(),
               ],
             ),
           ),
@@ -56,14 +48,19 @@ class ListOfTrainees extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<TraineeBloc, TraineeState>(
       builder: (context, state) {
+        final traineeBloc = BlocProvider.of<TraineeBloc>(context);
+        print(traineeBloc.state);
+
         // if the state is loading, show a progress indicator
         if (state is TraineeLoading) {
+          print("Trainees loading");
           return const Center(
-            child: CircularProgressIndicator(),
+            child: LoadingParagraphWidget(numberOfLines: 13, message: "Loading your list of trainees... ",),
           );
         }
         // if the trainees are loaded successfully
-        else if (state is TraineeLoadSuccess) {
+        else if (state is TraineeListLoadSuccess) {
+          // add an event to the bloc to load the trainees
           return ListView.builder(
             shrinkWrap: true,
             itemCount: state.trainees.length,
@@ -72,7 +69,7 @@ class ListOfTrainees extends StatelessWidget {
                 title: Text(state.trainees[index].name),
                 subtitle: Text(state.trainees[index].email),
                 onTap: () {
-                  context.go('/trainee/${state.trainees[index].id}');
+                  context.push('/traineedetail/${state.trainees[index].id}');
                 },
               );
             },
@@ -80,25 +77,42 @@ class ListOfTrainees extends StatelessWidget {
         }
         // The loading failed
         else if (state is TraineeOperationFailure) {
+          print("Trainees operation");
           return const Center(
             child: Text('👀 Failed to load trainees'),
           );
+        } else if (state is TraineeListEmpty) {
+          print("Trainees list empty");
+          return Center(
+            // no trainees
+            child: Column(
+              children: const [
+                Text(
+                  "🏜 ",
+                  style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  'Oh, you poor thing... You have no Trainees',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey),
+                ),
+              ],
+            ),
+          );
+        } else {
+          print("Trainees ");
+          traineeBloc.add(TraineesListLoadEvent());
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         }
-        return const Center(
-          child: Text('🏜 No trainees'),
-        );
       },
     );
   }
 }
 
-
-
-// class TaskDatePickerHandeler extends StatelessWidget {
-//   const TaskDatePickerHandeler({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return const TrainerTask();
-//   }
-// }

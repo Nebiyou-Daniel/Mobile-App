@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/notifications/Model/notification_model.dart';
+import 'package:frontend/notifications/views/notification_screen.dart';
 import 'package:frontend/theme/bloc/theme_bloc.dart';
 import 'package:frontend/auth/bloc/auth_bloc.dart';
 import 'package:frontend/UI/common/splashScreen.dart';
-import 'package:frontend/UI/common/about.dart';
 import 'package:frontend/UI/trainee/trainee_profile.dart';
 import 'package:frontend/UI/common/login.dart';
 import 'package:frontend/UI/common/settings.dart';
@@ -11,11 +12,12 @@ import 'package:frontend/UI/common/signup.dart';
 import 'package:frontend/trainee/bloc/trainee_bloc.dart';
 import 'package:frontend/trainer/bloc/trainer_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:frontend/trainee/trainee.dart';
 
 import 'UI/trainee/traineeProgressPage.dart';
 import 'UI/trainee/traineeHomePage.dart';
 import 'UI/trainee/trainer_choosing_page.dart';
-import 'UI/trainer/trainerHomePage.dart';
+import 'trainer/views/trainerHomePage.dart';
 import 'UI/trainer/workoutPlanCreationPage.dart';
 
 void main() {
@@ -45,8 +47,13 @@ class MyApp extends StatelessWidget {
         builder: (context, state) => const Settings(),
       ),
       GoRoute(
-        path: '/traineeProfile/:id',
-        builder: (context, state) => const TraineeProfile(),
+        path: '/traineedetail/:id',
+        pageBuilder: (context, state) {
+          final id = state.params['id'];
+          return MaterialPage<void>(
+            child: TraineeDetail(id: id!),
+          );
+        },
       ),
       GoRoute(
         path: '/traineeProgressPage',
@@ -101,10 +108,10 @@ class MyApp extends StatelessWidget {
       //   path: '/trainer/profile',
       //   builder: (context, state) => const TrainerProfilePage(),
       // ),
-      // GoRoute(
-      //   path: '/trainer/notifications',
-      //   builder: (context, state) => const TrainerNotificationsPage(),
-      // ),
+      GoRoute(
+        path: '/notifications',
+        builder: (context, state) => const NotificationScreen(),
+      ),
 
       // // trainee routes
       GoRoute(
@@ -173,11 +180,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
 
 
 

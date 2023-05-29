@@ -89,7 +89,7 @@ class SignUpFieldFormState extends State<SignUpFieldForm> {
 
     if (_formKey.currentState!.validate()) {
       bloc.add(
-        UserSignUpEvent(
+        AuthSignUpEvent(
             name: _fullNameController.text,
             username: _userNameController.text,
             email: _emailController.text,

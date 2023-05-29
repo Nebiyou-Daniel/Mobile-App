@@ -7,21 +7,24 @@ import '../Model/task_model.dart';
 import '../task.dart';
 
 class TrainerTask extends StatelessWidget {
-  const TrainerTask({super.key});
+  final int id;
+
+  const TrainerTask({Key? key, required this.id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => TaskBloc(),
-      child: const DatePicker(),
+      child: DatePicker(userID: id),
     );
   }
 }
 
 class DatePicker extends StatelessWidget {
   final double defaultPadding = 10.0;
+  final int userID;
 
-  const DatePicker({Key? key});
+  const DatePicker({Key? key, required this.userID}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +46,7 @@ class DatePicker extends StatelessWidget {
           firstDate: DateTime(2020),
           lastDate: DateTime(2025),
           onDateChanged: (DateTime date) {
-            taskBloc.add(TaskLoadingEvent(date: date, userId: -1));
+            taskBloc.add(TaskLoadingEvent(date: date, userId: userID));
             showDialog(
                 context: context,
                 builder: (BuildContext context) {
@@ -141,7 +144,7 @@ class DatePicker extends StatelessWidget {
                           ),
                           const Padding(padding: EdgeInsets.all(10.0)),
                           if (taskBlocState is TaskLoading)
-                            const LoadingParagraphWidget(numberOfLines: 3)
+                            const LoadingParagraphWidget(numberOfLines: 3, message: "Loading Task Description",)
                           else if (taskBlocState is TaskLoadedSuccessfully)
                             TextField(
                               controller: TextEditingController(

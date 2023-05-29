@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../Task/task.dart';
+
 import '../../Task/views/traineeTask.dart';
-import '../../custom_widgets/date_picker.dart';
-import '../../custom_widgets/line_chart.dart';
 
 import 'package:frontend/auth/auth.dart';
 import 'package:frontend/trainee/trainee.dart';
 import 'package:frontend/Theme/theme.dart';
 
 import '../../Custom_Widgets/header_banner.dart';
+import '../../weight/views/weight_chart.dart';
 import '../../weight/weight.dart';
 
 // import 'package:fl_chart/fl_chart.dart' as charts;
 class TraineeHomePage extends StatelessWidget {
-  const TraineeHomePage({Key? key}) : super(key: key);
+  const TraineeHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +29,29 @@ class TraineeHomePage extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: "Workout Warrior",
         home: Scaffold(
+          appBar: AppBar(
+            title: const Text("Workout Warrior"),
+            actions: <Widget>[
+              IconButton(
+                icon: const Icon(Icons.notifications),
+                onPressed: () {
+                  GoRouter.of(context).push('/notifications');
+                },
+              ),
+            ],
+            leading: PopupMenuButton(
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  child: TextButton(
+                    onPressed: () {
+                      BlocProvider.of<AuthBloc>(context).add(AuthLogoutEvent());
+                    },
+                    child: const Text("Logout"),
+                  ),
+                ),
+              ],
+            ),
+          ),
           body: SingleChildScrollView(
             child: Column(
               children: <Widget>[
@@ -46,10 +68,7 @@ class TraineeHomePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
-                    width: MediaQuery.of(context).size.width - 40,
-                    height: 180,
-                    child: const WeightChartHandeler()),
+                const SizedBox(height: 180, child: WeightChartHandeler(id: -1)),
                 const Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Text(
@@ -71,42 +90,6 @@ class TraineeHomePage extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class WeightChartHandeler extends StatelessWidget {
-  const WeightChartHandeler({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final weightBloc = context.watch<WeightBloc>();
-    final weightBlocState = weightBloc.state;
-
-    if (weightBlocState is WeightInitial) {
-      weightBloc.add(WeightLoadingEvent());
-      return const SizedBox();
-    } else if (weightBlocState is WeightLoading) {
-      return const LinearProgressIndicator(
-        valueColor: AlwaysStoppedAnimation<Color>(Colors.grey),
-        backgroundColor: Color.fromARGB(196, 158, 158, 158),
-        minHeight: 180,
-        semanticsLabel: "Loading your weight data",
-      );
-    } else if (weightBlocState is WeightLoadedSuccessfully) {
-      return WeightLineChart(weightData: weightBlocState.weightData);
-    }
-    if (weightBlocState is WeightLoadingError) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        final snackBar = SnackBar(
-          content: Text(weightBlocState.error),
-          backgroundColor: Colors.red,
-          behavior: SnackBarBehavior.floating,
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      });
-    }
-
-    return Container();
   }
 }
 

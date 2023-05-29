@@ -2,14 +2,14 @@ abstract class AuthEvent {}
 
 class AuthInitialEvent extends AuthEvent {}
 
-class UserLoginEvent extends AuthEvent {
+class AuthLoginEvent extends AuthEvent {
   final String email;
   final String password;
 
-  UserLoginEvent({required this.email, required this.password});
+  AuthLoginEvent({required this.email, required this.password});
 }
 
-class UserSignUpEvent extends AuthEvent {
+class AuthSignUpEvent extends AuthEvent {
   final String name;
   final String username;
   final String email;
@@ -17,7 +17,7 @@ class UserSignUpEvent extends AuthEvent {
   final String password;
   final String role;
 
-  UserSignUpEvent(
+  AuthSignUpEvent(
       {required this.name,
       required this.username,
       required this.email,
@@ -27,57 +27,57 @@ class UserSignUpEvent extends AuthEvent {
 }
 
 // logout
-class UserLogoutEvent extends AuthEvent {
-  UserLogoutEvent();
+class AuthLogoutEvent extends AuthEvent {
+  AuthLogoutEvent();
 }
 
 //delete account
-class UserDeleteAccountEvent extends AuthEvent {}
+class AuthDeleteAccountEvent extends AuthEvent {}
 
-// user login success
-class UserLoginSuccessEvent extends AuthEvent {
+// Auth login success
+class AuthLoginSuccessEvent extends AuthEvent {
   final String role;
 
-  UserLoginSuccessEvent({required this.role});
+  AuthLoginSuccessEvent({required this.role});
 }
 
-// user login error
-class UserLoginErrorEvent extends AuthEvent {
+// Auth login error
+class AuthLoginErrorEvent extends AuthEvent {
   final String error;
 
-  UserLoginErrorEvent({required this.error});
+  AuthLoginErrorEvent({required this.error});
 }
 
-// user sign up success
-class UserSignUpSuccessEvent extends AuthEvent {
+// Auth sign up success
+class AuthSignUpSuccessEvent extends AuthEvent {
   final String role;
 
-  UserSignUpSuccessEvent({required this.role});
+  AuthSignUpSuccessEvent({required this.role});
 }
 
-// user sign up error
-class UserSignUpErrorEvent extends AuthEvent {
+// Auth sign up error
+class AuthSignUpErrorEvent extends AuthEvent {
   final String error;
 
-  UserSignUpErrorEvent({required this.error});
+  AuthSignUpErrorEvent({required this.error});
 }
 
-// user logout success
-class UserLogoutSuccessEvent extends AuthEvent {}
+// Auth logout success
+class AuthLogoutSuccessEvent extends AuthEvent {}
 
-// user logout error
-class UserLogoutErrorEvent extends AuthEvent {
+// Auth logout error
+class AuthLogoutErrorEvent extends AuthEvent {
   final String error;
 
-  UserLogoutErrorEvent({required this.error});
+  AuthLogoutErrorEvent({required this.error});
 }
 
-// user delete account success
-class UserDeleteAccountSuccessEvent extends AuthEvent {}
+// Auth delete account success
+class AuthDeleteAccountSuccessEvent extends AuthEvent {}
 
-// user delete account error
-class UserDeleteAccountErrorEvent extends AuthEvent {
+// Auth delete account error
+class AuthDeleteAccountErrorEvent extends AuthEvent {
   final String error;
 
-  UserDeleteAccountErrorEvent({required this.error});
+  AuthDeleteAccountErrorEvent({required this.error});
 }
