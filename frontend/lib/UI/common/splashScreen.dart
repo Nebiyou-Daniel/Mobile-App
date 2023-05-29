@@ -59,17 +59,17 @@ class SplashScreenState extends State<SplashScreen> {
                     ),
                   ),
                   Container(height: 50),
-                  Expanded(
-                    child: ClipRect(
-                      // make borders rounded
-                      clipBehavior: Clip.hardEdge,
-                      child: Container(
-                        color: Colors.black,
-                        child: Image.asset(
-                          'assets/images/bear_nobg.png',
-                          fit: BoxFit.contain,
-                        ),
+                  const Expanded(
+                    child: CircleAvatar(
+                      radius: 200,
+                      backgroundColor: Colors.transparent,
+                      //make the background photo centered
+                      child: Image(
+                        image: AssetImage('assets/images/bear_nobg.png'),
+                        fit: BoxFit.cover,
+                        width: 280,
                       ),
+                      
                     ),
                   ),
 

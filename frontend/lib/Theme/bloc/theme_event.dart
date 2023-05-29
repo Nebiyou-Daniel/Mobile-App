@@ -13,5 +13,3 @@ class ThemeChangedEvent extends ThemeEvent {
   @override
   List<Object> get props => [isDarkThemeOn];
 }
-
-
