@@ -38,15 +38,12 @@ class SignUpPage extends StatelessWidget {
   }
 }
 
-class SignupHandler extends StatefulWidget {
+class SignupHandler extends StatelessWidget {
   const SignupHandler({super.key});
-
-  @override
-  State<SignupHandler> createState() => _SignupHandlerState();
-}
-
-class _SignupHandlerState extends State<SignupHandler> {
   static const signUpFieldForm = SignUpFieldForm();
+  void navigateToPage(BuildContext context, String route) {
+    context.go(route);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,12 +58,22 @@ class _SignupHandlerState extends State<SignupHandler> {
     }
 
     if (state is AuthSignupSuccess) {
-      if (state.user.role == "trainer") {
-        context.go("/trainer/homePage");
-        // return const Text("Trainer Signup Success");
-      } else if (state.user.role == "trainee") {
-        context.go("/trainee/homePage");
-        // return const Text("Trainee Signup Success");
+      if (state.role == "admin") {
+        // WidgetsBinding.instance.addPostFrameCallback((_) {
+        //   navigateToPage(context, "/admin/homePage");
+        // });
+        context.go("/admin/homePage");
+        return const SizedBox();
+      } else if (state.role == "trainer") {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          navigateToPage(context, "/trainer/homePage");
+        });
+        return const SizedBox();
+      } else if (state.role == "trainee") {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          navigateToPage(context, "/trainee/homePage");
+        });
+        return const SizedBox();
       }
     }
 

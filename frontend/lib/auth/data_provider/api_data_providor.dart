@@ -4,8 +4,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' show post, get, put, delete;
 
-import '../../User/Model/user_profile.dart';
-
 class ApiDataProvider {
   ApiDataProvider();
 
@@ -21,12 +19,12 @@ class ApiDataProvider {
       ).timeout(const Duration(seconds: 2));
 
       if (response.statusCode == 200) {
-        return User.fromJson(jsonDecode(response.body));
+        return (response.body);
       } else {
         throw Exception('Failed to login');
       }
     } on TimeoutException {
-      throw Exception('Login request timed out');
+      throw Exception('Login request timed out: Check your Internet Connection.');
     } catch (e) {
       throw Exception('Failed to login: $e');
     }
@@ -57,12 +55,13 @@ class ApiDataProvider {
       ).timeout(const Duration(seconds: 2));
 
       if (response.statusCode == 200) {
-        return User.fromJson(jsonDecode(response.body));
+        return jsonDecode(response.body);
       } else {
         throw Exception('Failed to login: ${response.body}');
       }
     } on TimeoutException {
-      throw Exception('signup request timed out');
+      throw Exception(
+          'signup request timed out, Check your Internet Connection');
     } catch (e) {
       throw Exception('Failed to login: $e');
     }

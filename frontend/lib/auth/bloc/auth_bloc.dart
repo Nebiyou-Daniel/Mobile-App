@@ -1,4 +1,3 @@
-
 import 'package:frontend/auth/bloc/auth_event.dart';
 import 'package:frontend/auth/bloc/auth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,8 +12,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthLoggingIn());
       // ... try logging in
       try {
-        await apiDataProvider.login(
-            email: event.email, password: event.password);
+        // wait 1 second
+        await Future.delayed(const Duration(seconds: 1));
+        // send a mock data
+        emit(AuthLoginSuccess(role: "trainer"));
+
+        // await apiDataProvider.login(email: event.email, password: event.password);
       } catch (error) {
         emit(AuthLoginError(error: error.toString()));
       }
@@ -22,7 +25,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     // login success
     on<UserLoginSuccessEvent>((event, emit) {
-      emit(AuthLoginSuccess(user: event.user));
+      emit(AuthLoginSuccess(role: event.role));
     });
 
     // login Error
@@ -33,6 +36,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     // logging out ...
     on<UserLogoutEvent>((event, emit) {
       emit(AuthLoggingOut());
+      // get the id of the currently loggedin user from the shared preferences
+      // String? userId = await sharedPrefDataProvider.getUserId();
+      // if (userId != null) {
+        // send a request to the server to logout the user
+        // await apiDataProvider.logout(userId: userId);
+        // emit(AuthLogoutSuccess());
+      // } else {
+        // emit(AuthLogoutError());
+      // }
     });
 
     // logout Error
@@ -49,13 +61,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<UserSignUpEvent>((event, emit) async {
       emit(AuthSigningUp());
       try {
-        await apiDataProvider.signUp(
-            name: event.name,
-            username: event.username,
-            email: event.email,
-            phoneNumber: event.phoneNumber,
-            password: event.password,
-            role: event.role);
+        await Future.delayed(const Duration(seconds: 1));
+        // send a mock data for test purpose only
+        emit(AuthSignupSuccess(role: "trainer"));
+        // await apiDataProvider.signUp(
+        //     name: event.name,
+        //     username: event.username,
+        //     email: event.email,
+        //     phoneNumber: event.phoneNumber,
+        //     password: event.password,
+        //     role: event.role);
       } catch (error) {
         emit(AuthSignupError(error: error.toString()));
       }
@@ -63,7 +78,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     // signup Success
     on<UserSignUpSuccessEvent>((event, emit) {
-      emit(AuthSignupSuccess(user: event.user));
+      emit(AuthSignupSuccess(role: event.role));
     });
 
     // signup Error
