@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:frontend/notifications/Model/notification_model.dart';
 import 'package:frontend/notifications/views/notification_screen.dart';
-import 'package:frontend/theme/bloc/theme_bloc.dart';
+import 'package:frontend/Theme/theme.dart';
 
 import 'package:frontend/auth/bloc/auth_bloc.dart';
 import 'package:frontend/UI/common/splashScreen.dart';
@@ -19,7 +19,9 @@ import 'package:frontend/trainee/trainee.dart';
 import 'UI/trainee/traineeProgressPage.dart';
 
 import 'UI/trainee/traineeHomePage.dart';
+import 'UI/trainee/trainee_trainer_detail.dart';
 import 'UI/trainee/trainer_choosing_page.dart';
+import 'UI/trainer/trainer_profile.dart';
 import 'trainer/views/trainerHomePage.dart';
 
 import 'UI/trainer/workoutPlanCreationPage.dart';

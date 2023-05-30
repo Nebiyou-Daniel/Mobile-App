@@ -52,19 +52,19 @@ class TraineePersonalInformation extends StatelessWidget {
                     child: Text(
                       // if the trainee name if of 2 length the initial will be the first letter of firstname plus last name 
                       // else the initial will be the first letter of firstname only
-                      state.trainee.name.length == 2
-                          ? state.trainee.name[0] + state.trainee.name[1]
-                          : state.trainee.name[0],
+                      state.trainees[0].name.length == 2
+                          ? state.trainees[0].name[0] + state.trainees[0].name[1]
+                          : state.trainees[0].name[0],
                       style: const TextStyle(
                         fontSize: 40,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  Text(state.trainee.name),
-                  Text(state.trainee.phone),
-                  Text(state.trainee.email),
-                  Text(state.trainee.address),
+                  Text(state.trainees[0].name),
+                  Text(state.trainees[0].phone),
+                  Text(state.trainees[0].email),
+                  Text(state.trainees[0].address),
                 ],
               ),
             );

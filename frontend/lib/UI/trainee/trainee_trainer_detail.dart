@@ -20,6 +20,9 @@ class _TraineeTrainerDetailState extends State<TraineeTrainerDetail> {
   String trainerBio = "this is trainer bio";
   String trainerPhoneNo = "+25194567823";
   String image = "https://picsum.photos/200";
+    final _editFormKey = GlobalKey<FormState>();
+    final _addFormKey = GlobalKey<FormState>();
+
 
   final reviews =[{'name': 'abebe', 'review':'this is the review part', 'rate': '3'},
   {'name': 'chane', 'review':'this is the review part', 'rate': '2'},
@@ -36,69 +39,84 @@ class _TraineeTrainerDetailState extends State<TraineeTrainerDetail> {
       builder: (BuildContext context) {
         String rate = '0';
         String editedReview = ''; 
-        return AlertDialog(
-          title: const Text('Edit Review'),
-          content: SizedBox(
-            height: 300,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFormField(
-                    initialValue: review['review'],
-                    decoration: const InputDecoration(
-                      border:OutlineInputBorder(),
-                      hintText: "Write your review here.",
-                    ),
-                    onChanged: (text){editedReview = text;},
-                    maxLines: 7,
-                          ),
-                ),
-                  const Padding(padding: EdgeInsets.all(8),
-                  child: Text('Rate Trainer'),),
-                  RatingBar.builder(
-                    initialRating: double.parse(review['rate']!),
-                    itemSize: 15,
-                    minRating: 1,
-                    direction: Axis.horizontal,
-                    allowHalfRating: true,
-                    itemCount: 5,
-                    itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                    itemBuilder: (context, _) => const Icon(
-                      Icons.star,
-                      color: Colors.amber,
-                    ),
-                    onRatingUpdate: (rating) {
-                      rate = rating.toString();
-                    },
-                  )
-              ],
+        return Form(
+          key: _editFormKey,
+          child: AlertDialog(
+            title: const Text('Edit Review'),
+            content: SizedBox(
+              height: 300,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      validator: (value) {
+                        if(value == null || value.trim().isEmpty){
+                          return 'please enter your review.';
+                        }
+                        return null;
+                      },
+                      initialValue: review['review'],
+                      decoration: const InputDecoration(
+                        border:OutlineInputBorder(),
+                        hintText: "Write your review here.",
+                      ),
+                      onChanged: (text){editedReview = text;},
+                      maxLines: 7,
+                            ),
+                  ),
+                    const Padding(padding: EdgeInsets.all(8),
+                    child: Text('Rate Trainer'),),
+                    RatingBar.builder(
+                      initialRating: double.parse(review['rate']!),
+                      itemSize: 15,
+                      minRating: 1,
+                      direction: Axis.horizontal,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                      itemBuilder: (context, _) => const Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      onRatingUpdate: (rating) {
+                        rate = rating.toString();
+                      },
+                    )
+                ],
+              ),
             ),
+            actions: <Widget>[
+              ElevatedButton(
+              child: const Text('Delete'),
+              onPressed: () {
+                setState(() {
+                reviews.removeAt(index);
+                });
+                Navigator.of(context).pop();
+                ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Review Deleted.')));  
+
+                },
+              ),
+              ElevatedButton(
+              child: const Text('Edit'),
+              onPressed: () {
+              if(_editFormKey.currentState!.validate()){  setState(() {
+                reviews.replaceRange(index,index + 1,[{'name': (review['name'])!, 'review': editedReview, 'rate': rate}]);
+                });
+                Navigator.of(context).pop();
+                ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Review Edited.')));  
+              }
+                },
+              ),
+              ElevatedButton(
+              child: const Text('Close'),
+              onPressed: () => Navigator.of(context).pop(),
+              )
+            ],
           ),
-          actions: <Widget>[
-            ElevatedButton(
-            child: const Text('Delete'),
-            onPressed: () {
-              setState(() {
-              reviews.removeAt(index);
-              });
-              Navigator.of(context).pop();
-              },
-            ),
-            ElevatedButton(
-            child: const Text('Edit'),
-            onPressed: () {
-              setState(() {
-              reviews.replaceRange(index,index + 1,[{'name': (review['name'])!, 'review': editedReview, 'rate': rate}]);
-              });
-              Navigator.of(context).pop();
-              },
-            ),
-            ElevatedButton(
-            child: const Text('Close'),
-            onPressed: () => Navigator.of(context).pop(),
-            )
-          ],
         );
       },
       ); 
@@ -110,65 +128,72 @@ class _TraineeTrainerDetailState extends State<TraineeTrainerDetail> {
       builder: (BuildContext context) {
         String rate = '0';
         String review = ''; 
-        return AlertDialog(
-          title: const Text('Write your review.'),
-          content: SizedBox(
-            height: 300,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: "Write your review here.",
-                    ),
-                    validator: (value) {
-                      if(value!.trim() == '' || value.isEmpty){
-                        return 'please enter your review.';
-                      }
-                      return null;
-                    },
-                    onChanged: (text){review = text;},
-                    maxLines: 7,
-                          ),
-                ),
-                  const Padding(padding: EdgeInsets.all(8),
-                  child: Text('Rate Trainer'),),
-                  RatingBar.builder(
-                    initialRating: 0,
-                    itemSize: 15,
-                    minRating: 1,
-                    direction: Axis.horizontal,
-                    allowHalfRating: true,
-                    itemCount: 5,
-                    itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                    itemBuilder: (context, _) => const Icon(
-                      Icons.star,
-                      color: Colors.amber,
-                    ),
-                    onRatingUpdate: (rating) {
-                      rate = rating.toString();
-                    },
-                  )
-              ],
+        return Form(
+          key: _addFormKey,
+          child: AlertDialog(
+            title: const Text('Write your review.'),
+            content: SizedBox(
+              height: 300,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: "Write your review here.",
+                      ),
+                      validator: (value) {
+                        if(value == null || value.trim().isEmpty){
+                          return 'please enter your review.';
+                        }
+                        return null;
+                      },
+                      onChanged: (text){review = text;},
+                      maxLines: 7,
+                            ),
+                  ),
+                    const Padding(padding: EdgeInsets.all(8),
+                    child: Text('Rate Trainer'),),
+                    RatingBar.builder(
+                      initialRating: 0,
+                      itemSize: 15,
+                      minRating: 1,
+                      direction: Axis.horizontal,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                      itemBuilder: (context, _) => const Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      onRatingUpdate: (rating) {
+                        rate = rating.toString();
+                      },
+                    )
+                ],
+              ),
             ),
+            actions: <Widget>[
+              ElevatedButton(
+              child: const Text('Add'),
+              onPressed: () {
+                if(_addFormKey.currentState!.validate()){
+                  setState(() {
+                  reviews.insert(0,{'name': 'chane', 'review': review, 'rate': rate});
+                  });
+                  Navigator.of(context).pop();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Review Added.')));
+                }
+                },
+              ),
+              ElevatedButton(
+              child: const Text('Close'),
+              onPressed: () => Navigator.of(context).pop(),
+              )
+            ],
           ),
-          actions: <Widget>[
-            ElevatedButton(
-            child: const Text('Add'),
-            onPressed: () {
-              setState(() {
-              reviews.insert(0,{'name': 'chane', 'review': review, 'rate': rate});
-              });
-              Navigator.of(context).pop();
-              },
-            ),
-            ElevatedButton(
-            child: const Text('Close'),
-            onPressed: () => Navigator.of(context).pop(),
-            )
-          ],
         );
       },
       ); 
@@ -313,7 +338,7 @@ class _TraineeTrainerDetailState extends State<TraineeTrainerDetail> {
                       padding: const EdgeInsets.all(10),
                       decoration:  BoxDecoration(
                         border: Border.all(),
-                        borderRadius: BorderRadius.circular(10)),
+                        borderRadius: BorderRadius.circular(20)),
                       height: 400,
                       width: 400,
                       child: ListView.builder(
@@ -329,7 +354,7 @@ class _TraineeTrainerDetailState extends State<TraineeTrainerDetail> {
                                   child: Text("${reviews[index]["name"]}"),),
                                 ),
                                 SizedBox(
-                                      width: 400,
+                                      width: 300,
                                       child: 
                                           RatingBarIndicator(
                                             rating: double.parse('${reviews[index]['rate']}'),

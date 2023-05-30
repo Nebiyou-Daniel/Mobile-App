@@ -238,7 +238,7 @@ class _TrainerProfileState extends State<TrainerProfile> {
                                   child: Text("${reviews[index]["name"]}"),),
                                 ),
                                 SizedBox(
-                                      width: 400,
+                                      width: 300,
                                       child: 
                                           RatingBarIndicator(
                                             rating: double.parse('${reviews[index]['rate']}'),
