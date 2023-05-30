@@ -12,6 +12,7 @@ import 'package:frontend/UI/common/login.dart';
 import 'package:frontend/UI/common/settings.dart';
 import 'package:frontend/UI/common/signup.dart';
 import 'package:frontend/trainee/bloc/trainee_bloc.dart';
+import 'package:frontend/trainee/views/trainer_choosing_page.dart';
 import 'package:frontend/trainer/bloc/trainer_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:frontend/trainee/trainee.dart';
@@ -21,7 +22,6 @@ import 'UI/trainee/traineeProgressPage.dart';
 
 import 'UI/trainee/traineeHomePage.dart';
 import 'UI/trainee/trainee_trainer_detail.dart';
-import 'UI/trainee/trainer_choosing_page.dart';
 import 'UI/trainer/trainer_profile.dart';
 import 'trainer/views/trainerHomePage.dart';
 
@@ -143,7 +143,7 @@ class MyApp extends StatelessWidget {
       // ),
       GoRoute(
         path: '/trainee/chooseTrainer',
-        builder: (context, state) => const TrainerChoosingPage(),
+        builder: (context, state) => TrainerChoosingPage(),
       ),
       // GoRoute(
       //   path: '/trainee/notifications',
