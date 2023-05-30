@@ -6,10 +6,12 @@ import '../../Reviews/views/list_of_reviews.dart';
 import '../../trainerHiring/trainer_hiring.dart';
 import '../trainer.dart';
 
+
 class TrainerDetailForTrainee extends StatelessWidget {
   final int id;
 
   const TrainerDetailForTrainee({Key? key, required this.id}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +37,12 @@ class TrainerDetailForTrainee extends StatelessWidget {
           ),
           body: SingleChildScrollView(
               child: Column(children: [
+
                 Text("Trainer $id"),
             // TraineePersonalInformation(id: id),
             // ReviewList(trainerId: id),
             // TrainerHiringButton(id: id),
+
           ])));
     });
   }

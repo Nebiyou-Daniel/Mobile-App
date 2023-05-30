@@ -73,6 +73,7 @@ class LoginFormFieldState extends State<LoginFormField> {
                       "Fill the following information to Login.",
                       softWrap: true,
                     ),
+
                   ),
                 ],
               ),

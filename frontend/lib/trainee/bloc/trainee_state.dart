@@ -77,11 +77,15 @@ class TraineesListLoading extends TraineeState {}
 class TraineesListLoadSuccessEvent extends TraineeState {
   final List<Trainee> trainees;
 
+
   const TraineesListLoadSuccessEvent({required this.trainees});
+
 }
 
 class TraineesListLoadErrorEvent extends TraineeState {
   final String message;
 
+
   const TraineesListLoadErrorEvent({required this.message});
+
 }
