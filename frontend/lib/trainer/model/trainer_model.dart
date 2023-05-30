@@ -1,4 +1,6 @@
 class Trainer {
+  // id
+  final int id;
   final String name;
   final String speciality;
   final double rating;
@@ -7,6 +9,7 @@ class Trainer {
   final String phoneNumber;
 
   Trainer({
+    required this.id,
     required this.name,
     required this.speciality,
     required this.rating,
@@ -18,6 +21,7 @@ class Trainer {
   // from json
   factory Trainer.fromJson(Map<String, dynamic> json) {
     return Trainer(
+      id: json['id'],
       name: json['name'],
       speciality: json['speciality'],
       rating: json['rating'],

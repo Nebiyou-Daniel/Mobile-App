@@ -6,10 +6,10 @@ import '../../Reviews/views/list_of_reviews.dart';
 import '../../trainerHiring/trainer_hiring.dart';
 import '../trainer.dart';
 
-class TraineeDetail extends StatelessWidget {
-  final String id;
+class TrainerDetailForTrainee extends StatelessWidget {
+  final int id;
 
-  const TraineeDetail({Key? key, required this.id}) : super(key: key);
+  const TrainerDetailForTrainee({Key? key, required this.id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +35,10 @@ class TraineeDetail extends StatelessWidget {
           ),
           body: SingleChildScrollView(
               child: Column(children: [
-            TraineePersonalInformation(id: int.parse(id)),
-            ReviewList(trainerId: int.parse(id)),
-            TrainerHiringButton(id: int.parse(id)),
+                Text("Trainer $id"),
+            // TraineePersonalInformation(id: id),
+            // ReviewList(trainerId: id),
+            // TrainerHiringButton(id: id),
           ])));
     });
   }

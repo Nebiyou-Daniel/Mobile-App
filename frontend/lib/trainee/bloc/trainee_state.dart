@@ -10,7 +10,6 @@ class TraineeState extends Equatable {
   List<Object> get props => [];
 }
 
-
 class TraineeInitial extends TraineeState {}
 
 class TraineeLoading extends TraineeState {}
@@ -78,11 +77,11 @@ class TraineesListLoading extends TraineeState {}
 class TraineesListLoadSuccessEvent extends TraineeState {
   final List<Trainee> trainees;
 
-  TraineesListLoadSuccessEvent({required this.trainees});
+  const TraineesListLoadSuccessEvent({required this.trainees});
 }
 
 class TraineesListLoadErrorEvent extends TraineeState {
   final String message;
 
-  TraineesListLoadErrorEvent({required this.message});
+  const TraineesListLoadErrorEvent({required this.message});
 }

@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../auth/auth.dart';
 import '../../custom_widgets/header_banner.dart';
-import '../../auth/bloc/auth_event.dart';
-
 import '../../custom_widgets/login_field_form.dart';
 import 'loading.dart';
 

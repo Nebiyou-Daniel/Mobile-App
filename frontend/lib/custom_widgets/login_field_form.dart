@@ -61,22 +61,20 @@ class LoginFormFieldState extends State<LoginFormField> {
           key: _loginformKey,
           child: Column(
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(bottom: 15, left: 20),
-                child: Row(
-                  children: const <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(right: 21),
-                      child: Icon(Icons.info),
-                    ),
-                    // make the text wrap to the next line if it is too long
-                
-                    Text(
+              Row(
+                children: const <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(right: 10),
+                    child: Icon(Icons.info),
+                  ),
+              
+                  Expanded(
+                    child: Text(
                       "Fill the following information to Login.",
                       softWrap: true,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
               TextFormField(
                 controller: _emailController,
