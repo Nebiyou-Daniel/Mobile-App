@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frontend/notifications/Model/notification_model.dart';
 import 'package:frontend/notifications/views/notification_screen.dart';
 import 'package:frontend/theme/bloc/theme_bloc.dart';
 
@@ -10,16 +9,18 @@ import 'package:frontend/UI/trainee/trainee_profile.dart';
 import 'package:frontend/UI/common/login.dart';
 import 'package:frontend/UI/common/settings.dart';
 import 'package:frontend/UI/common/signup.dart';
-import 'package:frontend/trainee/bloc/trainee_bloc.dart';
-import 'package:frontend/trainer/bloc/trainer_bloc.dart';
+import 'package:frontend/trainer/trainer.dart';
+import 'package:frontend/trainer/views/trainerDetailPageForTrainee.dart';
 import 'package:go_router/go_router.dart';
 import 'package:frontend/trainee/trainee.dart';
-import 'package:frontend/trainee/trainee.dart';
 
+import 'UI/common/about.dart';
+import 'UI/common/contacts.dart';
 import 'UI/trainee/traineeProgressPage.dart';
 
-import 'UI/trainee/traineeHomePage.dart';
-import 'trainee/views/trainer_choosing_page.dart';
+import 'trainee/views/traineeHomePage.dart';
+import 'trainee/views/trainerChoosingPage.dart';
+
 import 'trainer/views/trainerHomePage.dart';
 import 'UI/trainer/workoutPlanCreationPage.dart';
 
@@ -65,6 +66,16 @@ class MyApp extends StatelessWidget {
       GoRoute(
         path: '/workoutPlanCreationPage',
         builder: (context, state) => const WorkoutPlanCreationPage(),
+      ),
+      // go router for about page
+      GoRoute(
+        path: '/aboutus',
+        builder: (context, state) => const AboutPage(),
+      ),
+      // go router for contact us page
+      GoRoute(
+        path: '/contactUs',
+        builder: (context, state) => const ContactsUsPage(),
       ),
 
       // admin routes
@@ -141,10 +152,16 @@ class MyApp extends StatelessWidget {
         path: '/trainee/chooseTrainer',
         builder: (context, state) => TrainerChoosingPage(),
       ),
-      // GoRoute(
-      //   path: '/trainee/notifications',
-      //   builder: (context, state) => const TraineeNotificationsPage(),
-      // ),
+      GoRoute(
+        path: '/trainee/trainer_profile/:id',
+        pageBuilder: (context, state) {
+          final int id = int.parse(state.params['id']!);
+          return MaterialPage<void>(
+            child: TrainerDetailForTrainee(id: id),
+          );
+        },
+      ),
+
       // GoRoute(
       //   path: '/trainee/applyAsTrainer',
       //   builder: (context, state) => const TraineeApplyAsTrainerPage(),

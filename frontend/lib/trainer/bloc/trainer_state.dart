@@ -128,10 +128,12 @@ class TrainerListLoading extends TrainerState {
 
 
 class TrainerListLoadingSuccess extends TrainerState {
-  final List<Trainer> traineeList;
+
+  final List<Trainer> trainerList;
   final String criteria;
 
-  TrainerListLoadingSuccess({required this.traineeList, this.criteria = "None"});
+  TrainerListLoadingSuccess({required this.trainerList, this.criteria = "None"});
+
 
   @override
   List<Object?> get props => [];
