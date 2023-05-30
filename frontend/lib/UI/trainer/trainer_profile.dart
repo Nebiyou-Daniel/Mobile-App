@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import 'package:go_router/go_router.dart';
@@ -29,6 +27,7 @@ class _TrainerProfileState extends State<TrainerProfile> {
   {'name': 'chane', 'review':'this is the review part', 'rate': '2'},
   {'name': 'brad', 'review':'this is the review part', 'rate': '5'},
   {'name': 'john', 'review':'this is the review part', 'rate': '4'},];
+
 
   void updatePicture(){
     print('update picture clicked.');
@@ -94,8 +93,9 @@ class _TrainerProfileState extends State<TrainerProfile> {
       },
       );
 
-  }  
-
+  }
+  
+  
 
   @override
   Widget build(BuildContext context) {
@@ -239,7 +239,7 @@ class _TrainerProfileState extends State<TrainerProfile> {
                                   child: Text("${reviews[index]["name"]}"),),
                                 ),
                                 SizedBox(
-                                      width: 400,
+                                      width: 300,
                                       child: 
                                           RatingBarIndicator(
                                             rating: double.parse('${reviews[index]['rate']}'),
@@ -284,11 +284,8 @@ class _TrainerProfileState extends State<TrainerProfile> {
               ),
             ),
             bottomNavigationBar: TrainerBottomNavigation(selectedIndex: 1,)
-           
-            );
-      }
-
-
-    );
+           );
+           });
   }
+
 }

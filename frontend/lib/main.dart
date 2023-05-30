@@ -13,17 +13,14 @@ import 'package:frontend/trainer/trainer.dart';
 import 'package:frontend/trainer/views/trainerDetailPageForTrainee.dart';
 import 'package:go_router/go_router.dart';
 import 'package:frontend/trainee/trainee.dart';
-
 import 'UI/common/about.dart';
 import 'UI/common/contacts.dart';
 import 'UI/trainee/traineeProgressPage.dart';
 
 import 'trainee/views/traineeHomePage.dart';
 import 'trainee/views/trainerChoosingPage.dart';
-
 import 'trainer/views/trainerHomePage.dart';
 import 'UI/trainer/workoutPlanCreationPage.dart';
-
 void main() {
   runApp(MyApp());
 }
@@ -40,7 +37,7 @@ class MyApp extends StatelessWidget {
       ),
       GoRoute(
         path: '/login',
-        builder: (context, state) => const LoginPage(),
+        builder: (context, state) => const TraineeTrainerDetail(),
       ),
       GoRoute(
         path: '/signup',
@@ -172,10 +169,10 @@ class MyApp extends StatelessWidget {
       //   builder: (context, state) => const TraineeRequestSentPage(),
       // ),
       // // view trainer's profile
-      // GoRoute(
-      //   path: '/trainee/trainer_profile',
-      //   builder: (context, state) => const TraineeTrainerProfilePage(),
-      // ),
+      GoRoute(
+        path: '/trainee/trainer_profile',
+        builder: (context, state) => const TrainerProfile(),
+      ),
     ],
   );
 
