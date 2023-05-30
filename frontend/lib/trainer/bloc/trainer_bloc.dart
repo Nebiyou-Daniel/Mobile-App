@@ -28,6 +28,17 @@ class TrainerBloc extends Bloc<TrainerEvent, TrainerState> {
       }
     });
 
+    on<TrainerLoading>((event, emit) async {
+      // load the trainer's information and send a trainer object
+      try {
+        Trainer trainer = await apiDataProvider.getTrainerInformation(event.id);
+        emit(TrainerLoadingSuccess(trainer: trainer));
+      } catch (error) {
+        emit(TrainerLoadingError(error: error.toString()));
+      }
+      ;
+    });
+
     on<GettingTraineeDetailEvent>((event, emit) async {
       try {
         Trainee trainee = await apiDataProvider.getTraineeDetail(event.id);
@@ -61,54 +72,40 @@ class TrainerBloc extends Bloc<TrainerEvent, TrainerState> {
           speciality: "Fitness",
           rating: 4.5,
           numberOfTrainees: 10,
-        ),
-        Trainer(
-          name: "Abdulaziz",
-          speciality: "Fitness",
-          rating: 4.5,
-          numberOfTrainees: 10,
-        ),
-        Trainer(
-          name: "Robera",
-          speciality: "Weight loss",
-          rating: 4.5,
-          numberOfTrainees: 10,
-        ),
-        Trainer(
-          name: "Abebe",
-          speciality: " Weight gain",
-          rating: 4.5,
-          numberOfTrainees: 10,
-        ),
-        Trainer(
-          name: "Abdulaziz",
-          speciality: "Fitness",
-          rating: 4.5,
-          numberOfTrainees: 10,
+          email: 'mafsd@gmail.com',
+          phoneNumber: "+123456789"
         ),
         Trainer(
           name: "Asmaa",
           speciality: "Fitness",
           rating: 4.5,
           numberOfTrainees: 10,
+          email: 'mafsd@gmail.com',
+          phoneNumber: "+123456789"
         ),
         Trainer(
           name: "Ahmed",
           speciality: "Fitness",
           rating: 4.5,
           numberOfTrainees: 10,
+          email: 'mafsd@gmail.com',
+          phoneNumber: "+123456789"
         ),
         Trainer(
           name: "Abdulaziz",
           speciality: "Fitness",
           rating: 4.5,
           numberOfTrainees: 10,
+          email: 'mafsd@gmail.com',
+          phoneNumber: "+123456789"
         ),
         Trainer(
           name: "Asmaa",
           speciality: "Fitness",
           rating: 4.5,
           numberOfTrainees: 10,
+          email: 'mafsd@gmail.com',
+          phoneNumber: "+123456789"
         ),
       ];
       emit(trainers.isNotEmpty
@@ -144,57 +141,44 @@ class TrainerBloc extends Bloc<TrainerEvent, TrainerState> {
           speciality: "Fitness",
           rating: 4.5,
           numberOfTrainees: 10,
-        ),
-        Trainer(
-          name: "Abdulaziz",
-          speciality: "Fitness",
-          rating: 4.5,
-          numberOfTrainees: 10,
-        ),
-        Trainer(
-          name: "Robera",
-          speciality: "Weight loss",
-          rating: 4.5,
-          numberOfTrainees: 10,
-        ),
-        Trainer(
-          name: "Abebe",
-          speciality: " Weight gain",
-          rating: 4.5,
-          numberOfTrainees: 10,
-        ),
-        Trainer(
-          name: "Abdulaziz",
-          speciality: "Fitness",
-          rating: 4.5,
-          numberOfTrainees: 10,
+          email: 'mafsd@gmail.com',
+          phoneNumber: "+123456789"
         ),
         Trainer(
           name: "Asmaa",
           speciality: "Fitness",
           rating: 4.5,
           numberOfTrainees: 10,
+          email: 'mafsd@gmail.com',
+          phoneNumber: "+123456789"
         ),
         Trainer(
           name: "Ahmed",
           speciality: "Fitness",
           rating: 4.5,
           numberOfTrainees: 10,
+          email: 'mafsd@gmail.com',
+          phoneNumber: "+123456789"
         ),
         Trainer(
           name: "Abdulaziz",
           speciality: "Fitness",
           rating: 4.5,
           numberOfTrainees: 10,
+          email: 'mafsd@gmail.com',
+          phoneNumber: "+123456789"
         ),
         Trainer(
           name: "Asmaa",
           speciality: "Fitness",
           rating: 4.5,
           numberOfTrainees: 10,
+          email: 'mafsd@gmail.com',
+          phoneNumber: "+123456789"
         ),
       ];
-      emit(TrainerListLoadingSuccess(traineeList: trainers, criteria: event.criteria));
+      emit(TrainerListLoadingSuccess(
+          traineeList: trainers, criteria: event.criteria));
     });
   }
 }

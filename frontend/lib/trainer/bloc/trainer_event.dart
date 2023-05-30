@@ -2,12 +2,6 @@ import '../../trainee/model/trainee_model.dart';
 
 abstract class TrainerEvent {}
 
-class GetTraineeEvent extends TrainerEvent {
-  final String id;
-
-  GetTraineeEvent({required this.id});
-}
-
 class GettingTraineeListEvent extends TrainerEvent {}
 
 class GettingTraineeDetailEvent extends TrainerEvent {
@@ -16,11 +10,14 @@ class GettingTraineeDetailEvent extends TrainerEvent {
 }
 
 class TraineeListReceivedSuccessfullyEvent extends TrainerEvent {
-  // initialized by using the Trainee model instance this is
-  // a list so used in the UI to show the list of trainees as .builder()
   final List<Trainee> traineeList;
 
   TraineeListReceivedSuccessfullyEvent({required this.traineeList});
+}
+
+class TrainerLoading extends TrainerEvent {
+  final int id;
+  TrainerLoading({required this.id});
 }
 
 class TraineeDetailReceivedSuccessfullyEvent extends TrainerEvent {}
@@ -49,7 +46,6 @@ class TraineeRemoveFromTraineeListSuccessEvent extends TrainerEvent {}
 class TraineeRemoveFromTraineeListErrorEvent extends TrainerEvent {}
 
 class TraineeLoadListOfTrainersEvent extends TrainerEvent {}
-
 
 // sorting the trainers by some criteria
 class TraineeSortTrainersEvent extends TrainerEvent {

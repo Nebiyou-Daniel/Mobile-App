@@ -139,9 +139,27 @@ class TrainerListLoadingSuccess extends TrainerState {
 
 
 class TrainerListLoadingError extends TrainerState {
-  final String message;
+  final String error;
 
-  TrainerListLoadingError({required this.message});
+  TrainerListLoadingError({required this.error});
+
+  @override
+  List<Object?> get props => [];
+}
+
+class TrainerLoadingSuccess extends TrainerState {
+  final Trainer trainer;
+
+  TrainerLoadingSuccess({required this.trainer});
+
+  @override
+  List<Object?> get props => [];
+}
+
+class TrainerLoadingError extends TrainerState {
+  final String error;
+
+  TrainerLoadingError({required this.error});
 
   @override
   List<Object?> get props => [];
