@@ -71,4 +71,24 @@ export class TaskService {
             }
         })
     }
+    async setTaskAsDone(traineeId: number, taskId: number, dto: EditTaskDto){
+        const task = await this.prisma.task.findUnique({
+            where: {
+                id: taskId
+            }
+
+        })
+        if (!task || task.traineeId !== traineeId){
+            throw new ForbiddenException('Access to resource denied')
+        }
+
+        return this.prisma.task.update({
+            where: {
+                id: taskId
+            },
+            data: {
+                ...dto
+            }
+        })        
+    }
 }

@@ -9,6 +9,8 @@ import 'package:frontend/trainee/trainee.dart';
 import 'package:frontend/Theme/theme.dart';
 
 import '../../custom_widgets/header_banner.dart';
+import '../../custom_widgets/bottom_navigation_trainee.dart';
+import '../../custom_widgets/header_banner.dart';
 import '../../weight/views/weight_chart.dart';
 import '../../weight/weight.dart';
 
@@ -31,6 +33,7 @@ class TraineeHomePage extends StatelessWidget {
         home: Scaffold(
           appBar: AppBar(
             title: const Text("Workout Warrior"),
+            backgroundColor: const Color(0xFF0A568A),
             actions: <Widget>[
               IconButton(
                 icon: const Icon(Icons.notifications),
@@ -40,6 +43,7 @@ class TraineeHomePage extends StatelessWidget {
               ),
             ],
             leading: PopupMenuButton(
+              child: const Icon(Icons.person_2_outlined),
               itemBuilder: (context) => [
                 PopupMenuItem(
                   child: TextButton(
@@ -87,6 +91,7 @@ class TraineeHomePage extends StatelessWidget {
               ],
             ),
           ),
+          bottomNavigationBar: TraineeBottomNavigation(selectedIndex: 0),
         ),
       ),
     );

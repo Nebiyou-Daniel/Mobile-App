@@ -48,11 +48,9 @@ class TraineePersonalInformation extends StatelessWidget {
                   CircleAvatar(
                     radius: 50,
                     child: Text(
-                      // if the trainee name if of 2 length the initial will be the first letter of firstname plus last name 
-                      // else the initial will be the first letter of firstname only
-                      state.trainees[0].name.length == 2
-                          ? state.trainees[0].name[0] + state.trainees[0].name[1]
-                          : state.trainees[0].name[0],
+                      state.trainee.name.length == 2
+                          ? state.trainee.name[0] + state.trainee.name[1]
+                          : state.trainee.name[0],
                       style: const TextStyle(
                         fontSize: 40,
                         fontWeight: FontWeight.bold,

@@ -115,10 +115,15 @@ class SignUpFieldFormState extends State<SignUpFieldForm> {
                 child: Row(
                   children: const <Widget>[
                     Padding(
-                      padding: EdgeInsets.only(right: 21),
+                      padding: EdgeInsets.only(right: 10),
                       child: Icon(Icons.info),
                     ),
-                    Text("Fill the following information to sign up."),
+                    Expanded(
+                      child: Text(
+                        "Fill the following information to Signup.",
+                        softWrap: true,
+                      ),
+                    ),
                   ],
                 ),
               ),

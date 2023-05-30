@@ -5,13 +5,12 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import 'package:go_router/go_router.dart';
 
-import '../../custom_widgets/bottom_navigation.dart';
+import '../../custom_widgets/bottom_navigation_trainer.dart';
 import '../../custom_widgets/header_banner_with_icons.dart';
 
 
 import 'package:go_router/go_router.dart';
 
-import '../../custom_widgets/bottom_navigation.dart';
 import '../../custom_widgets/header_banner_with_icons.dart';
 
 
@@ -290,7 +289,7 @@ class _TrainerProfileState extends State<TrainerProfile> {
                 ]),
               ),
             ),
-            bottomNavigationBar: BottomNavigation(selectedIndex: 1,)
+            bottomNavigationBar: TrainerBottomNavigation(selectedIndex: 1,)
            );
            });
   }
