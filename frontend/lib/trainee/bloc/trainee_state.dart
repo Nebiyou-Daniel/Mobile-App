@@ -70,3 +70,19 @@ class TraineeDeleteSuccess extends TraineeState {
   @override
   List<Object> get props => [trainee];
 }
+
+// when list of trainers is loadin
+class TraineesListLoading extends TraineeState {}
+
+// success and error events for the above
+class TraineesListLoadSuccessEvent extends TraineeState {
+  final List<Trainee> trainees;
+
+  TraineesListLoadSuccessEvent({required this.trainees});
+}
+
+class TraineesListLoadErrorEvent extends TraineeState {
+  final String message;
+
+  TraineesListLoadErrorEvent({required this.message});
+}

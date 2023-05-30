@@ -15,6 +15,7 @@ import 'package:frontend/trainee/bloc/trainee_bloc.dart';
 import 'package:frontend/trainer/bloc/trainer_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:frontend/trainee/trainee.dart';
+import 'package:frontend/trainee/trainee.dart';
 
 import 'UI/trainee/traineeProgressPage.dart';
 
@@ -114,6 +115,10 @@ class MyApp extends StatelessWidget {
       //   path: '/trainer/profile',
       //   builder: (context, state) => const TrainerProfilePage(),
       // ),
+      GoRoute(
+        path: '/notifications',
+        builder: (context, state) => const NotificationScreen(),
+      ),
       GoRoute(
         path: '/notifications',
         builder: (context, state) => const NotificationScreen(),

@@ -64,7 +64,7 @@ class ListOfTrainees extends StatelessWidget {
           );
         }
         // if the trainees are loaded successfully
-        else if (state is TraineeLoadSuccess) {
+        else if (state is TraineeListLoadSuccess) {
           return ListView.builder(
             shrinkWrap: true,
             itemCount: state.trainees.length,

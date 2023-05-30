@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frontend/Task/views/trainerTask.dart';
 import 'package:frontend/UI/common/loading_paragraph.dart';
-import 'package:frontend/weight/views/weight_chart.dart';
 import 'package:frontend/trainee/bloc/trainee_bloc.dart';
 import 'package:frontend/trainee/bloc/trainee_event.dart';
 import 'package:frontend/trainee/bloc/trainee_state.dart';
@@ -61,10 +59,11 @@ class TraineePersonalInformation extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Text(state.trainees[0].name),
-                  Text(state.trainees[0].phone),
-                  Text(state.trainees[0].email),
-                  Text(state.trainees[0].address),
+                  Text(state.trainee.name),
+                  Text(state.trainee.phone),
+                  Text(state.trainee.email),
+                  Text(state.trainee.address),
+                  
                 ],
               ),
             );
