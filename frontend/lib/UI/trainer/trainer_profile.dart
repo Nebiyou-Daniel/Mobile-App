@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import 'package:go_router/go_router.dart';
 
+import '../../custom_widgets/bottom_navigation_trainee.dart';
 import '../../custom_widgets/bottom_navigation_trainer.dart';
-import '../../custom_widgets/header_banner_with_icons.dart';
-
-
-import 'package:go_router/go_router.dart';
-
 import '../../custom_widgets/header_banner_with_icons.dart';
 
 
