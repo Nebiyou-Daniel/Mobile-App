@@ -53,12 +53,12 @@ class TraineeAddError extends TraineeState {
 class TraineeListEmpty extends TraineeState {}
 
 class TraineeLoadSuccess extends TraineeState {
-  final Trainee trainee;
+  final List<Trainee> trainees;
 
-  const TraineeLoadSuccess({required this.trainee});
+  const TraineeLoadSuccess({required this.trainees});
 
   @override
-  List<Object> get props => [trainee];
+  List<Object> get props => [trainees];
 }
 
 class TraineeDeleteSuccess extends TraineeState {

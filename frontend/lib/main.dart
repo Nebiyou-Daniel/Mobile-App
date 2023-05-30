@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/notifications/views/notification_screen.dart';
-import 'package:frontend/theme/bloc/theme_bloc.dart';
+import 'package:frontend/Theme/theme.dart';
 
 import 'package:frontend/auth/bloc/auth_bloc.dart';
 import 'package:frontend/UI/common/splashScreen.dart';
@@ -18,10 +18,12 @@ import 'UI/common/about.dart';
 import 'UI/common/contacts.dart';
 import 'UI/trainee/traineeProgressPage.dart';
 
+import 'UI/trainee/trainee_trainer_detail.dart';
 import 'trainee/views/traineeHomePage.dart';
 import 'trainee/views/trainerChoosingPage.dart';
 
 import 'trainer/views/trainerHomePage.dart';
+
 import 'UI/trainer/workoutPlanCreationPage.dart';
 
 void main() {
@@ -40,7 +42,7 @@ class MyApp extends StatelessWidget {
       ),
       GoRoute(
         path: '/login',
-        builder: (context, state) => const LoginPage(),
+        builder: (context, state) => const TraineeTrainerDetail(),
       ),
       GoRoute(
         path: '/signup',
@@ -172,10 +174,10 @@ class MyApp extends StatelessWidget {
       //   builder: (context, state) => const TraineeRequestSentPage(),
       // ),
       // // view trainer's profile
-      // GoRoute(
-      //   path: '/trainee/trainer_profile',
-      //   builder: (context, state) => const TraineeTrainerProfilePage(),
-      // ),
+      GoRoute(
+        path: '/trainee/trainer_profile',
+        builder: (context, state) => const TrainerProfile(),
+      ),
     ],
   );
 
