@@ -114,10 +114,6 @@ class MyApp extends StatelessWidget {
       ),
 
       GoRoute(
-        path: '/trainer/profile',
-        builder: (context, state) => const TrainerProfile(),
-      ),
-      GoRoute(
         path: '/notifications',
         builder: (context, state) => const NotificationScreen(),
       ),
