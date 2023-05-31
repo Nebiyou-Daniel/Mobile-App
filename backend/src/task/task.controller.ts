@@ -49,7 +49,7 @@ export class TaskController {
         return this.taskService.deleteTaskById(trainerId, taskId);
     }
 
-    @Patch('taskDone/:id')
+    @Patch(':id/taskDone')
     setTaskAsDone(
         @GetTrainee('id') traineeId: number,
         @Param('id', ParseIntPipe) taskId: number,
