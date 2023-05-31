@@ -1,0 +1,117 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Trainee {
+  id Int @id @default(autoincrement())
+  fullName String
+  email String @unique
+  password String
+  phoneNumber String? @unique
+  role String
+  bio String?
+  tasks Task[]
+  reviews Review[]
+  notifications Notification[]
+  weights Weight[]
+  trainerId Int?
+  trainer Trainer? @relation(fields:[trainerId], references: [id])
+  previousJobXp String?
+  yearsOfXp Int?
+  previousWorkPlace String?
+
+  @@map("trainee")
+}
+
+model Trainer{
+  id Int @id @default(autoincrement())
+  fullName String
+  email String @unique
+  password String
+  phoneNumber String? @unique
+  role String
+  bio String?
+  tasks Task[]
+  reviews Review[]
+  notifications Notification[]
+  weights Weight[]
+  trainees Trainee[]
+  averageRating Int @default(0)
+  previousJobXp String?
+  yearsOfXp Int?
+  previousWorkPlace String?
+
+  @@map("trainer")
+}
+
+model Admin{
+  id Int @id @default(autoincrement())
+  fullName String
+  email String @unique
+  password String
+  phoneNumber String? @unique
+  role String
+  bio String?
+  notifications Notification[]
+
+  @@map("admin")
+}
+
+model Task{
+  id Int @id @default(autoincrement())
+  taskName String
+  description String
+  taskDone Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  traineeId Int
+  trainee Trainee @relation(fields:[traineeId], references: [id])
+  trainerId Int
+  trainer Trainer @relation(fields:[trainerId], references: [id])
+
+  @@map("tasks")
+}
+
+model Review{
+  id Int @id @default(autoincrement())
+  comment String
+  rating Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt  
+  traineeId Int
+  trainee Trainee @relation(fields:[traineeId], references: [id])
+  trainerId Int
+  trainer Trainer @relation(fields:[trainerId], references: [id])
+
+}
+
+model Notification{
+  id Int @id @default(autoincrement())
+  title String
+  details String
+  createdAt DateTime @default(now())
+  traineeId Int?
+  trainee Trainee? @relation(fields:[traineeId], references: [id])
+  trainerId Int?
+  trainer Trainer? @relation(fields:[trainerId], references: [id])
+  adminId Int?
+  admin Admin? @relation(fields:[adminId], references: [id])
+}
+
+model Weight{
+  id Int @id @default(autoincrement())
+  weight String
+  createdAt DateTime @default(now())
+  traineeId Int?
+  trainee Trainee? @relation(fields:[traineeId], references: [id])
+  trainerId Int?
+  trainer Trainer? @relation(fields:[trainerId], references: [id])
+}

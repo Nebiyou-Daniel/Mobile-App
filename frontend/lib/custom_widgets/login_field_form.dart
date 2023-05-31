@@ -1,77 +1,109 @@
 import 'package:flutter/material.dart';
-import 'password_form_field.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/auth/bloc/auth_event.dart';
+import 'package:frontend/auth/bloc/auth_state.dart';
 
-class LoginFieldForm extends StatelessWidget {
-  const LoginFieldForm({super.key});
+import '../auth/bloc/auth_bloc.dart';
+
+class LoginFormField extends StatefulWidget {
+  const LoginFormField({super.key});
+
+  @override
+  LoginFormFieldState createState() => LoginFormFieldState();
+}
+
+class LoginFormFieldState extends State<LoginFormField> {
+  final GlobalKey<FormState> _loginformKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  String? _validateEmail() {
+    if (_emailController.text.isEmpty) {
+      return 'Please enter your email';
+    }
+    // You can add more validation logic for the email format if needed
+    return null;
+  }
+
+  String? _validatePassword() {
+    if (_passwordController.text.isEmpty) {
+      return 'Please enter your password';
+    }
+    // You can add more validation logic for the password if needed
+    return null;
+  }
+
+  void _submitForm() {
+    if (_loginformKey.currentState!.validate()) {
+      final AuthBloc bloc = BlocProvider.of<AuthBloc>(context);
+
+      bloc.add(AuthLoginEvent(
+        email: _emailController.text,
+        password: _passwordController.text,
+      ));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Form(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(15),
-              child: Row(
-                children: const <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(right: 21),
-                    child: Icon(Icons.info),
-                  ),
-                  Text("Enter your username and password."),
-                ],
-              ),
-            ),
-            const TextField(
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                icon: Icon(Icons.email),
-                label: Text("Email"),
-                hintText: 'Enter your email',
-              ),
-            ),
-            Container(margin: const EdgeInsets.only(top: 20.0)),
-            const TextField(
-              decoration: InputDecoration(
-                icon: Icon(Icons.person_rounded),
-                label: Text("Full Name"),
-                hintText: "Enter your full name",
-              ),
-            ),
-            Container(margin: const EdgeInsets.only(top: 20.0)),
-            PasswordFormField(
-              controller: TextEditingController(),
-              labelText: 'Password',
-              hintText: 'Enter your password',
-            ),
-            Container(margin: const EdgeInsets.only(top: 20.0)),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    // validation for email,
-                  },
-                  child: const Text('LOGIN'),
+    return BlocProvider(
+      create: (context) => AuthBloc(),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _loginformKey,
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(bottom: 15, left: 20),
+                child: Row(
+                  children: const <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(right: 21),
+                      child: Icon(Icons.info),
+                    ),
+                    // make the text wrap to the next line if it is too long
+                
+                    Text(
+                      "Fill the following information to Login.",
+                      softWrap: true,
+                    ),
+                  ],
                 ),
               ),
-            ),
-            Container(margin: const EdgeInsets.only(top: 40.0)),
-            // Ask if don't have an account and when clicked  redirect to the signup page
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text("Don't have an account?"),
-                TextButton(
-                  onPressed: () {
-                    print("Sign Up button clicked");
-                  },
-                  child: const Text('Sign Up'),
+              TextFormField(
+                controller: _emailController,
+                decoration: const InputDecoration(
+                  labelText: 'Email',
                 ),
-              ],
-            ),
-          ],
+                validator: (value) {
+                  return _validateEmail();
+                },
+              ),
+              TextFormField(
+                controller: _passwordController,
+                obscureText: true,
+                decoration: const InputDecoration(
+                  labelText: 'Password',
+                ),
+                validator: (value) {
+                  return _validatePassword();
+                },
+              ),
+              const SizedBox(height: 16.0),
+              ElevatedButton(
+                onPressed: () => _submitForm(),
+                child: const Text('Login'),
+              ),
+            ],
+          ),
         ),
       ),
     );
