@@ -62,16 +62,19 @@ class LoginHandler extends StatelessWidget {
     }
     if (state is AuthLoginSuccess) {
       if (state.role == "admin") {
+        print("Navigating to admin home page");
         WidgetsBinding.instance.addPostFrameCallback((_) {
           navigateToPage(context, "/admin/homePage");
         });
         return const SizedBox();
       } else if (state.role == "trainer") {
+        print("Navigating to trainer home page");
         WidgetsBinding.instance.addPostFrameCallback((_) {
           navigateToPage(context, "/trainer/homePage");
         });
         return const SizedBox();
       } else if (state.role == "trainee") {
+        print("Navigating to trainee home page");
         WidgetsBinding.instance.addPostFrameCallback((_) {
           navigateToPage(context, "/trainee/homePage");
         });

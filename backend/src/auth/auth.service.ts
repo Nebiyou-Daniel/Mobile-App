@@ -2,7 +2,6 @@ import { ForbiddenException, Injectable } from '@nestjs/common';
 import { loginDto, signupDto } from './dto';
 import * as argon from 'argon2';
 import { PrismaService } from 'src/prisma/prisma.service';
-<<<<<<< HEAD
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { NewTrainerApprovalDto } from './dto/new-trainer-approval.dto';
@@ -20,12 +19,6 @@ export class AuthService {
         private jwt: JwtService,
         private config: ConfigService
         ){}
-=======
-
-@Injectable()
-export class AuthService {
-    constructor(private prisma: PrismaService){}
->>>>>>> master
 
 
     async traineeSignup(dto: signupDto){
@@ -44,11 +37,7 @@ export class AuthService {
             })
             // return saved user
             delete trainee.password;
-<<<<<<< HEAD
             return this.signToken(trainee.id, trainee.email, Role.trainee);;
-=======
-            return trainee;
->>>>>>> master
 
         } catch (error) {
             throw new ForbiddenException(
@@ -75,11 +64,7 @@ export class AuthService {
             delete trainer.password;
 
             // return saved user
-<<<<<<< HEAD
             return this.signToken(trainer.id, trainer.email, Role.trainer);
-=======
-            return trainer;
->>>>>>> master
 
         } catch (error) {
             throw new ForbiddenException(
@@ -116,11 +101,7 @@ export class AuthService {
         delete trainee.password;
 
         // return user
-<<<<<<< HEAD
         return this.signToken(trainee.id, trainee.email, Role.trainee);
-=======
-        return trainee;
->>>>>>> master
     }
 
 
@@ -151,7 +132,6 @@ export class AuthService {
         delete trainer.password;
 
         // return user
-<<<<<<< HEAD
         return this.signToken(trainer.id, trainer.email, Role.trainer);
     }
 
@@ -180,9 +160,6 @@ export class AuthService {
                 `the ${error.meta.target} credential has been taken`,
             );
         }
-=======
-        return trainer;
->>>>>>> master
     }
 
 

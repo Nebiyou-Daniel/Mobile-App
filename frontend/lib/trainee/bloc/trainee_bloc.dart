@@ -74,9 +74,9 @@ class TraineeBloc extends Bloc<TraineeEvent, TraineeState> {
       ));
     });
 
+
     on<TraineeDeleteEvent>((event, emit) async {
       emit(TraineeLoading());
-      await Future.delayed(const Duration(seconds: 3));
       await Future.delayed(const Duration(seconds: 3));
 
       emit(TraineeLoadSuccess(
@@ -91,12 +91,20 @@ class TraineeBloc extends Bloc<TraineeEvent, TraineeState> {
       ));
     });
 
-    on<TraineeDeleteEvent> ((event, emit) async {
-      emit(TraineeLoading());
-      await Future.delayed(const Duration(seconds: 3));
-
-      // emit(TraineeOperationSuccess());
+    on<TraineeAddToTraineeListSuccessEvent>((event, emit) async {
+      // TODO: implement event handler
     });
 
+    on<TraineeAddToTraineeListErrorEvent>((event, emit) async {
+      // TODO: implement event handler
+    });
+
+    on<TraineeRemoveFromTraineeListSuccessEvent>((event, emit) async {
+      // TODO: implement event handler
+    });
+
+    on<TraineeRemoveFromTraineeListErrorEvent>((event, emit) async {
+      // TODO: implement event handler
+    });
   }
 }

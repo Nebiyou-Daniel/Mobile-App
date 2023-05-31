@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/custom_widgets/header_banner.dart';
 import 'package:go_router/go_router.dart';
 
-class AdminHome extends StatelessWidget {
-  const AdminHome({super.key});
+import '../../auth/auth.dart';
+
+class AdminHomePage extends StatelessWidget {
+  const AdminHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +14,25 @@ class AdminHome extends StatelessWidget {
       title: "app",
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(title: const Text('Admin Home page')),
+        appBar: AppBar(
+          title: const Text("Workout Warrior admin"),
+          backgroundColor: const Color(0xFF0A568A),
+          leading: Expanded(
+            child: PopupMenuButton(
+              child: const Icon(Icons.person_2_outlined),
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  child: TextButton(
+                    onPressed: () {
+                      BlocProvider.of<AuthBloc>(context).add(AuthLogoutEvent());
+                    },
+                    child: const Text("Logout"),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
         body: Builder(builder: (context) {
           return SingleChildScrollView(
             child: Column(
@@ -25,7 +46,7 @@ class AdminHome extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
                         // list of all trainees
-                        onPressed: () => context.go('/admin/trainees'),
+                        onPressed: () => context.push('/admin/trainees'),
                         child: const Text('List of All Trainees')),
                   ),
                 ),
@@ -34,7 +55,7 @@ class AdminHome extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
-                        onPressed: () => context.go('/admin/trainers'),
+                        onPressed: () => context.push('/admin/trainers'),
                         child: const Text('List of All Trainers')),
                   ),
                 ),

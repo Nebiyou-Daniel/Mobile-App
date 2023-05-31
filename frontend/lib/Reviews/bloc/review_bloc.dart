@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../review.dart';
-import '../dataprovidor/api_data_providor.dart';
+import '../dataprovider/api_data_provider.dart';
 
 class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
   ReviewBloc() : super(ReviewInitial()) {

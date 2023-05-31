@@ -39,7 +39,7 @@ class TraineePersonalInformation extends StatelessWidget {
               ),
             );
           } else if (state is TraineeLoadSuccess) {
-            print("Trainee load success");
+            // print("Trainee load success");
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -66,7 +66,7 @@ class TraineePersonalInformation extends StatelessWidget {
               ),
             );
           } else {
-            print("Failed to load trainee");
+            // print("Failed to load trainee");
             return const Center(
               child: Text('👀 Failed to load Trainee...'),
             );

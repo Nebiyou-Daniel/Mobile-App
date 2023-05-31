@@ -1,50 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../UI/common/loading.dart';
 import '../../custom_widgets/line_chart.dart';
 import '../weight.dart';
 
-
-class WeightChartHandeler extends StatelessWidget {
+class WeightChartHandler extends StatelessWidget {
   final int id;
 
-  const WeightChartHandeler({Key? key, required this.id}) : super(key: key);
+  const WeightChartHandler({super.key, required this.id});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<WeightBloc>(
-      create: (context) =>
-          WeightBloc(), // Create and provide the WeightBloc instance
-      child: BlocBuilder<WeightBloc, WeightState>(
-        builder: (context, state) {
-          final weightBloc = context
-              .read<WeightBloc>(); // Use context.read to access the WeightBloc
+      create: (context) => WeightBloc()..add(WeightLoadingEvent()),
+      child: Builder(builder: (context) {
+        final weightBloc = context.watch<WeightBloc>();
+        final weightState = weightBloc.state;
+        print(weightState);
 
-          if (state is WeightInitial) {
-            weightBloc.add(WeightLoadingEvent(userId: id));
-            return const LoadingScreen();
-          } else if (state is WeightLoading) {
-            print("Weight loading");
-            return const LoadingScreen();
-          } else if (state is WeightLoadedSuccessfully) {
-            print("Weight loaded successfully");
-            return SizedBox(
-              height: 300,
-              child: WeightLineChart(
-                weightData: state.weightData,
-              ),
-            );
-          } else if (state is WeightLoadingError) {
-            print("Weight loaded Error");
-            return const Center(
-              child: Text('👀 Failed to load weight'),
-            );
-          } else {
-            return const LoadingScreen();
-          }
-        },
-      ),
+        if (weightState is WeightLoading) {
+          return LoadingScreen();
+        } else if (weightState is WeightLoadingError) {
+          // weightBloc.add(WeightLoadingEvent());
+          return const Text("Error loading weight data");
+        } else if (weightState is WeightInitial) {
+          weightBloc.add(WeightLoadingEvent(userId: id));
+          return const LoadingScreen();
+        } else if (weightState is WeightLoadedSuccessfully) {
+          final _state = weightState as WeightLoadedSuccessfully;
+          print("I have entererd the weight loaded successfull page");
+          Map<double, double> weightData = _state.weightData;
+          return SizedBox(
+            height: 300,
+            child: WeightLineChart(
+              weightData: weightData,
+            ),
+          );
+        }
+        return Container(
+          child: Text("Unexpected State"),
+        );
+      }),
     );
   }
 }

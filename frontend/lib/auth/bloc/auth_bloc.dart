@@ -17,7 +17,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         // wait 1 second
         await Future.delayed(const Duration(seconds: 1));
         // send a mock data
-        emit(AuthLoginSuccess(role: "trainee"));
+        emit(AuthLoginSuccess(role: "trainer"));
 
         // await apiDataProvider.login(email: event.email, password: event.password);
       } catch (error) {
@@ -65,7 +65,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         await Future.delayed(const Duration(seconds: 1));
         // send a mock data for test purpose only
-        emit(AuthSignupSuccess(role: "trainee"));
+        emit(AuthSignupSuccess(role: "trainer"));
         // await apiDataProvider.signUp(
         //     name: event.name,
         //     username: event.username,
