@@ -29,4 +29,8 @@ export class loginDto{
     password: string
 }
 
-
+export class AdminSecondDto{
+    @IsNotEmpty()
+    @IsString()
+    companyCode: string
+}

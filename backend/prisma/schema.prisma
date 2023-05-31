@@ -24,9 +24,6 @@ model Trainee {
   weights Weight[]
   trainerId Int?
   trainer Trainer? @relation(fields:[trainerId], references: [id])
-  previousJobXp String?
-  yearsOfXp Int?
-  previousWorkPlace String?
 
   @@map("trainee")
 }
