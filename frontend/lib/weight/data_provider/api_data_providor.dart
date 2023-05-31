@@ -11,8 +11,8 @@ class ApiDataProvidor {
     // random chance
     return {
       1.1: 52.0,
-      2.02: 63.3,
-      5.2: 33.3,
+      2.02: 52.3,
+      5.2: 52.3,
     };
   }
 
@@ -23,7 +23,7 @@ class ApiDataProvidor {
     return {
       1.1: 52.0,
       2.02: 63.3,
-      5.2: 33.3,
+      5.2: 88.3,
     };
   }
 }

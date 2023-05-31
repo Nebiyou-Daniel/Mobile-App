@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/notifications/Model/notification_model.dart';
+import 'package:frontend/notifications/views/notification_screen.dart';
 import 'package:frontend/theme/bloc/theme_bloc.dart';
+
 import 'package:frontend/auth/bloc/auth_bloc.dart';
 import 'package:frontend/UI/common/splashScreen.dart';
-import 'package:frontend/UI/common/about.dart';
 import 'package:frontend/UI/trainee/trainee_profile.dart';
 import 'package:frontend/UI/common/login.dart';
 import 'package:frontend/UI/common/settings.dart';
@@ -11,11 +13,14 @@ import 'package:frontend/UI/common/signup.dart';
 import 'package:frontend/trainee/bloc/trainee_bloc.dart';
 import 'package:frontend/trainer/bloc/trainer_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:frontend/trainee/trainee.dart';
+import 'package:frontend/trainee/trainee.dart';
 
 import 'UI/trainee/traineeProgressPage.dart';
+
 import 'UI/trainee/traineeHomePage.dart';
-import 'UI/trainee/trainer_choosing_page.dart';
-import 'UI/trainer/trainerHomePage.dart';
+import 'trainee/views/trainer_choosing_page.dart';
+import 'trainer/views/trainerHomePage.dart';
 import 'UI/trainer/workoutPlanCreationPage.dart';
 
 void main() {
@@ -45,8 +50,13 @@ class MyApp extends StatelessWidget {
         builder: (context, state) => const Settings(),
       ),
       GoRoute(
-        path: '/traineeProfile/:id',
-        builder: (context, state) => const TraineeProfile(),
+        path: '/traineedetail/:id',
+        pageBuilder: (context, state) {
+          final id = state.params['id'];
+          return MaterialPage<void>(
+            child: TraineeDetail(id: id!),
+          );
+        },
       ),
       GoRoute(
         path: '/traineeProgressPage',
@@ -101,10 +111,14 @@ class MyApp extends StatelessWidget {
       //   path: '/trainer/profile',
       //   builder: (context, state) => const TrainerProfilePage(),
       // ),
-      // GoRoute(
-      //   path: '/trainer/notifications',
-      //   builder: (context, state) => const TrainerNotificationsPage(),
-      // ),
+      GoRoute(
+        path: '/notifications',
+        builder: (context, state) => const NotificationScreen(),
+      ),
+      GoRoute(
+        path: '/notifications',
+        builder: (context, state) => const NotificationScreen(),
+      ),
 
       // // trainee routes
       GoRoute(
@@ -125,7 +139,7 @@ class MyApp extends StatelessWidget {
       // ),
       GoRoute(
         path: '/trainee/chooseTrainer',
-        builder: (context, state) => const TrainerChoosingPage(),
+        builder: (context, state) => TrainerChoosingPage(),
       ),
       // GoRoute(
       //   path: '/trainee/notifications',
@@ -167,121 +181,10 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
         routerDelegate: _router.routerDelegate,
         routeInformationParser: _router.routeInformationParser,
       ),
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-    A list of possible routes in our application.
-      `/`                    => shows splash screen
-      `/login`               => shows login page
-      `/signup`              => shows sign up page
-      `/about`               => shows about page
-      `/settings`            => shows settings page
-      `/contact`             => shows contact page
-
-
-      ########__admin_routes__########
-      `/admin/homePage`        => the home page of the admin
-      `/admin/listOfTrainees`  => list of trainees for the admin to see
-      `/admin/listOfTrainees`  => list of trainers for the admin to see
-      `/admin/approvalPage`    => page to approve or disapprove requests from users that admin should handle
-      `/admin/notifications`   => notifications for the admin
-      `/admin/enter_code`  => the page to enter the login code for the admin
-      // router for admin to watch trainee profile
-      `/admin/trainee_profile` => the profile of trainee
-
-      ########__trainer_routes__########
-      `trainer/home_page`      => trainer home page
-      `trainer/profile`        => the profile of trainer
-      `trainer/create_plan`    => the page to create workout plan for trainee
-      `trainer/list_of_trainees` => the list of trainees for the trainer
-      `trainer/notifications`  => notifications for the trainer
-
-      
-
-      #######__trainee_routes__########
-      `trainee/home_page`          => the trainee home page
-      `trainee/apply_as_trainer`   => for trainer to apply as a trainer
-      `trainee/profile`            => the profile of trainee
-      `trainee/progress`           => the progress of trainee
-      `trainee/workout_plan`       => the workout plan of trainee
-      `trainee/choose_trainer`     => the page to choose trainer
-      `trainee/notifications`      => notifications for the trainee
-      `trainee/request_sent`       => the page to show that the request has been sent
-
-*/

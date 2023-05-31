@@ -14,10 +14,11 @@ class WeightLoading extends WeightState {
 
 class WeightLoadedSuccessfully extends WeightState {
   final Map<double, double> weightData;
-  @override
-  List<Object?> get props => [];
 
   WeightLoadedSuccessfully({required this.weightData});
+
+  @override
+  List<Object?> get props => [weightData];
 }
 
 class WeightLoadingError extends WeightState {

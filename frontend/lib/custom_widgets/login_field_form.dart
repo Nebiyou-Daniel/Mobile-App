@@ -42,9 +42,9 @@ class LoginFormFieldState extends State<LoginFormField> {
 
   void _submitForm() {
     if (_loginformKey.currentState!.validate()) {
-    final AuthBloc bloc = BlocProvider.of<AuthBloc>(context);
+      final AuthBloc bloc = BlocProvider.of<AuthBloc>(context);
 
-      bloc.add(UserLoginEvent(
+      bloc.add(AuthLoginEvent(
         email: _emailController.text,
         password: _passwordController.text,
       ));
@@ -69,7 +69,12 @@ class LoginFormFieldState extends State<LoginFormField> {
                       padding: EdgeInsets.only(right: 21),
                       child: Icon(Icons.info),
                     ),
-                    Text("Fill the following information to Login."),
+                    // make the text wrap to the next line if it is too long
+                
+                    Text(
+                      "Fill the following information to Login.",
+                      softWrap: true,
+                    ),
                   ],
                 ),
               ),

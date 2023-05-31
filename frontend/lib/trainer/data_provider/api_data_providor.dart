@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:frontend/trainee/model/trainee_model.dart';
 import 'package:http/http.dart' as http;
 
+import '../model/trainer_model.dart';
+
 class ApiDataProvider {
   // this class is used to get data from the API
   // this class is used by the bloc
@@ -194,6 +196,33 @@ class ApiDataProvider {
     } else {
       // if response is not successful, throw error
       throw Exception('Failed to load trainee list');
+    }
+  }
+
+  // method to get trainer information by id
+  Future<Trainer> getTrainerInformation(int id) async {
+    // this method is used to get trainer information from the API
+    // this method is used by the bloc
+
+    // url to get trainer information
+    String url = 'http://localhost:8000/api/trainer/$id/';
+
+    // get response from the API
+    var response = await http.get(Uri.parse(url));
+
+    // check if response is successful
+    if (response.statusCode == 200) {
+      // convert response body to json
+      var jsonData = jsonDecode(response.body);
+
+      // create trainer from json data
+      Trainer trainer = Trainer.fromJson(jsonData);
+
+      // return trainer
+      return trainer;
+    } else {
+      // if response is not successful, throw error
+      throw Exception('Failed to load trainer information');
     }
   }
 }
