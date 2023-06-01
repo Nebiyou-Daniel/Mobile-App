@@ -14,9 +14,6 @@ import '../../custom_widgets/profile_form.dart';
 class TraineeProfile extends StatelessWidget {
   const TraineeProfile({super.key});
 
-  final String name = "John Doe";
-  final String bio = "A passionate developer and a lifelong learner.";
-  final String image = "https://picsum.photos/200";
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

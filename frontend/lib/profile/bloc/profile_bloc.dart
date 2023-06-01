@@ -27,6 +27,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           name: "John Adamu",
           bio: "I am a trainer",
           email: 'thisisemail@gmail.com',
+          phoneNumber: "234567876543",
         ));
         // add profileLoad event to this bloc
         add(ProfileLoadEvent());

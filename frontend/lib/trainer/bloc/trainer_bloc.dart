@@ -11,7 +11,6 @@ import 'trainer_event.dart';
 
 class TrainerBloc extends Bloc<TrainerEvent, TrainerState> {
   TrainerBloc() : super(TrainerInitial()) {
-    ApiDataProvider apiDataProvider = ApiDataProvider();
     SharedPreferences preferences = ServiceLocator().preferences;
 
     on<TrainerListLoadEvent>((event, emit) async {
@@ -107,10 +106,10 @@ class TrainerBloc extends Bloc<TrainerEvent, TrainerState> {
       emit(TrainerLoading());
 
       // get the current user id from the shared preferences
-      int userId = preferences.getInt('userId')!;
+      // int userId = preferences.getInt('userId')!;
       // make a request to server to get the trainer details of the current user
       // Trainer? trainer = await apiDataProvider.getTrainerDetails(userId);
-
+      try{
       await Future.delayed(const Duration(seconds: 3));
       emit(TrainerLoadSuccess(
         trainer: Trainer(
@@ -122,7 +121,10 @@ class TrainerBloc extends Bloc<TrainerEvent, TrainerState> {
           rating: 4.5,
           numberOfTrainees: 10,
         ),
-      ));
+      ));}
+      catch (error) {
+        emit(TrainerLoadingError(error: error.toString()));
+      }
     });
   }
 }

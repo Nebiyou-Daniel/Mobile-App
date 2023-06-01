@@ -1,22 +1,60 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/UI/common/loading.dart';
 import 'package:frontend/custom_widgets/initial_avatar.dart';
 
 import '../profile/profile.dart';
 
-class ProfileForm extends StatelessWidget {
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController bioController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController phoneNumberController = TextEditingController();
+class ProfileForm extends StatefulWidget {
+  const ProfileForm({Key? key}) : super(key: key);
 
-  ProfileForm({super.key});
+  @override
+  _ProfileFormState createState() => _ProfileFormState();
+}
+
+class _ProfileFormState extends State<ProfileForm> {
+  late TextEditingController nameController;
+  late TextEditingController bioController;
+  late TextEditingController emailController;
+  late TextEditingController phoneNumberController;
+  bool isNameEditable = false;
+  bool isBioEditable = false;
+  bool isEmailEditable = false;
+  bool isPhoneNumberEditable = false;
+
+  @override
+  void initState() {
+    super.initState();
+    nameController = TextEditingController();
+    bioController = TextEditingController();
+    emailController = TextEditingController();
+    phoneNumberController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    bioController.dispose();
+    emailController.dispose();
+    phoneNumberController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileBloc, ProfileState>(
       builder: (context, state) {
         final profileBloc = BlocProvider.of<ProfileBloc>(context);
+        print(profileBloc.state);
+
+        if (state is ProfileInitial) {
+          profileBloc.add(ProfileLoadEvent());
+          return const LoadingScreen();
+        }
+
+        if (state is ProfileLoadingState) {
+          return const LoadingScreen();
+        }
 
         if (state is ProfileLoadSuccessState) {
           nameController.text = state.name;
@@ -43,15 +81,26 @@ class ProfileForm extends StatelessWidget {
                   const Icon(Icons.person),
                   Container(margin: const EdgeInsets.only(left: 20.0)),
                   Expanded(
-                    child: TextField(
-                      controller: nameController,
-                      enabled: state is! ProfileLoadSuccessState,
-                    ),
+                    child: isNameEditable
+                        ? TextField(
+                            controller: nameController,
+                          )
+                        : Text(nameController.text),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.save),
+                    icon: isNameEditable
+                        ? const Icon(Icons.save)
+                        : const Icon(Icons.edit),
                     onPressed: () {
-                      _updateProfile(profileBloc);
+                      setState(() {
+                        isNameEditable = !isNameEditable;
+                        if (isNameEditable) {
+                          nameController.text = nameController.text;
+                        } else {
+                          _updateProfile(
+                              profileBloc, 'name', nameController.text);
+                        }
+                      });
                     },
                   ),
                 ],
@@ -62,17 +111,26 @@ class ProfileForm extends StatelessWidget {
                   const Icon(Icons.info),
                   Container(margin: const EdgeInsets.only(left: 20.0)),
                   Expanded(
-                    child: state is ProfileLoadSuccessState
+                    child: isBioEditable
                         ? TextField(
                             controller: bioController,
-                            enabled: state is! ProfileLoadSuccessState,
                           )
                         : Text(bioController.text),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.save),
+                    icon: isBioEditable
+                        ? const Icon(Icons.save)
+                        : const Icon(Icons.edit),
                     onPressed: () {
-                      _updateProfile(profileBloc);
+                      setState(() {
+                        isBioEditable = !isBioEditable;
+                        if (isBioEditable) {
+                          bioController.text = bioController.text;
+                        } else {
+                          _updateProfile(
+                              profileBloc, 'bio', bioController.text);
+                        }
+                      });
                     },
                   ),
                 ],
@@ -83,17 +141,26 @@ class ProfileForm extends StatelessWidget {
                   const Icon(Icons.email),
                   Container(margin: const EdgeInsets.only(left: 20.0)),
                   Expanded(
-                    child: state is ProfileLoadSuccessState
+                    child: isEmailEditable
                         ? TextField(
                             controller: emailController,
-                            enabled: state is! ProfileLoadSuccessState,
                           )
                         : Text(emailController.text),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.save),
+                    icon: isEmailEditable
+                        ? const Icon(Icons.save)
+                        : const Icon(Icons.edit),
                     onPressed: () {
-                      _updateProfile(profileBloc);
+                      setState(() {
+                        isEmailEditable = !isEmailEditable;
+                        if (isEmailEditable) {
+                          emailController.text = emailController.text;
+                        } else {
+                          _updateProfile(
+                              profileBloc, 'email', emailController.text);
+                        }
+                      });
                     },
                   ),
                 ],
@@ -104,15 +171,27 @@ class ProfileForm extends StatelessWidget {
                   const Icon(Icons.phone),
                   Container(margin: const EdgeInsets.only(left: 20.0)),
                   Expanded(
-                    child: TextField(
-                      controller: phoneNumberController,
-                      enabled: state is! ProfileLoadSuccessState,
-                    ),
+                    child: isPhoneNumberEditable
+                        ? TextField(
+                            controller: phoneNumberController,
+                          )
+                        : Text(phoneNumberController.text),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.save),
+                    icon: isPhoneNumberEditable
+                        ? const Icon(Icons.save)
+                        : const Icon(Icons.edit),
                     onPressed: () {
-                      _updateProfile(profileBloc);
+                      setState(() {
+                        isPhoneNumberEditable = !isPhoneNumberEditable;
+                        if (isPhoneNumberEditable) {
+                          phoneNumberController.text =
+                              phoneNumberController.text;
+                        } else {
+                          _updateProfile(profileBloc, 'phoneNumber',
+                              phoneNumberController.text);
+                        }
+                      });
                     },
                   ),
                 ],
@@ -124,18 +203,14 @@ class ProfileForm extends StatelessWidget {
     );
   }
 
-  void _updateProfile(ProfileBloc profileBloc) {
+  void _updateProfile(ProfileBloc profileBloc, String field, String value) {
     print("Updating profile");
-    final String newName = nameController.text;
-    final String newBio = bioController.text;
-    final String newEmail = emailController.text;
-    final String newPhoneNumber = phoneNumberController.text;
+    final String fullname = nameController.text;
+    final String bio = bioController.text;
+    final String email = emailController.text;
+    final String phoneNumber = phoneNumberController.text;
 
     profileBloc.add(ProfileUpdateEvent(
-      fullname: newName,
-      bio: newBio,
-      email: newEmail,
-      phonenumber: newPhoneNumber,
-    ));
+        fullname: fullname, bio: bio, email: email, phonenumber: phoneNumber));
   }
 }
