@@ -31,7 +31,7 @@ class TrainerHiredByTrainee extends StatelessWidget {
                     ReviewBloc reviewBloc =
                         BlocProvider.of<ReviewBloc>(context);
                     reviewBloc
-                        .add(ReviewsGetByTraineeEvent(trainerId: trainer.id));
+                        .add(ReviewGetTraineeReview(trainerId: trainer.id));
                   }
                   if (state is ReviewLoadSuccess) {
                     final review = state.review;
