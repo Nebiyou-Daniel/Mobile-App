@@ -16,7 +16,7 @@ class ReviewList extends StatelessWidget {
         create: (context) =>
             ReviewBloc()..add(ReviewsGetAllEvent(trainerId: trainerId)),
         child: BlocBuilder<ReviewBloc, ReviewState>(builder: (context, state) {
-          if (state is ReviewLoading) {
+          if (state is ReviewLoadingState) {
             return const Center(
               child: CircularProgressIndicator(),
             );
