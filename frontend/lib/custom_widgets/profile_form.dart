@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/custom_widgets/logoutButton.dart';
+
+import '../auth/auth.dart';
+import 'deleteSelfAccountButton.dart';
 
 class ProfileForm extends StatefulWidget {
   const ProfileForm({super.key});
@@ -205,7 +209,7 @@ class _ProfileFormState extends State<ProfileForm> {
                     IconButton(
                       icon: const Icon(Icons.save),
                       onPressed: savePhoneNumber,
-                    ),
+                    ),  
                   ],
                 )
               : Row(
@@ -225,25 +229,9 @@ class _ProfileFormState extends State<ProfileForm> {
                   ],
                 ),
           Container(height: 20),
-          const Divider(),
-          SizedBox(
-            width: 300,
-            height: 38,
-            child: ElevatedButton(
-              style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(
-                      Color.fromARGB(255, 255, 163, 26))),
-              child: const Text('Log Out'),
-              onPressed: () {
-                // Log out logic here
-              },
-            ),
-          ),
-          Container(height: 20),
-          LogoutButton(),
         ],
-        
       ),
     );
   }
 }
+

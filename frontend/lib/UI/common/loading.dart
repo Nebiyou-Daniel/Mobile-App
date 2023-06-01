@@ -16,15 +16,3 @@ class LoadingScreen extends StatelessWidget {
     );
   }
 }
-
-// q: Give me a list of loading widgets in flutter, no url links.
-// a:
-// 1. CircularProgressIndicator
-// 2. LinearProgressIndicator
-// 3. RefreshProgressIndicator
-// 4. CupertinoActivityIndicator
-// 5. FadingCube
-// 6. FlareActor
-// 7. LiquidCircularProgressIndicator
-// 8. LoadingBouncingGrid.circle
-

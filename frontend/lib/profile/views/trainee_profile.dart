@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/custom_widgets/header_banner.dart';
+import 'package:frontend/custom_widgets/logoutButton.dart';
+import 'package:frontend/trainer/views/trainer_hired_by_trainee.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../auth/auth.dart';
 import '../../custom_widgets/bottom_navigation_trainee.dart';
+import '../../custom_widgets/deleteSelfAccountButton.dart';
 import '../../custom_widgets/profile_form.dart';
 
 class TraineeProfile extends StatelessWidget {
@@ -46,9 +49,21 @@ class TraineeProfile extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             // crossAxisAlignment: CrossAxisAlignment.center,
-            children: const [
-              HeaderBanner(),
-              ProfileForm(),
+            children: [
+              const HeaderBanner(),
+              // a widget that shows this user is a trainee
+              Row(
+                children: const [
+                  Text("Role: Trainee => "),
+                  Icon(Icons.person),
+                ],
+              ),
+              const ProfileForm(),
+              const Divider(),
+              const LogoutButton(),
+              const Divider(),
+              const DeleteSelfAccountButton(),
+              const TrainerHiredByTrainee(),
             ],
           ),
         ),

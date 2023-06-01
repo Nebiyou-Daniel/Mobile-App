@@ -7,13 +7,12 @@ import 'package:frontend/auth/auth.dart';
 import 'package:frontend/trainee/trainee.dart';
 import 'package:frontend/Theme/theme.dart';
 
-import '../../custom_widgets/header_banner.dart';
 import '../../Task/views/traineeTask.dart';
+import '../../custom_widgets/header_banner.dart';
 import '../../custom_widgets/bottom_navigation_trainee.dart';
 import '../../custom_widgets/header_banner.dart';
 import '../../weight/views/weight_chart.dart';
 import '../../weight/weight.dart';
-
 
 class TraineeHomePage extends StatelessWidget {
   const TraineeHomePage({super.key});
@@ -46,12 +45,29 @@ class TraineeHomePage extends StatelessWidget {
               child: const Icon(Icons.person_2_outlined),
               itemBuilder: (context) => [
                 PopupMenuItem(
-                  child: TextButton(
-                    onPressed: () {
-                      BlocProvider.of<AuthBloc>(context).add(AuthLogoutEvent());
-                    },
-                    child: const Text("Logout"),
-                  ),
+                  child: BlocBuilder<AuthBloc, AuthState>(
+                      builder: (context, state) {
+                    final authBloc = BlocProvider.of<AuthBloc>(context);
+                    if (state is AuthLoginSuccess ||
+                        state is AuthSignupSuccess ||
+                        state is AuthInitial) {
+                      return TextButton(
+                        onPressed: () {
+                          authBloc.add(AuthLogoutEvent());
+                        },
+                        child: const Text("Logout"),
+                      );
+                    } else if (state is AuthLogoutSuccess) {
+                      // Navigate to the login screen when the user has logged out
+                      // Delay the navigation to the login screen
+                      Future.delayed(Duration.zero, () {
+                        GoRouter.of(context).go('/login');
+                      });
+                      return const Text("Logout");
+                    } else {
+                      return const Text("Unexpected error occurred!");
+                    }
+                  }),
                 ),
               ],
             ),
