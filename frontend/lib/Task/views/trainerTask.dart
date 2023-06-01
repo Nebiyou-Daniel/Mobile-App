@@ -46,7 +46,7 @@ class DatePicker extends StatelessWidget {
           firstDate: DateTime(2020),
           lastDate: DateTime(2025),
           onDateChanged: (DateTime date) {
-            taskBloc.add(TaskLoadingEvent(date: date, userId: userID));
+            taskBloc.add(TaskTrainerLoadingEvent(date: date, userId: userID));
             showDialog(
                 context: context,
                 builder: (BuildContext context) {
@@ -177,7 +177,7 @@ class DatePicker extends StatelessWidget {
                               TextButton(
                                 onPressed: () {
                                   taskBloc.add(
-                                    TaskAddDummyEvent(),
+                                    TaskAddEvent(task: Task.fromJson(), userId: -1),
                                   );
                                 },
                                 child: Row(

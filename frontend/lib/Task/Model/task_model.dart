@@ -56,7 +56,7 @@ class Task {
       title: title ?? this.title,
       description: description ?? this.description,
       date: date ?? this.date,
-      traineeId: traineeId ?? this.traineeId,
+      traineeId: traineeId,
       isCompleted: isCompleted ?? this.isCompleted,
     );
   }

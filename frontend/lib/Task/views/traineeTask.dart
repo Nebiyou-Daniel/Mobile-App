@@ -39,7 +39,7 @@ class DatePicker extends StatelessWidget {
       firstDate: DateTime(2020),
       lastDate: DateTime(2025),
       onDateChanged: (DateTime date) {
-        taskBloc.add(TaskLoadingEvent(date: date, userId: -1));
+        taskBloc.add(TaskTraineeLoadingEvent(date: date));
         showDialog(
           context: context,
           builder: (BuildContext context) {

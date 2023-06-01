@@ -2,18 +2,21 @@ import '../Model/task_model.dart';
 
 abstract class TaskEvent {}
 
-class TaskLoadingEvent extends TaskEvent {
+class TaskTrainerLoadingEvent extends TaskEvent {
   final int userId;
   final DateTime date;
 
-  TaskLoadingEvent({required this.date, this.userId = -1});
+  TaskTrainerLoadingEvent({required this.date, required this.userId});
 }
 
-class TaskLoadedSuccessfullyEvent extends TaskEvent {}
+class TaskTraineeLoadingEvent extends TaskEvent {
+  final DateTime date;
 
-class TaskLoadingErrorEvent extends TaskEvent {}
+  TaskTraineeLoadingEvent({required this.date});
+}
 
 class TaskAddEvent extends TaskEvent {
+  // no need to add date as the date is the current date to be added.
   final Task task;
   final int userId;
 
@@ -31,5 +34,3 @@ class TaskUpdateEvent extends TaskEvent {
 }
 
 class TaskCompletedToggleEvent extends TaskEvent {}
-
-class TaskAddDummyEvent extends TaskEvent {}
