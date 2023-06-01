@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frontend/auth/bloc/auth_bloc.dart';
-import 'package:frontend/auth/bloc/auth_state.dart';
 import 'package:go_router/go_router.dart';
-import '../../Custom_Widgets/header_banner.dart';
+
+import '../../custom_widgets/header_banner.dart';
+import '../../auth/auth.dart';
+import '../../auth/data_provider/local_data_providor.dart';
+
 import '../../custom_widgets/login_field_form.dart';
 import 'loading.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
-  @override
-  LoginState createState() => LoginState();
-}
-
-class LoginState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -27,7 +24,7 @@ class LoginState extends State<LoginPage> {
               const HeaderBanner(),
               Container(
                 padding: const EdgeInsets.all(39.5),
-                child: const LoginWidget(),
+                child: LoginHandler(),
               ),
               Container(
                   padding: const EdgeInsets.all(39.5),
@@ -47,8 +44,14 @@ class LoginState extends State<LoginPage> {
   }
 }
 
-class LoginWidget extends StatelessWidget {
-  const LoginWidget({super.key});
+class LoginHandler extends StatelessWidget {
+  LoginHandler({super.key});
+  final LocalDataProvider localDataProvider = LocalDataProvider();
+
+
+  void navigateToPage(BuildContext context, String route) {
+    context.go(route);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,18 +65,50 @@ class LoginWidget extends StatelessWidget {
       return const LoadingScreen();
     }
     if (state is AuthLoginSuccess) {
-      if (state.user.role == "admin") {
-        context.go("/admin/homePage");
-        // return const Text("Admin login Success");
-      } else if (state.user.role == "trainer") {
-        context.go("/trainer/homePage");
-        // return const Text("Trainer login Success");
-      } else if (state.user.role == "trainee") {
-        context.go("/trainee/homePage");
-        // return const Text("Trainee login Success");
+      if (state.role == "admin") {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          navigateToPage(context, "/admin/homePage");
+        });
+        return const SizedBox();
+      } else if (state.role == "trainer") {
+        getLocalDataProvider();
+
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          navigateToPage(context, "/trainer/homePage");
+        });
+        return const SizedBox();
+      } else if (state.role == "trainee") {
+        getLocalDataProvider();
+
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          navigateToPage(context, "/trainee/homePage");
+        });
+
+        return const SizedBox();
       }
     }
 
-    return const Text("Login Failed");
+    if (state is AuthLoginError) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final snackBar = SnackBar(
+          content: Text(state.error),
+          backgroundColor: Colors.red,
+          behavior: SnackBarBehavior.floating,
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      });
+    }
+
+    return const LoginFormField();
+  }
+    getLocalDataProvider() async {
+    try {
+      final token = await localDataProvider.getAccessToken();
+      print('Access Token: $token');
+      // Do something with the access token
+    } catch (e) {
+      print('Error: $e');
+      // Handle the error
+    }
   }
 }

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frontend/Custom_Widgets/header_banner.dart';
-import 'package:frontend/Custom_Widgets/signup_field_form.dart';
+import 'package:frontend/custom_widgets/header_banner.dart';
+import 'package:frontend/custom_widgets/signup_field_form.dart';
 import 'package:go_router/go_router.dart';
 import '../../auth/bloc/auth_bloc.dart';
+import '../../auth/bloc/auth_event.dart';
 import '../../auth/bloc/auth_state.dart';
 import 'loading.dart';
 
@@ -37,40 +38,69 @@ class SignUpPage extends StatelessWidget {
   }
 }
 
-class SignupHandler extends StatelessWidget {
+class SignupHandler extends StatefulWidget {
   const SignupHandler({super.key});
+  static const signUpFieldForm = SignUpFieldForm();
+  void navigateToPage(BuildContext context, String route) {
+    context.go(route);
+  }
+
+  @override
+  State<SignupHandler> createState() => _SignupHandlerState();
+}
+
+class _SignupHandlerState extends State<SignupHandler> {
+  static const signUpFieldForm = SignUpFieldForm();
 
   @override
   Widget build(BuildContext context) {
     final bloc = context.watch<AuthBloc>();
     final state = bloc.state;
+    print(state);
 
     if (state is AuthInitial) {
-      return const SignUpFieldForm();
+      return signUpFieldForm;
     }
     if (state is AuthSigningUp) {
       return const LoadingScreen();
     }
 
     if (state is AuthSignupSuccess) {
-      if (state.user.role == "trainer") {
-        context.go("/trainer/homePage");
-        return const Text("Trainer Signup Success");
-      } else if (state.user.role == "trainee") {
-        context.go("/trainee/homePage");
-        // return const Text("Trainee Signup Success");
+      if (state.role == "admin") {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          navigateToPage(context, "/admin/homePage");
+        });
+        // context.go("/admin/homePage");
+        return const SizedBox();
+      } else if (state.role == "trainer") {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          navigateToPage(context, "/trainer/homePage");
+        });
+        return const SizedBox();
+      } else if (state.role == "trainee") {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          navigateToPage(context, "/trainee/homePage");
+        });
+        return const SizedBox();
       }
     }
+
     if (state is AuthSignupError) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         final snackBar = SnackBar(
           content: Text(state.error),
           backgroundColor: Colors.red,
+          // show on top of the screen
+          behavior: SnackBarBehavior.floating,
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       });
     }
 
-    return const SignUpFieldForm();
+    return signUpFieldForm;
+  }
+
+  void navigateToPage(BuildContext context, String s) {
+    context.go(s);
   }
 }
