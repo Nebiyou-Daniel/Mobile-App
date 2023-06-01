@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/Reviews/bloc/review_bloc.dart';
 import 'package:frontend/notifications/views/notification_screen.dart';
 import 'package:frontend/theme/bloc/theme_bloc.dart';
 
@@ -186,6 +187,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<TrainerHiringBloc>(
           create: (context) => TrainerHiringBloc(),
+        ),
+        BlocProvider<ReviewBloc>(
+          create: (context) => ReviewBloc(),
         ),
       ],
       child: MaterialApp.router(

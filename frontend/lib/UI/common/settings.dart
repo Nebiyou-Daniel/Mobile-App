@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../custom_widgets/header_banner.dart';
-import '../../theme/theme.dart';
+import '../../Theme/theme.dart';
 
 class Settings extends StatelessWidget {
   const Settings({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -22,55 +23,47 @@ class Settings extends StatelessWidget {
           child: Scaffold(
             appBar: AppBar(
               leading: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(Icons.keyboard_arrow_left_outlined)),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(Icons.keyboard_arrow_left_outlined),
+              ),
               title: const Text('Settings'),
             ),
             body: Column(
-              children: const <Widget>[
-                HeaderBanner(),
-                SettingsWidget(),
+              children: <Widget>[
+                const HeaderBanner(),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height / 3,
+                  child: ListView(
+                    children: [
+                      // a dark mode toggler
+                      ListTile(
+                        title: const Text('Dark Mode'),
+                        trailing: Switch(
+                          value: context.watch<ThemeBloc>().state is DarkTheme,
+                          onChanged: (bool value) {
+                            // Here I am having the issue error:- The argument type 'ThemeChangedEvent' can't be assigned to the parameter type 'ThemeEvent'.dartargument_type_not_assignable
+                            context.read<ThemeBloc>().add(ThemeChangedEvent(isDarkThemeOn: value));
+                          },
+                        ),
+                      ),
+
+                      // A settings for editing profile
+                      ListTile(
+                        title: const Text('Edit Profile'),
+                        onTap: () {
+                          // Replace with our own logic to toggle notifications
+                        },
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class SettingsWidget extends StatelessWidget {
-  const SettingsWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height / 3,
-      child: ListView(
-        children: [
-          // a dark mode toggler
-          ListTile(
-            title: const Text('Dark Mode'),
-            trailing: Switch(
-              value: false,
-              onChanged: (bool value) {
-                value = !value;
-                context.read<ThemeBloc>().add(ThemeChangedEvent(value));
-              },
-            ),
-          ),
-
-          // A settings for editing profile
-          ListTile(
-            title: const Text('Edit Profile'),
-            onTap: () {
-              // Replace with our own logic to toggle notifications
-            },
-          ),
-        ],
       ),
     );
   }
