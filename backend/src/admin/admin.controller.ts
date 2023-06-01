@@ -24,15 +24,15 @@ export class AdminController {
     updatePassword(@GetAdmin('id') adminId: number, @Body() dto: PasswordUpdateDto){
         return this.adminService.updatePassword(adminId, dto);
     }
-    @Delete()    
+    @Delete('deleteAdmin')    
     deleteAdmin(@GetAdmin('id') adminId: number){
         return this.adminService.deleteAdmin(adminId);
     }
-    @Delete()    
+    @Delete('deleteTrainee')    
     deleteTrainee(@GetTrainee('id') traineeId: number){
         return this.adminService.deleteTrainee(traineeId);
     }
-    @Delete()    
+    @Delete('deleteTrainer')    
     deleteTrainer(@GetTrainer('id') trainerId: number){
         return this.adminService.deleteTrainer(trainerId);
     }

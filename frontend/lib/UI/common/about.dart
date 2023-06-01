@@ -1,19 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/custom_widgets/header_banner.dart';
 
-class AboutPage extends StatelessWidget{
+import '../../Theme/theme.dart';
+
+class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
 
-
-    @override
-  Widget build(BuildContext context){
+  @override
+  Widget build(BuildContext context) {
     return MaterialApp(
+      theme: context.watch<ThemeBloc>().state.theme,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.keyboard_arrow_left_outlined),
+          ),
+          title: const Text("About Workout Warriors"),
+          backgroundColor: Colors.black,
+        ),
         body: SingleChildScrollView(
           child: Column(
-            children: const <Widget> [
+            children: const <Widget>[
               HeaderBanner(),
               Padding(
                 padding: EdgeInsets.only(top: 15.0, bottom: 8.0),
@@ -23,7 +35,6 @@ class AboutPage extends StatelessWidget{
                   softWrap: true,
                   style: TextStyle(
                     fontSize: 40,
-              
                   ),
                 ),
               ),
@@ -32,13 +43,11 @@ class AboutPage extends StatelessWidget{
                 child: Text(
                   "Here we discuss what our app stads for and any questions people may have about it.",
                   softWrap: true,
-                  
                 ),
               ),
               Image(
                 image: AssetImage('assets/images/img.jpg'),
                 height: 350,
-
               ),
               Padding(
                 padding: EdgeInsets.only(bottom: 10.0, top: 25.0),
@@ -46,20 +55,15 @@ class AboutPage extends StatelessWidget{
                   "Below listed are FAQs and basic explanation of our app",
                   softWrap: true,
                   textAlign: TextAlign.start,
-                  
                 ),
-              ),  
+              ),
               ExpansionTile(
                 title: Text("What is workout warriors for?"),
-                children:[
-                  Text("answer")
-                ],
+                children: [Text("answer")],
               ),
               ExpansionTile(
                 title: Text("How can someone apply to become a Trainer?"),
-                children: [
-                  Text("answer")
-                ],
+                children: [Text("answer")],
               ),
               ExpansionTile(
                 title: Text("What are all the roles that exist?"),
@@ -68,7 +72,8 @@ class AboutPage extends StatelessWidget{
                 ],
               ),
               ExpansionTile(
-                title: Text("What are all the things that can be done on the app?"),
+                title: Text(
+                    "What are all the things that can be done on the app?"),
                 children: [
                   Text("answer"),
                 ],
@@ -82,7 +87,6 @@ class AboutPage extends StatelessWidget{
               Padding(
                 padding: EdgeInsets.only(top: 40.0),
               )
-
             ],
           ),
         ),

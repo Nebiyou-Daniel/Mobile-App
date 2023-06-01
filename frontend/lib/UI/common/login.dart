@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../auth/auth.dart';
 import '../../custom_widgets/header_banner.dart';
-import '../../auth/bloc/auth_event.dart';
-
 import '../../custom_widgets/login_field_form.dart';
 import 'loading.dart';
 
@@ -23,7 +22,7 @@ class LoginPage extends StatelessWidget {
               const HeaderBanner(),
               Container(
                 padding: const EdgeInsets.all(39.5),
-                child: const LoginHandler(),
+                child: LoginHandler(),
               ),
               Container(
                   padding: const EdgeInsets.all(39.5),
@@ -46,6 +45,7 @@ class LoginPage extends StatelessWidget {
 class LoginHandler extends StatelessWidget {
   const LoginHandler({super.key});
 
+
   void navigateToPage(BuildContext context, String route) {
     context.go(route);
   }
@@ -63,16 +63,19 @@ class LoginHandler extends StatelessWidget {
     }
     if (state is AuthLoginSuccess) {
       if (state.role == "admin") {
+        print("Navigating to admin home page");
         WidgetsBinding.instance.addPostFrameCallback((_) {
           navigateToPage(context, "/admin/homePage");
         });
         return const SizedBox();
       } else if (state.role == "trainer") {
+        print("Navigating to trainer home page");
         WidgetsBinding.instance.addPostFrameCallback((_) {
           navigateToPage(context, "/trainer/homePage");
         });
         return const SizedBox();
       } else if (state.role == "trainee") {
+        print("Navigating to trainee home page");
         WidgetsBinding.instance.addPostFrameCallback((_) {
           navigateToPage(context, "/trainee/homePage");
         });

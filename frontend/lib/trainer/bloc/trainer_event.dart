@@ -1,49 +1,20 @@
-import '../../trainee/model/trainee_model.dart';
+abstract class TrainerEvent {
+  const TrainerEvent();
+}
 
-abstract class TrainerEvent {}
+class TrainerListLoadEvent extends TrainerEvent {
+  const TrainerListLoadEvent();
+}
 
-class GetTraineeEvent extends TrainerEvent {
+class TrainerDetailLoadEvent extends TrainerEvent {
+  final int trainerId;
+  const TrainerDetailLoadEvent({required this.trainerId});
+}
+
+// TrainerDeleteEvent
+class TrainerDeleteEvent extends TrainerEvent {
   final String id;
-
-  GetTraineeEvent({required this.id});
+  const TrainerDeleteEvent({required this.id});
 }
 
-class GettingTraineeListEvent extends TrainerEvent {}
-
-class GettingTraineeDetailEvent extends TrainerEvent {
-  final int id;
-  GettingTraineeDetailEvent({required this.id});
-}
-
-class TraineeListReceivedSuccessfullyEvent extends TrainerEvent {
-  // initialized by using the Trainee model instance this is
-  // a list so used in the UI to show the list of trainees as .builder()
-  final List<Trainee> traineeList;
-
-  TraineeListReceivedSuccessfullyEvent({required this.traineeList});
-}
-
-class TraineeDetailReceivedSuccessfullyEvent extends TrainerEvent {}
-
-class TraineeListReceivedErrorEvent extends TrainerEvent {}
-
-class TraineeDetailReceivedErrorEvent extends TrainerEvent {}
-
-class TraineeListEmptyEvent extends TrainerEvent {}
-
-class TraineeDetailEmptyEvent extends TrainerEvent {}
-
-class TraineeAddToTraineeListEvent extends TrainerEvent {}
-
-class TraineeRemoveFromTraineeListEvent extends TrainerEvent {
-  final int traineeId;
-  TraineeRemoveFromTraineeListEvent({required this.traineeId});
-}
-
-class TraineeAddToTraineeListSuccessEvent extends TrainerEvent {}
-
-class TraineeAddToTraineeListErrorEvent extends TrainerEvent {}
-
-class TraineeRemoveFromTraineeListSuccessEvent extends TrainerEvent {}
-
-class TraineeRemoveFromTraineeListErrorEvent extends TrainerEvent {}
+class LoadMyTrainer extends TrainerEvent {}

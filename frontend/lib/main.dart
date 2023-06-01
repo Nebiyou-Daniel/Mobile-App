@@ -1,30 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:frontend/notifications/Model/notification_model.dart';
+import 'package:frontend/Reviews/bloc/review_bloc.dart';
 import 'package:frontend/notifications/views/notification_screen.dart';
-import 'package:frontend/theme/bloc/theme_bloc.dart';
+import 'package:frontend/serviceLocator.dart';
+import 'package:frontend/Theme/bloc/theme_bloc.dart';
 
 import 'package:frontend/auth/bloc/auth_bloc.dart';
 import 'package:frontend/UI/common/splashScreen.dart';
-import 'package:frontend/UI/trainee/trainee_profile.dart';
+import 'package:frontend/profile/views/trainee_profile.dart';
 import 'package:frontend/UI/common/login.dart';
 import 'package:frontend/UI/common/settings.dart';
 import 'package:frontend/UI/common/signup.dart';
-import 'package:frontend/trainee/bloc/trainee_bloc.dart';
-import 'package:frontend/trainer/bloc/trainer_bloc.dart';
+import 'package:frontend/trainer/trainer.dart';
+import 'package:frontend/trainer/views/trainerDetailPageForTrainee.dart';
+import 'package:frontend/trainer/views/trainerProfile.dart';
+import 'package:frontend/trainerHiring/bloc/trainer_hiring_bloc.dart';
+import 'package:frontend/weight/bloc/weight_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:frontend/trainee/trainee.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import 'UI/admin/admin_home.dart';
+import 'UI/common/about.dart';
+import 'UI/common/contacts.dart';
 import 'UI/trainee/traineeProgressPage.dart';
 
-import 'UI/trainee/traineeHomePage.dart';
-import 'UI/trainee/trainer_choosing_page.dart';
+import 'profile/profile.dart';
+import 'trainee/views/traineeHomePage.dart';
+import 'trainee/views/trainee_detail_for_trainer.dart';
+import 'trainee/views/trainerChoosingPage.dart';
 import 'trainer/views/trainerHomePage.dart';
-
 import 'UI/trainer/workoutPlanCreationPage.dart';
 
-void main() {
+// void main() {
+//   runApp(MyApp());
+// }
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final SharedPreferences preferences = await SharedPreferences.getInstance();
+  ServiceLocator().registerPreferences(preferences);
   runApp(MyApp());
 }
 
@@ -40,7 +54,7 @@ class MyApp extends StatelessWidget {
       ),
       GoRoute(
         path: '/login',
-        builder: (context, state) => const TraineeTrainerDetail(),
+        builder: (context, state) => const LoginPage(),
       ),
       GoRoute(
         path: '/signup',
@@ -51,15 +65,6 @@ class MyApp extends StatelessWidget {
         builder: (context, state) => const Settings(),
       ),
       GoRoute(
-        path: '/traineedetail/:id',
-        pageBuilder: (context, state) {
-          final id = state.params['id'];
-          return MaterialPage<void>(
-            child: TraineeDetail(id: id!),
-          );
-        },
-      ),
-      GoRoute(
         path: '/traineeProgressPage',
         builder: (context, state) => TraineeProgressPage(),
       ),
@@ -67,12 +72,22 @@ class MyApp extends StatelessWidget {
         path: '/workoutPlanCreationPage',
         builder: (context, state) => const WorkoutPlanCreationPage(),
       ),
+      // go router for about page
+      GoRoute(
+        path: '/aboutus',
+        builder: (context, state) => const AboutPage(),
+      ),
+      // go router for contact us page
+      GoRoute(
+        path: '/contactUs',
+        builder: (context, state) => const ContactsUsPage(),
+      ),
 
       // admin routes
-      // GoRoute(
-      //   path: '/admin/homePage',
-      //   builder: (context, state) => const AdminHomePage(),
-      // ),
+      GoRoute(
+        path: '/admin/homePage',
+        builder: (context, state) => const AdminHomePage(),
+      ),
       // GoRoute(
       //   path: '/admin/listOfTrainees',
       //   builder: (context, state) => const AdminListOfTraineesPage(),
@@ -90,11 +105,6 @@ class MyApp extends StatelessWidget {
       //   builder: (context, state) => const AdminNotifications(),
       // ),
       // GoRoute(
-      //   path: '/admin/enterCode',
-      //   builder: (context, state) => const AdminEnterCodePage(),
-      // ),
-      // // watch trainer profile
-      // GoRoute(
       //   path: '/admin/trainer_profile',
       //   builder: (context, state) => const AdminTrainerProfilePage(),
       // ),
@@ -108,10 +118,20 @@ class MyApp extends StatelessWidget {
         path: '/trainer/homePage',
         builder: (context, state) => const TrainerHomePage(),
       ),
-      // GoRoute(
-      //   path: '/trainer/profile',
-      //   builder: (context, state) => const TrainerProfilePage(),
-      // ),
+      GoRoute(
+        path: '/trainer/traineeProfile/:id',
+        pageBuilder: (context, state) {
+          final int id = int.parse(state.params['id']!);
+          return MaterialPage<void>(
+            child: TraineeDetailForTrainer(id: id.toString()),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/trainer/profile',
+        builder: (context, state) => TrainerProfile(),
+      ),
+
       GoRoute(
         path: '/notifications',
         builder: (context, state) => const NotificationScreen(),
@@ -130,32 +150,23 @@ class MyApp extends StatelessWidget {
         path: '/trainee/progress',
         builder: (context, state) => TraineeProgressPage(),
       ),
-      // GoRoute(
-      //   path: '/trainee/workoutPlan',
-      //   builder: (context, state) => const TraineeWorkoutPlanPage(),
-      // ),
       GoRoute(
         path: '/trainee/chooseTrainer',
         builder: (context, state) => const TrainerChoosingPage(),
       ),
-      // GoRoute(
-      //   path: '/trainee/notifications',
-      //   builder: (context, state) => const TraineeNotificationsPage(),
-      // ),
-      // GoRoute(
-      //   path: '/trainee/applyAsTrainer',
-      //   builder: (context, state) => const TraineeApplyAsTrainerPage(),
-      // ),
-      // // trainer application submitted page
-      // GoRoute(
-      //   path: 'trainee/request_sent',
-      //   builder: (context, state) => const TraineeRequestSentPage(),
-      // ),
-      // // view trainer's profile
       GoRoute(
-        path: '/trainee/trainer_profile',
-        builder: (context, state) => const TrainerProfile(),
+        path: '/trainee/trainer_profile/:id',
+        pageBuilder: (context, state) {
+          final int id = int.parse(state.params['id']!);
+          return MaterialPage<void>(
+            child: TrainerDetailForTrainee(id: id),
+          );
+        },
       ),
+      // GoRoute(
+      //   path: '/trainee/trainer_profile',
+      //   builder: (context, state) => TrainerProfile(),
+      // ),
     ],
   );
 
@@ -176,6 +187,18 @@ class MyApp extends StatelessWidget {
         BlocProvider<TrainerBloc>(
           create: (context) => TrainerBloc(),
         ),
+        BlocProvider<WeightBloc>(
+          create: (context) => WeightBloc(),
+        ),
+        BlocProvider<TrainerHiringBloc>(
+          create: (context) => TrainerHiringBloc(),
+        ),
+        BlocProvider<ReviewBloc>(
+          create: (context) => ReviewBloc(),
+        ),
+        BlocProvider<ProfileBloc>(
+          create: (context) => ProfileBloc(),
+        ),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
@@ -185,110 +208,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-    A list of possible routes in our application.
-      `/`                    => shows splash screen
-      `/login`               => shows login page
-      `/signup`              => shows sign up page
-      `/about`               => shows about page
-      `/settings`            => shows settings page
-      `/contact`             => shows contact page
-
-
-      ########__admin_routes__########
-      `/admin/homePage`        => the home page of the admin
-      `/admin/listOfTrainees`  => list of trainees for the admin to see
-      `/admin/listOfTrainees`  => list of trainers for the admin to see
-      `/admin/approvalPage`    => page to approve or disapprove requests from users that admin should handle
-      `/admin/notifications`   => notifications for the admin
-      `/admin/enter_code`  => the page to enter the login code for the admin
-      // router for admin to watch trainee profile
-      `/admin/trainee_profile` => the profile of trainee
-
-      ########__trainer_routes__########
-      `trainer/home_page`      => trainer home page
-      `trainer/profile`        => the profile of trainer
-      `trainer/create_plan`    => the page to create workout plan for trainee
-      `trainer/list_of_trainees` => the list of trainees for the trainer
-      `trainer/notifications`  => notifications for the trainer
-
-      
-
-      #######__trainee_routes__########
-      `trainee/home_page`          => the trainee home page
-      `trainee/apply_as_trainer`   => for trainer to apply as a trainer
-      `trainee/profile`            => the profile of trainee
-      `trainee/progress`           => the progress of trainee
-      `trainee/workout_plan`       => the workout plan of trainee
-      `trainee/choose_trainer`     => the page to choose trainer
-      `trainee/notifications`      => notifications for the trainee
-      `trainee/request_sent`       => the page to show that the request has been sent
-
-*/

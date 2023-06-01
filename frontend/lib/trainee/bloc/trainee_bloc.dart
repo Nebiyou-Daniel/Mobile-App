@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/trainee/bloc/trainee_event.dart';
 import 'package:frontend/trainee/bloc/trainee_state.dart';
 
+import '../../trainer/model/trainer_model.dart';
 import '../data_provider/api_data_providor.dart';
 import '../model/trainee_model.dart';
 
@@ -73,11 +74,25 @@ class TraineeBloc extends Bloc<TraineeEvent, TraineeState> {
       ));
     });
 
-    on<TraineeDeleteEvent> ((event, emit) async {
+    on<TraineeDeleteEvent>((event, emit) async {
       emit(TraineeLoading());
       await Future.delayed(const Duration(seconds: 3));
+    });
 
-      // emit(TraineeOperationSuccess());
+    on<TraineeAddToTraineeListSuccessEvent>((event, emit) async {
+      // TODO: implement event handler
+    });
+
+    on<TraineeAddToTraineeListErrorEvent>((event, emit) async {
+      // TODO: implement event handler
+    });
+
+    on<TraineeRemoveFromTraineeListSuccessEvent>((event, emit) async {
+      // TODO: implement event handler
+    });
+
+    on<TraineeRemoveFromTraineeListErrorEvent>((event, emit) async {
+      // TODO: implement event handler
     });
   }
 }

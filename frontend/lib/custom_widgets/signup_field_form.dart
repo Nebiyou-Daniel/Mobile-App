@@ -17,8 +17,6 @@ class SignUpFieldFormState extends State<SignUpFieldForm> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
-  final TextEditingController _userNameController = TextEditingController();
-  final TextEditingController _phoneNumberController = TextEditingController();
   String roleSelection = 'trainer';
 
   @override
@@ -27,26 +25,10 @@ class SignUpFieldFormState extends State<SignUpFieldForm> {
     _fullNameController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
-    _userNameController.dispose();
-    _phoneNumberController.dispose();
+
     super.dispose();
   }
-
-  String? _validateUsername() {
-    if (_userNameController.text.isEmpty) {
-      return 'Please enter your Username';
-    }
-    // You can add more validation logic for the email format if needed
-    return null;
-  }
-
-  String? _validatePhoneNumber() {
-    if (_phoneNumberController.text.isEmpty) {
-      return 'Please enter your Username';
-    }
-    // You can add more validation logic for the email format if needed
-    return null;
-  }
+  
 
   String? _validateEmail() {
     if (_emailController.text.isEmpty) {
@@ -91,11 +73,10 @@ class SignUpFieldFormState extends State<SignUpFieldForm> {
       bloc.add(
         AuthSignUpEvent(
             name: _fullNameController.text,
-            username: _userNameController.text,
             email: _emailController.text,
             password: _passwordController.text,
             role: roleSelection,
-            phoneNumber: _phoneNumberController.text),
+            ),
       );
     }
   }
@@ -115,10 +96,15 @@ class SignUpFieldFormState extends State<SignUpFieldForm> {
                 child: Row(
                   children: const <Widget>[
                     Padding(
-                      padding: EdgeInsets.only(right: 21),
+                      padding: EdgeInsets.only(right: 10),
                       child: Icon(Icons.info),
                     ),
-                    Text("Fill the following information to sign up."),
+                    Expanded(
+                      child: Text(
+                        "Fill the following information to Signup.",
+                        softWrap: true,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -145,31 +131,6 @@ class SignUpFieldFormState extends State<SignUpFieldForm> {
                 ),
                 validator: (value) {
                   return _validateFullName();
-                },
-              ),
-
-              Container(margin: const EdgeInsets.only(top: 20.0)),
-
-              TextFormField(
-                controller: _userNameController,
-                decoration: const InputDecoration(
-                  icon: Icon(Icons.person_rounded),
-                  labelText: 'User Name',
-                  hintText: 'Enter your User name',
-                ),
-                validator: (value) {
-                  return _validateUsername();
-                },
-              ),
-              TextFormField(
-                controller: _phoneNumberController,
-                decoration: const InputDecoration(
-                  icon: Icon(Icons.phone),
-                  labelText: 'Phone Number',
-                  hintText: 'Enter your Phone Number',
-                ),
-                validator: (value) {
-                  return _validatePhoneNumber();
                 },
               ),
 

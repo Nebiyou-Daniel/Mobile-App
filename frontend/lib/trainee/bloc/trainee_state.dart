@@ -10,7 +10,6 @@ class TraineeState extends Equatable {
   List<Object> get props => [];
 }
 
-
 class TraineeInitial extends TraineeState {}
 
 class TraineeLoading extends TraineeState {}
@@ -56,7 +55,7 @@ class TraineeListEmpty extends TraineeState {}
 class TraineeLoadSuccess extends TraineeState {
   final Trainee trainee;
 
-  const TraineeLoadSuccess({required this.trainee});
+  TraineeLoadSuccess({required this.trainee});
 
   @override
   List<Object> get props => [trainee];
@@ -69,4 +68,20 @@ class TraineeDeleteSuccess extends TraineeState {
 
   @override
   List<Object> get props => [trainee];
+}
+
+// when list of trainers is loadin
+class TraineesListLoading extends TraineeState {}
+
+// success and error events for the above
+class TraineesListLoadSuccessEvent extends TraineeState {
+  final List<Trainee> trainees;
+
+  const TraineesListLoadSuccessEvent({required this.trainees});
+}
+
+class TraineesListLoadErrorEvent extends TraineeState {
+  final String message;
+
+  const TraineesListLoadErrorEvent({required this.message});
 }

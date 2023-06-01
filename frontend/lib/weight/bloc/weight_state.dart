@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
-abstract class WeightState extends Equatable {}
+abstract class WeightState extends Equatable {
+}
 
 class WeightInitial extends WeightState {
   @override
