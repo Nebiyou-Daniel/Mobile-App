@@ -39,7 +39,7 @@ class DatePicker extends StatelessWidget {
       firstDate: DateTime(2020),
       lastDate: DateTime(2025),
       onDateChanged: (DateTime date) {
-        taskBloc.add(TaskLoadingEvent(date: date, userId: -1));
+        taskBloc.add(TaskTraineeLoadingEvent(date: date));
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -47,7 +47,7 @@ class DatePicker extends StatelessWidget {
 
             return AlertDialog(
               title: Card(
-                // Text("${dayNames[date.weekday-1]}  ${date.month}/${date.day}/${date.year}",style: const TextStyle(fontSize: 35)),
+                // display the date in the title
                 child: Column(
                   children: [
                     Text(dayNames[date.weekday - 1],
@@ -68,7 +68,6 @@ class DatePicker extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            print("Tabbed");
                             final taskData = taskBlocState.task;
                             final newTaskData = taskData.copyWith(
                               isCompleted: !taskData.isCompleted,
@@ -102,7 +101,7 @@ class DatePicker extends StatelessWidget {
                         SizedBox(width: 10.0),
                         Expanded(
                           child: Text(
-                            "Loading...",
+                            "Loading Task for this day...",
                             style: TextStyle(fontSize: 16.0),
                           ),
                         ),
@@ -122,7 +121,10 @@ class DatePicker extends StatelessWidget {
                   ),
                   const Padding(padding: EdgeInsets.all(10.0)),
                   if (taskBlocState is TaskLoading)
-                    const LoadingParagraphWidget(numberOfLines: 3, message: "Loading task details.",)
+                    const LoadingParagraphWidget(
+                      numberOfLines: 3,
+                      message: "Loading task details.",
+                    )
                   else if (taskBlocState is TaskLoadedSuccessfully)
                     Text(taskBlocState.task.description)
                   else if (taskBlocState is TaskLoadingError)
@@ -136,7 +138,8 @@ class DatePicker extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: const Text("Close", style: TextStyle(color: Colors.blue)),
+                  child:
+                      const Text("Close", style: TextStyle(color: Colors.blue)),
                 ),
               ],
             );

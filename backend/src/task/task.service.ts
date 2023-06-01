@@ -6,7 +6,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class TaskService {
     
     constructor(private prisma: PrismaService){}
-
+    
     getTaskByDateTrainee(traineeId: number, date: string) {
         let Date = date.split(':');
         let assignedDate = `${Date[0]}/${Date[1]}/${Date[2]}`;        

@@ -4,6 +4,7 @@ import '../data_providor/api_providor.dart';
 
 class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
   NotificationBloc() : super(NotificationInitial()) {
+    
     final ApiDataProvidor apiDataProvidor = ApiDataProvidor();
 
     on<NotificationEvent>((event, emit) {

@@ -51,7 +51,7 @@ class TraineeDetailForAdmin extends StatelessWidget {
                 height: 200,
                 child: WeightChartHandler(id: int.parse(id)),
               ),
-              TrainerTask(id: int.parse(id)),
+              TrainerTask(traineeId: int.parse(id)),
             ]),
           ),
           bottomNavigationBar: TraineeDeleteAccountButton(traineeId: id),

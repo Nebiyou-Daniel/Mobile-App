@@ -16,13 +16,15 @@ class DarkTheme extends ThemeState {
             theme: ThemeData(
           brightness: Brightness.dark,
           primaryColor: Colors.black,
+          scaffoldBackgroundColor: const Color.fromARGB(255, 5, 10, 13),
         ));
 }
+
 class LightTheme extends ThemeState {
   LightTheme()
       : super(
             theme: ThemeData(
-                brightness: Brightness.light,
-                primaryColor: Colors.white,
+          brightness: Brightness.light,
+          primaryColor: Colors.white,
         ));
 }
