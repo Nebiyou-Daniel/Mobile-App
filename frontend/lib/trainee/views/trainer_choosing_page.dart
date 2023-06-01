@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:frontend/trainer/views/trainerDetailPageForTrainee.dart';
-import 'package:go_router/go_router.dart';
-
-import '../../trainer/model/trainer_model.dart';
 
 class TrainerChoosingPage extends StatefulWidget {
   const TrainerChoosingPage({super.key});

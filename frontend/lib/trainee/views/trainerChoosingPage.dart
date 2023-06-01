@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:go_router/go_router.dart';
-
-import '../../custom_widgets/initial_avatar.dart';
 import '../../trainer/model/trainer_model.dart';
 import '../../trainer/trainer.dart';
 import '../../trainer/views/trainerDetailPageForTrainee.dart';
@@ -19,13 +16,13 @@ class TrainerChoosingPage extends StatelessWidget {
       ),
       body: BlocProvider<TrainerBloc>(
         create: (context) =>
-            TrainerBloc()..add(TraineeLoadListOfTrainersEvent()),
+            TrainerBloc()..add(const TrainerListLoadEvent()),
         child: BlocBuilder<TrainerBloc, TrainerState>(
           builder: (context, state) {
             final trainerBloc = BlocProvider.of<TrainerBloc>(context);
 
             if (state is TrainerInitial) {
-              trainerBloc.add(TraineeLoadListOfTrainersEvent());
+              trainerBloc.add(const TrainerListLoadEvent());
               return const Center(child: CircularProgressIndicator());
             } else if (state is TrainerListLoadingSuccess) {
               final trainers = state.trainerList;
@@ -37,6 +34,21 @@ class TrainerChoosingPage extends StatelessWidget {
                 },
               );
             } else if (state is TrainerListLoadingError) {
+              // a button to retry loading trainers
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Failed to load trainers'),
+                    ElevatedButton(
+                      onPressed: () {
+                        trainerBloc.add(const TrainerListLoadEvent());
+                      },
+                      child: const Icon(Icons.refresh),
+                    ),
+                  ],
+                ),
+              );
               return const Center(child: Text('Failed to load trainers'));
             }
 
@@ -56,13 +68,13 @@ class TrainerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: GestureDetector(
-        child: Container(git stat
+        child: Container(
           padding: const EdgeInsets.all(8),
           height: 80,
           child: Column(children: [
             SizedBox(width: 400, child: Text('Name: ${trainer.name}')),
             SizedBox(
-                width: 400, child: Text('Speciality: ${trainer.speciality}')),
+                width: 400, child: Text('Speciality: ${trainer.bio}')),
             SizedBox(
                 width: 400,
                 child: Text('Number of Trainees: ${trainer.numberOfTrainees}')),

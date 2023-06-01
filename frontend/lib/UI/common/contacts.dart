@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../Theme/theme.dart';
 
 class ContactsUsPage extends StatelessWidget {
   const ContactsUsPage({Key? key});
@@ -6,6 +9,7 @@ class ContactsUsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: context.watch<ThemeBloc>().state.theme,
       title: "Contacts",
       home: Scaffold(
         appBar: AppBar(

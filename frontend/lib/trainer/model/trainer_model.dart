@@ -1,21 +1,17 @@
 class Trainer {
-
   // id
   final int id;
-
   final String name;
-  final String speciality;
+  final String bio;
   final double rating;
   final int numberOfTrainees;
   final String email;
   final String phoneNumber;
 
   Trainer({
-
     required this.id,
-
     required this.name,
-    required this.speciality,
+    required this.bio,
     required this.rating,
     required this.numberOfTrainees,
     required this.email,
@@ -25,11 +21,9 @@ class Trainer {
   // from json
   factory Trainer.fromJson(Map<String, dynamic> json) {
     return Trainer(
-
       id: json['id'],
-
       name: json['name'],
-      speciality: json['speciality'],
+      bio: json['bio'],
       rating: json['rating'],
       numberOfTrainees: json['numberOfTrainees'],
       email: json["email"],

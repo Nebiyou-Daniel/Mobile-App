@@ -21,6 +21,9 @@ class AuthLogoutSuccess extends AuthState {
 
 // logout Erroe
 class AuthLogoutError extends AuthState {
+  final String error;
+
+  AuthLogoutError({required this.error});
   @override
   List<Object?> get props => [];
 }
@@ -58,7 +61,7 @@ class AuthSigningUp extends AuthState {
 
 // sign up success
 class AuthSignupSuccess extends AuthState {
-  final role;
+  final String role;
   AuthSignupSuccess({required this.role});
 
   @override
