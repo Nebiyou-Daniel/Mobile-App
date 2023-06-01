@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:frontend/Task/views/trainerTask.dart';
 import 'package:frontend/UI/common/loading_paragraph.dart';
-import 'package:frontend/weight/views/weight_chart.dart';
+import 'package:frontend/trainee/trainee.dart';
 import '../trainer.dart';
 
 class TrainerPersonalInformation extends StatelessWidget {
@@ -17,13 +16,14 @@ class TrainerPersonalInformation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<TrainerBloc>(
-      create: (context) => TrainerBloc()..add(TrainerLoading(id: id)),
+      create: (context) =>
+          TrainerBloc()..add(TrainerDetailLoadEvent(trainerId: id)),
       child: BlocBuilder<TrainerBloc, TrainerState>(
         builder: (context, state) {
           final trainerBloc = context.watch<TrainerBloc>();
 
           if (state is TrainerInitial) {
-            trainerBloc.add(TrainerLoading(id: id));
+            trainerBloc.add(TrainerDetailLoadEvent(trainerId: id));
             return const Center(
               child: LoadingParagraphWidget(
                 numberOfLines: 13,
@@ -39,7 +39,7 @@ class TrainerPersonalInformation extends StatelessWidget {
                 message: "Loading trainee...",
               ),
             );
-          } else if (state is TrainerLoadingSuccess) {
+          } else if (state is TrainerLoadSuccess) {
             print("Trainee load success");
             return SingleChildScrollView(
               child: Column(
@@ -62,9 +62,10 @@ class TrainerPersonalInformation extends StatelessWidget {
                   ),
                   Text(state.trainer.name),
                   Text(state.trainer.email),
-                  Text(state.trainer.speciality),
+                  Text(state.trainer.bio),
                   Text(state.trainer.phoneNumber),
-                  Text('Current active Trainees: ${state.trainer.numberOfTrainees}'),
+                  Text(
+                      'Current active Trainees: ${state.trainer.numberOfTrainees}'),
 
                   // The trainer's rating ***
                   RatingBar.builder(

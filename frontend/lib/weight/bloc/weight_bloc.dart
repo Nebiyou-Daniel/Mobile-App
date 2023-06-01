@@ -1,6 +1,4 @@
-// the bloc for weight data for user
 
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/weight/data_provider/api_data_providor.dart';
 import 'package:frontend/weight/bloc/weight_event.dart';
@@ -27,6 +25,12 @@ class WeightBloc extends Bloc<WeightEvent, WeightState> {
       }
     });
 
-    on<WeightAddEvent>((event, emit) {});    
+    on<WeightAddEvent>((event, emit) async {
+      emit(WeightLoading());
+      await Future.delayed(const Duration(seconds: 2));
+      Map<double, double> weightData =
+          await apiDataProvider.getSelfWeightData();
+      emit(WeightLoadedSuccessfully(weightData: weightData));
+    });
   }
 }

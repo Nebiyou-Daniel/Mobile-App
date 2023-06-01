@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/custom_widgets/logoutButton.dart';
 
 class ProfileForm extends StatefulWidget {
   const ProfileForm({super.key});
@@ -23,7 +24,6 @@ class _ProfileFormState extends State<ProfileForm> {
   TextEditingController bioController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
-  
 
   @override
   void initState() {
@@ -240,21 +240,9 @@ class _ProfileFormState extends State<ProfileForm> {
             ),
           ),
           Container(height: 20),
-          SizedBox(
-            width: 300,
-            height: 38,
-            child: ElevatedButton(
-              style: ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(Colors.red[900])),
-              child: const Text(
-                'Terminate Account',
-              ),
-              onPressed: () {
-                // Terminate account logic here
-              },
-            ),
-          ),
+          LogoutButton(),
         ],
+        
       ),
     );
   }

@@ -4,10 +4,26 @@ import 'package:equatable/equatable.dart';
 
 import '../../trainee/model/trainee_model.dart';
 import '../model/trainer_model.dart';
+import '../model/trainer_model.dart';
 
 abstract class TrainerState extends Equatable {}
 
 class TrainerInitial extends TrainerState {
+  @override
+  List<Object?> get props => [];
+}
+
+class TrainerDeleteSuccess extends TrainerState {
+  @override
+  List<Object?> get props => [];
+}
+
+
+class TrainerDeleteError extends TrainerState {
+  final String error;
+
+  TrainerDeleteError({required this.error});
+
   @override
   List<Object?> get props => [];
 }
@@ -24,24 +40,74 @@ class GettingTraineeDetail extends TrainerState {
   List<Object?> get props => [];
 }
 
-// trainee list received successfully
-class TraineeListReceivedSuccessfully extends TrainerState {
-  // initialized by using the Trainee model instance
-  final List<Trainee> traineeList;
+// trainee removed from trainee list successfully
+class TraineeRemoveFromTraineeListSuccess extends TrainerState {
+  @override
+  List<Object?> get props => [];
+}
 
-  TraineeListReceivedSuccessfully({required this.traineeList});
+// trainee removed from trainee list error
+class TraineeRemoveFromTraineeListError extends TrainerState {
+  final String error;
+
+  TraineeRemoveFromTraineeListError({required this.error});
 
   @override
   List<Object?> get props => [];
 }
 
-// trainee detail received successfully
-class TraineeDetailReceivedSuccessfully extends TrainerState {
-  // initialized by using the Trainee model instance
-  final Trainee trainee;
 
-  TraineeDetailReceivedSuccessfully({required this.trainee});
+class TrainerListLoading extends TrainerState {
+  @override
+  List<Object?> get props => [];
+}
 
+
+class TrainerListLoadingSuccess extends TrainerState {
+  final List<Trainer> trainerList;
+  final String criteria;
+
+  TrainerListLoadingSuccess({required this.trainerList, this.criteria = "None"});
+
+  @override
+  List<Object?> get props => [];
+}
+
+
+class TrainerListLoadingError extends TrainerState {
+  final String error;
+
+  TrainerListLoadingError({required this.error});
+
+  @override
+  List<Object?> get props => [];
+}
+
+
+class TrainerLoading extends TrainerState {
+  @override
+  List<Object?> get props => [];
+}
+
+class TrainerLoadSuccess extends TrainerState {
+  final Trainer trainer;
+
+  TrainerLoadSuccess({required this.trainer});
+
+  @override
+  List<Object?> get props => [];
+}
+
+class TrainerLoadingError extends TrainerState {
+  final String error;
+
+  TrainerLoadingError({required this.error});
+
+  @override
+  List<Object?> get props => [];
+}
+
+class TrainerListEmpty extends TrainerState {
   @override
   List<Object?> get props => [];
 }
@@ -104,65 +170,3 @@ class TraineeAddToTraineeListError extends TrainerState {
   List<Object?> get props => [];
 }
 
-// trainee removed from trainee list successfully
-class TraineeRemoveFromTraineeListSuccess extends TrainerState {
-  @override
-  List<Object?> get props => [];
-}
-
-// trainee removed from trainee list error
-class TraineeRemoveFromTraineeListError extends TrainerState {
-  final String error;
-
-  TraineeRemoveFromTraineeListError({required this.error});
-
-  @override
-  List<Object?> get props => [];
-}
-
-
-class TrainerListLoading extends TrainerState {
-  @override
-  List<Object?> get props => [];
-}
-
-
-class TrainerListLoadingSuccess extends TrainerState {
-
-  final List<Trainer> trainerList;
-  final String criteria;
-
-  TrainerListLoadingSuccess({required this.trainerList, this.criteria = "None"});
-
-
-  @override
-  List<Object?> get props => [];
-}
-
-
-class TrainerListLoadingError extends TrainerState {
-  final String error;
-
-  TrainerListLoadingError({required this.error});
-
-  @override
-  List<Object?> get props => [];
-}
-
-class TrainerLoadingSuccess extends TrainerState {
-  final Trainer trainer;
-
-  TrainerLoadingSuccess({required this.trainer});
-
-  @override
-  List<Object?> get props => [];
-}
-
-class TrainerLoadingError extends TrainerState {
-  final String error;
-
-  TrainerLoadingError({required this.error});
-
-  @override
-  List<Object?> get props => [];
-}
