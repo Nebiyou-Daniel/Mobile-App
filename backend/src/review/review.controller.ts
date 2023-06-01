@@ -23,6 +23,14 @@ export class ReviewController {
         return this.reviewService.getAllReviewsOfTrainer(trainerId);
     }
 
+    @Get('trainee/:id')
+    getTraineeReview(
+        @GetTrainee('id') traineeId: number,
+        @Param('id',ParseIntPipe) trainerId: number
+    ){
+        return this.reviewService.getTraineeReview(traineeId,trainerId);
+    }
+
     @Get(':id')
     getReviewById(
         @GetTrainee('id') traineeId: number,
