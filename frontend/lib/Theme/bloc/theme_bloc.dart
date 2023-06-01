@@ -6,7 +6,6 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
   ThemeBloc() : super(LightTheme()) {
     on<ThemeChangedEvent>((event, emit) {
       if (event.isDarkThemeOn) {
-        // save the dark theme on to the shared preference
         emit(DarkTheme());
       } else {
         emit(LightTheme());
