@@ -4,6 +4,7 @@ import '../../trainee/model/trainee_model.dart';
 import '../../trainer/bloc/trainer_state.dart';
 import '../data_provider/api_data_providor.dart';
 import '../model/trainer_model.dart';
+import '../model/trainer_model.dart';
 import 'trainer_event.dart';
 
 class TrainerBloc extends Bloc<TrainerEvent, TrainerState> {

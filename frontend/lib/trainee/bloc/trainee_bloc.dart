@@ -106,5 +106,6 @@ class TraineeBloc extends Bloc<TraineeEvent, TraineeState> {
     on<TraineeRemoveFromTraineeListErrorEvent>((event, emit) async {
       // TODO: implement event handler
     });
+
   }
 }

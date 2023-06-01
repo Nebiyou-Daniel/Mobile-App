@@ -16,7 +16,7 @@ model Trainee {
   email String @unique
   password String
   phoneNumber String? @unique
-  role String
+  role String @default("trainee")
   bio String?
   tasks Task[]
   reviews Review[]
@@ -24,6 +24,9 @@ model Trainee {
   weights Weight[]
   trainerId Int?
   trainer Trainer? @relation(fields:[trainerId], references: [id])
+  previousJobXp String?
+  yearsOfXp Int?
+  previousWorkPlace String?
 
   @@map("trainee")
 }
@@ -34,7 +37,7 @@ model Trainer{
   email String @unique
   password String
   phoneNumber String? @unique
-  role String
+  role String @default("trainer")
   bio String?
   tasks Task[]
   reviews Review[]
@@ -55,7 +58,7 @@ model Admin{
   email String @unique
   password String
   phoneNumber String? @unique
-  role String
+  role String @default("admin")
   bio String?
   notifications Notification[]
 
@@ -94,6 +97,7 @@ model Notification{
   id Int @id @default(autoincrement())
   title String
   details String
+  markAsRead Boolean @default(false)
   createdAt DateTime @default(now())
   traineeId Int?
   trainee Trainee? @relation(fields:[traineeId], references: [id])
@@ -106,6 +110,7 @@ model Notification{
 model Weight{
   id Int @id @default(autoincrement())
   weight String
+  height String?
   createdAt DateTime @default(now())
   traineeId Int?
   trainee Trainee? @relation(fields:[traineeId], references: [id])

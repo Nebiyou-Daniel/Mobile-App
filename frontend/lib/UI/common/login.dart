@@ -22,7 +22,7 @@ class LoginPage extends StatelessWidget {
               const HeaderBanner(),
               Container(
                 padding: const EdgeInsets.all(39.5),
-                child: const LoginHandler(),
+                child: LoginHandler(),
               ),
               Container(
                   padding: const EdgeInsets.all(39.5),
@@ -44,6 +44,7 @@ class LoginPage extends StatelessWidget {
 
 class LoginHandler extends StatelessWidget {
   const LoginHandler({super.key});
+
 
   void navigateToPage(BuildContext context, String route) {
     context.go(route);

@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../trainee/model/trainee_model.dart';
 import '../model/trainer_model.dart';
+import '../model/trainer_model.dart';
 
 abstract class TrainerState extends Equatable {}
 

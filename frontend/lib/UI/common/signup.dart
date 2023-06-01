@@ -56,6 +56,7 @@ class _SignupHandlerState extends State<SignupHandler> {
   Widget build(BuildContext context) {
     final bloc = context.watch<AuthBloc>();
     final state = bloc.state;
+    print(state);
 
     if (state is AuthInitial) {
       return signUpFieldForm;
@@ -66,10 +67,10 @@ class _SignupHandlerState extends State<SignupHandler> {
 
     if (state is AuthSignupSuccess) {
       if (state.role == "admin") {
-        // WidgetsBinding.instance.addPostFrameCallback((_) {
-        //   navigateToPage(context, "/admin/homePage");
-        // });
-        context.go("/admin/homePage");
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          navigateToPage(context, "/admin/homePage");
+        });
+        // context.go("/admin/homePage");
         return const SizedBox();
       } else if (state.role == "trainer") {
         WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -98,7 +99,7 @@ class _SignupHandlerState extends State<SignupHandler> {
 
     return signUpFieldForm;
   }
-  
+
   void navigateToPage(BuildContext context, String s) {
     context.go(s);
   }

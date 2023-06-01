@@ -137,7 +137,7 @@ class MyApp extends StatelessWidget {
       // ),
       GoRoute(
         path: '/trainee/chooseTrainer',
-        builder: (context, state) => const TrainerChoosingPage(),
+        builder: (context, state) => TrainerChoosingPage(),
       ),
       GoRoute(
         path: '/trainee/trainer_profile/:id',
