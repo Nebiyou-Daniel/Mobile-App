@@ -21,7 +21,7 @@ class DeleteSelfAccountButton extends StatelessWidget {
           BlocProvider.of<AuthBloc>(context).add(AuthDeleteSelfAccountEvent());
         },
         child: const Text("Delete Account",
-            style: TextStyle(fontSize: 20, color: Colors.red)),
+            style: TextStyle(fontSize: 20)),
       ),
     );
   }

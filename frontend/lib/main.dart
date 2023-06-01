@@ -13,7 +13,7 @@ import 'package:frontend/UI/common/settings.dart';
 import 'package:frontend/UI/common/signup.dart';
 import 'package:frontend/trainer/trainer.dart';
 import 'package:frontend/trainer/views/trainerDetailPageForTrainee.dart';
-import 'package:frontend/trainer/views/trainerProfile.dart';
+import 'package:frontend/profile/views/trainerProfile.dart';
 import 'package:frontend/trainerHiring/bloc/trainer_hiring_bloc.dart';
 import 'package:frontend/weight/bloc/weight_bloc.dart';
 import 'package:go_router/go_router.dart';

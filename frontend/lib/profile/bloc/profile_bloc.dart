@@ -12,6 +12,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           name: "John Adamu",
           bio: "I am a trainer",
           email: 'thisisemail@gmail.com',
+          phoneNumber: "125673456",
         ));
       } catch (e) {
         emit(ProfileLoadFailureState());
@@ -27,8 +28,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           bio: "I am a trainer",
           email: 'thisisemail@gmail.com',
         ));
+        // add profileLoad event to this bloc
+        add(ProfileLoadEvent());
       } catch (e) {
-        emit(ProfileOperationErrorState(message: "Inexpected error occurred when updating profile!"));
+        emit(const ProfileOperationErrorState(message: "Inexpected error occurred when updating profile!"));
       }
     });
   }

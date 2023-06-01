@@ -26,10 +26,10 @@ class TrainerHomePage extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: "Workout Warrior",
+        theme: context.watch<ThemeBloc>().state.theme,
         home: Scaffold(
           appBar: AppBar(
             title: const Text("Workout Warrior"),
-            backgroundColor: const Color(0xFF0A568A),
             actions: <Widget>[
               IconButton(
                 icon: const Icon(Icons.notifications),
