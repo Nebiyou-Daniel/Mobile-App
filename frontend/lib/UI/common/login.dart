@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../custom_widgets/header_banner.dart';
-import '../../auth/bloc/auth_event.dart';
+import '../../auth/auth.dart';
+import '../../auth/data_provider/local_data_providor.dart';
 
 import '../../custom_widgets/login_field_form.dart';
 import 'loading.dart';
@@ -23,7 +24,7 @@ class LoginPage extends StatelessWidget {
               const HeaderBanner(),
               Container(
                 padding: const EdgeInsets.all(39.5),
-                child: const LoginHandler(),
+                child: LoginHandler(),
               ),
               Container(
                   padding: const EdgeInsets.all(39.5),
@@ -44,7 +45,9 @@ class LoginPage extends StatelessWidget {
 }
 
 class LoginHandler extends StatelessWidget {
-  const LoginHandler({super.key});
+  LoginHandler({super.key});
+  final LocalDataProvider localDataProvider = LocalDataProvider();
+
 
   void navigateToPage(BuildContext context, String route) {
     context.go(route);
@@ -68,11 +71,15 @@ class LoginHandler extends StatelessWidget {
         });
         return const SizedBox();
       } else if (state.role == "trainer") {
+        getLocalDataProvider();
+
         WidgetsBinding.instance.addPostFrameCallback((_) {
           navigateToPage(context, "/trainer/homePage");
         });
         return const SizedBox();
       } else if (state.role == "trainee") {
+        getLocalDataProvider();
+
         WidgetsBinding.instance.addPostFrameCallback((_) {
           navigateToPage(context, "/trainee/homePage");
         });
@@ -93,5 +100,15 @@ class LoginHandler extends StatelessWidget {
     }
 
     return const LoginFormField();
+  }
+    getLocalDataProvider() async {
+    try {
+      final token = await localDataProvider.getAccessToken();
+      print('Access Token: $token');
+      // Do something with the access token
+    } catch (e) {
+      print('Error: $e');
+      // Handle the error
+    }
   }
 }

@@ -62,17 +62,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     // signing up ...
     on<AuthSignUpEvent>((event, emit) async {
       emit(AuthSigningUp());
+
       try {
-        await Future.delayed(const Duration(seconds: 1));
-        // send a mock data for test purpose only
-        emit(AuthSignupSuccess(role: "trainee"));
-        // await apiDataProvider.signUp(
-        //     name: event.name,
-        //     username: event.username,
-        //     email: event.email,
-        //     phoneNumber: event.phoneNumber,
-        //     password: event.password,
-        //     role: event.role);
+        String token = "None";
+        if (event.role == "trainee") {
+          token = await apiDataProvider.traineeSignUp(
+              email: event.email,
+              password: event.password,
+              name: event.name,
+              role: "trainee");
+        }
+        // else {
+        // token = await apiDataProvider.
+        // }
+        emit(AuthSignupSuccess(role: event.role));
+
+        print(token);
       } catch (error) {
         emit(AuthSignupError(error: error.toString()));
       }

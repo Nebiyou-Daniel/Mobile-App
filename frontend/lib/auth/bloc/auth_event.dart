@@ -11,17 +11,13 @@ class AuthLoginEvent extends AuthEvent {
 
 class AuthSignUpEvent extends AuthEvent {
   final String name;
-  final String username;
   final String email;
-  final String phoneNumber;
   final String password;
   final String role;
 
   AuthSignUpEvent(
       {required this.name,
-      required this.username,
       required this.email,
-      required this.phoneNumber,
       required this.password,
       required this.role});
 }

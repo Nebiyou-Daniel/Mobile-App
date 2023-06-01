@@ -58,7 +58,7 @@ class AuthSigningUp extends AuthState {
 
 // sign up success
 class AuthSignupSuccess extends AuthState {
-  final role;
+  final String role;
   AuthSignupSuccess({required this.role});
 
   @override

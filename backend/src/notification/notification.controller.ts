@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards } from '@nestjs/common';
 import { NotificationService } from './notification.service';
 import { GetTrainee, GetTrainer } from 'src/auth/decorator';
-import { Task, Trainee, Trainer } from '@prisma/client';
+import { Task, Trainee } from '@prisma/client';
 import { JwtGuard } from 'src/auth/guard';
 
 @UseGuards(JwtGuard)

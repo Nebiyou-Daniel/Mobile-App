@@ -24,7 +24,7 @@ export class AuthService {
     async traineeSignup(dto: signupDto){
         // generate password hash
         const passwordHash = await argon.hash(dto.password);
-
+        console.log("request comes")
         //save new user in the database
         try {
             const trainee = await this.prisma.trainee.create({
@@ -35,6 +35,7 @@ export class AuthService {
                     role: dto.role,
                 }
             })
+            console.log("comes through here")
             // return saved user
             delete trainee.password;
             return this.signToken(trainee.id, trainee.email, Role.trainee);;
