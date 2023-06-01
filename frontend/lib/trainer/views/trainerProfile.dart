@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:frontend/Reviews/views/list_of_reviews.dart';
+import 'package:frontend/Reviews/views/trainerListOfReviews.dart';
 import 'package:frontend/custom_widgets/initial_avatar.dart';
 import 'package:frontend/profile/bloc/profile_bloc.dart';
 import 'package:frontend/profile/profile.dart';

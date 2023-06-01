@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frontend/trainee/trainee.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../Reviews/views/list_of_reviews.dart';
+import '../../Reviews/views/trainerListOfReviews.dart';
 import '../../trainee/views/trainee_personal_information.dart';
 import '../../trainerHiring/trainer_hiring.dart';
 import '../trainer.dart';
@@ -26,21 +25,22 @@ class TrainerDetailForTrainee extends StatelessWidget {
         );
       }
       return Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {
-                context.pop();
-              },
-            ),
-            title: const Text('Trainer Details Page'),
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              context.pop();
+            },
           ),
-          body: SingleChildScrollView(
-              child: Column(children: [
-            TraineePersonalInformation(id: id),
-            // ReviewList(trainerId: id),
-            TrainerHiringButton(id: id),
-          ])));
+          title: const Text('Trainer Details Page'),
+        ),
+        body: SingleChildScrollView(
+            child: Column(children: [
+          TraineePersonalInformation(id: id),
+          ReviewList(trainerId: id),
+        ])),
+        bottomNavigationBar: TrainerHiringButton(id: id),
+      );
     });
   }
 }
@@ -81,12 +81,12 @@ class TrainerHiringButton extends StatelessWidget {
                   .read<TrainerHiringBloc>()
                   .add(TrainerHiringHireEvent(id: id));
             },
-            child: const Text('Hire as Trainer'),
+            child: const Text('Hire Trainer'),
           );
         }
       }
       return const Center(
-        child: Text('Error'),
+        child: Text('Error loading the button'),
       );
     });
   }

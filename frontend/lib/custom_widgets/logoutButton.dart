@@ -20,7 +20,7 @@ class LogoutButton extends StatelessWidget {
         onPressed: () {
           BlocProvider.of<AuthBloc>(context).add(AuthLogoutEvent());
         },
-        child: const Text("Logout"),
+        child: const Text("Logout", style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     );
   }

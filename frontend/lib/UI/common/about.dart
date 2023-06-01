@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/custom_widgets/header_banner.dart';
+
+import '../../Theme/theme.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
@@ -7,6 +10,7 @@ class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: context.watch<ThemeBloc>().state.theme,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
