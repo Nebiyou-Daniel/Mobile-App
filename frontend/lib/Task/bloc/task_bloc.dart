@@ -9,7 +9,6 @@ import '../../serviceLocator.dart';
 class TaskBloc extends Bloc<TaskEvent, TaskState> {
   TaskBloc() : super(TaskInitial()) {
     ApiDataProvider apiDataProvider = ApiDataProvider();
-    SharedPreferences preferences = ServiceLocator().preferences;
 
     // loading task for trainee, need to pass trainee id and date
     on<TaskTrainerLoadingEvent>((event, emit) async {
@@ -79,6 +78,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       }
       emit(TaskInitial());
     });
+
     on<TaskCompletedToggleEvent>((event, emit) async {
       emit(TaskLoading());
 

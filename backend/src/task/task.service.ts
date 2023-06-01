@@ -4,25 +4,30 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class TaskService {
-    getTaskByDateTrainee(traineeId: number, dto: GetTaskDtoTrainee) {
+    
+    constructor(private prisma: PrismaService){}
+    
+    getTaskByDateTrainee(traineeId: number, date: string) {
+        let Date = date.split(':');
+        let assignedDate = `${Date[0]}/${Date[1]}/${Date[2]}`;        
         return this.prisma.task.findFirst({
             where: {
                 traineeId: traineeId,
-                trainerId: dto.trainerId,
-                assignedDate: dto.assignedDate
+                assignedDate: assignedDate
             }
         }) ;
     }
-    getTaskByDate(trainerId: number, dto: GetTaskDto) {
+    getTaskByDate(trainerId: number, traineeId: number, date: string ) {
+        let Date = date.split(':');
+        let assignedDate = `${Date[0]}/${Date[1]}/${Date[2]}`;
         return this.prisma.task.findFirst({
             where: {
                 trainerId: trainerId,
-                traineeId: dto.traineeId,
-                assignedDate: dto.assignedDate
+                traineeId: traineeId,
+                assignedDate: assignedDate
             }
         })  
     }
-    constructor(private prisma: PrismaService){}
 
     async createTask(trainerId: number, dto: CreateTaskDto){
         const task = await this.prisma.task.create({
