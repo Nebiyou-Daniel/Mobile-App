@@ -1,10 +1,3 @@
-// the following ApiDataProvidor class is used to get the data from the backend about review
-// It has to do the following things:
-// 1. get all reviews
-// 2. post a review
-// 3. delete a review
-// 4. update a review
-// 5. get all reviews for a trainer by id
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
