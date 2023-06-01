@@ -3,6 +3,7 @@ import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator"
 export class CreateReviewDto{
     
     @IsString()
+    @IsNotEmpty()
     comment: string
     @IsNumber()
     rating: number
