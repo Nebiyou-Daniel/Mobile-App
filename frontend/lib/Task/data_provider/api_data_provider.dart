@@ -7,7 +7,9 @@ class ApiDataProvider {
 // define the url base and so
   getSelfTaskData() {}
 
-  getTaskData(userId) {}
+  getTaskByDateAndTraineeId(traineeId, date) {
+    // TODO: impement get task by date
+  }
 
   addTask(task, userId) async {
     // try adding the task,
