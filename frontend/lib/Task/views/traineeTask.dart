@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/UI/common/loading_paragraph.dart';
 import 'package:go_router/go_router.dart';
 
+import '../Model/task_model.dart';
 import '../task.dart';
 
 class TraineeTask extends StatelessWidget {
@@ -68,12 +69,9 @@ class DatePicker extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            final taskData = taskBlocState.task;
-                            final newTaskData = taskData.copyWith(
-                              isCompleted: !taskData.isCompleted,
-                            );
+                            final Task taskData = taskBlocState.task.copyWith();
                             taskBloc.add(
-                              TaskUpdateEvent(task: newTaskData),
+                              TaskCompletedToggleEvent(task: taskData),
                             );
                           },
                           child: Icon(
@@ -128,9 +126,19 @@ class DatePicker extends StatelessWidget {
                   else if (taskBlocState is TaskLoadedSuccessfully)
                     Text(taskBlocState.task.description)
                   else if (taskBlocState is TaskLoadingError)
+                    TextButton(
+                      onPressed: () {
+                        taskBloc.add(TaskTraineeLoadingEvent(date: date));
+                      },
+                      child: const Text("Failed to load task, Reload"),
+                    )
+                  else if (taskBlocState is TaskIsEmpty)
+                    const Text("🏜 Looks like there are no tasks for the day.")
+                  else if (taskBlocState is TaskUpdateError)
                     Text(taskBlocState.error)
                   else
-                    const Text("Looks like there are no tasks for the day."),
+                    const Text("Unexpected Error Happened !",
+                        style: TextStyle(fontSize: 50.0)),
                 ],
               ),
               actions: [
