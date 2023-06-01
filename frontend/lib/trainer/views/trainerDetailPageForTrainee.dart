@@ -39,7 +39,7 @@ class TrainerDetailForTrainee extends StatelessWidget {
           TraineePersonalInformation(id: id),
           ReviewList(trainerId: id),
         ])),
-        bottomNavigationBar: TrainerHiringButton(id: id),
+        // bottomNavigationBar: TrainerHiringButton(id: id),
       );
     });
   }

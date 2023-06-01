@@ -5,6 +5,7 @@ import 'package:frontend/custom_widgets/logoutButton.dart';
 import 'package:frontend/trainer/views/trainer_hired_by_trainee.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../Theme/theme.dart';
 import '../../auth/auth.dart';
 import '../../custom_widgets/bottom_navigation_trainee.dart';
 import '../../custom_widgets/deleteSelfAccountButton.dart';
@@ -13,17 +14,14 @@ import '../../custom_widgets/profile_form.dart';
 class TraineeProfile extends StatelessWidget {
   const TraineeProfile({super.key});
 
-  final String name = "John Doe";
-  final String bio = "A passionate developer and a lifelong learner.";
-  final String image = "https://picsum.photos/200";
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: context.watch<ThemeBloc>().state.theme,
       home: Scaffold(
         appBar: AppBar(
           title: const Text("Workout Warrior"),
-          backgroundColor: const Color(0xFF0A568A),
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.notifications),
@@ -54,16 +52,18 @@ class TraineeProfile extends StatelessWidget {
               // a widget that shows this user is a trainee
               Row(
                 children: const [
-                  Text("Role: Trainee => "),
                   Icon(Icons.person),
+                  Text("Role: Trainee"),
                 ],
               ),
-              const ProfileForm(),
+              ProfileForm(),
               const Divider(),
               const LogoutButton(),
               const Divider(),
               const DeleteSelfAccountButton(),
+              Container(height: 20),
               const TrainerHiredByTrainee(),
+              Container(height: 20),
             ],
           ),
         ),
