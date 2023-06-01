@@ -83,6 +83,15 @@ class LoginHandler extends StatelessWidget {
         return const SizedBox();
       }
     }
+    if (state is AuthSignupError) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final snackBar = SnackBar(
+          content: Text(state.error),
+          backgroundColor: Colors.red,
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      });
+    }
 
     if (state is AuthLoginError) {
       WidgetsBinding.instance.addPostFrameCallback((_) {

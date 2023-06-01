@@ -7,8 +7,8 @@ import 'package:frontend/auth/auth.dart';
 import 'package:frontend/trainee/trainee.dart';
 import 'package:frontend/Theme/theme.dart';
 
-import '../../Custom_Widgets/header_banner.dart';
 import '../../Task/views/traineeTask.dart';
+import '../../custom_widgets/header_banner.dart';
 import '../../custom_widgets/bottom_navigation_trainee.dart';
 import '../../weight/views/weight_chart.dart';
 import '../../weight/weight.dart';
