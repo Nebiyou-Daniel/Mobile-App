@@ -17,7 +17,6 @@ import 'package:frontend/trainerHiring/bloc/trainer_hiring_bloc.dart';
 import 'package:frontend/weight/bloc/weight_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:frontend/trainee/trainee.dart';
-import 'UI/admin/admin_home.dart';
 import 'UI/common/about.dart';
 import 'UI/common/contacts.dart';
 import 'UI/trainee/traineeProgressPage.dart';
@@ -26,10 +25,8 @@ import 'trainee/views/traineeHomePage.dart';
 import 'trainee/views/traineeList.dart';
 import 'trainee/views/trainee_detail_for_trainer.dart';
 import 'trainee/views/trainerChoosingPage.dart';
-import 'trainer/views/trainerDetailPageForAdmin.dart';
 import 'trainer/views/trainerHomePage.dart';
 import 'UI/trainer/workoutPlanCreationPage.dart';
-
 void main() {
   runApp(MyApp());
 }
@@ -76,27 +73,39 @@ class MyApp extends StatelessWidget {
       ),
 
       // admin routes
-      GoRoute(
-        path: '/admin/homePage',
-        builder: (context, state) => const AdminHomePage(),
-      ),
-      GoRoute(
-        path: '/admin/trainees',
-        builder: (context, state) => const ListOfTrainees(),
-      ),
-      GoRoute(
-        path: '/admin/trainers',
-        builder: (context, state) => const ListOfTrainers(),
-      ),
-      GoRoute(
-        path: '/admin/traineedetail/:id',
-        pageBuilder: (context, state) {
-          final id = state.params['id'];
-          return MaterialPage<void>(
-            child: TraineeDetailForAdmin(id: id!),
-          );
-        },
-      ),
+      // GoRoute(
+      //   path: '/admin/homePage',
+      //   builder: (context, state) => const AdminHomePage(),
+      // ),
+      // GoRoute(
+      //   path: '/admin/listOfTrainees',
+      //   builder: (context, state) => const AdminListOfTraineesPage(),
+      // ),
+      // GoRoute(
+      //   path: '/admin/listOfTrainers',
+      //   builder: (context, state) => const AdminListOfTrainersPage(),
+      // ),
+      // GoRoute(
+      //   path: '/admin/approvalPage',
+      //   builder: (context, state) => const AdminApprovalPage(),
+      // ),
+      // GoRoute(
+      //   path: '/admin/notifications',
+      //   builder: (context, state) => const AdminNotifications(),
+      // ),
+      // GoRoute(
+      //   path: '/admin/enterCode',
+      //   builder: (context, state) => const AdminEnterCodePage(),
+      // ),
+      // // watch trainer profile
+      // GoRoute(
+      //   path: '/admin/trainer_profile',
+      //   builder: (context, state) => const AdminTrainerProfilePage(),
+      // ),
+      // GoRoute(
+      //   path: '/admin/trainee_profile',
+      //   builder: (context, state) => const AdminTraineeProfilePage(),
+      // ),
 
       // trainer routes
       GoRoute(
@@ -148,15 +157,10 @@ class MyApp extends StatelessWidget {
           );
         },
       ),
-      GoRoute(
-        path: '/admin/trainer_profile/:id',
-        pageBuilder: (context, state) {
-          final int id = int.parse(state.params['id']!);
-          return MaterialPage<void>(
-            child: TrainerDetailForAdmin(id: id.toString()),
-          );
-        },
-      ),
+      // GoRoute(
+      //   path: '/trainee/trainer_profile',
+      //   builder: (context, state) => TrainerProfile(),
+      // ),
     ],
   );
 

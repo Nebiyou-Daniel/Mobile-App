@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frontend/weight/views/weight_chart.dart';
+import 'package:frontend/UI/common/loading_paragraph.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../Task/views/traineeTask.dart';
 
 import 'package:frontend/auth/auth.dart';
 import 'package:frontend/trainee/trainee.dart';
 import 'package:frontend/Theme/theme.dart';
 
 import '../../Custom_Widgets/header_banner.dart';
+import '../../Task/views/traineeTask.dart';
 import '../../custom_widgets/bottom_navigation_trainee.dart';
+import '../../weight/views/weight_chart.dart';
 import '../../weight/weight.dart';
+
 
 class TraineeHomePage extends StatelessWidget {
   const TraineeHomePage({super.key});

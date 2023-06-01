@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../../custom_widgets/bottom_navigation_trainee.dart';
 import '../../custom_widgets/header_banner_with_icons.dart';
+
 
 class TraineeTrainerDetail extends StatefulWidget {
   const TraineeTrainerDetail({super.key});
@@ -35,6 +37,7 @@ class _TraineeTrainerDetailState extends State<TraineeTrainerDetail> {
       builder: (BuildContext context) {
         String rate = '0';
         String editedReview = '';
+
         return AlertDialog(
           title: const Text('Edit Review'),
           content: SizedBox(
@@ -46,6 +49,7 @@ class _TraineeTrainerDetailState extends State<TraineeTrainerDetail> {
                   child: TextFormField(
                     initialValue: review['review'],
                     decoration: const InputDecoration(
+
                       border: OutlineInputBorder(),
                       hintText: "Write your review here.",
                     ),
@@ -75,11 +79,13 @@ class _TraineeTrainerDetailState extends State<TraineeTrainerDetail> {
                     rate = rating.toString();
                   },
                 )
+
               ],
             ),
           ),
           actions: <Widget>[
             ElevatedButton(
+
               child: const Text('Delete'),
               onPressed: () {
                 setState(() {
@@ -106,10 +112,12 @@ class _TraineeTrainerDetailState extends State<TraineeTrainerDetail> {
             ElevatedButton(
               child: const Text('Close'),
               onPressed: () => Navigator.of(context).pop(),
+
             )
           ],
         );
       },
+
     );
   }
 
@@ -119,6 +127,7 @@ class _TraineeTrainerDetailState extends State<TraineeTrainerDetail> {
       builder: (BuildContext context) {
         String rate = '0';
         String review = '';
+
         return AlertDialog(
           title: const Text('Write your review.'),
           content: SizedBox(
@@ -133,11 +142,14 @@ class _TraineeTrainerDetailState extends State<TraineeTrainerDetail> {
                       hintText: "Write your review here.",
                     ),
                     validator: (value) {
+
                       if (value!.trim() == '' || value.isEmpty) {
+
                         return 'please enter your review.';
                       }
                       return null;
                     },
+
                     onChanged: (text) {
                       review = text;
                     },
@@ -164,11 +176,13 @@ class _TraineeTrainerDetailState extends State<TraineeTrainerDetail> {
                     rate = rating.toString();
                   },
                 )
+
               ],
             ),
           ),
           actions: <Widget>[
             ElevatedButton(
+
               child: const Text('Add'),
               onPressed: () {
                 setState(() {
@@ -181,6 +195,7 @@ class _TraineeTrainerDetailState extends State<TraineeTrainerDetail> {
             ElevatedButton(
               child: const Text('Close'),
               onPressed: () => Navigator.of(context).pop(),
+
             )
           ],
         );
@@ -213,6 +228,7 @@ class _TraineeTrainerDetailState extends State<TraineeTrainerDetail> {
           ],
         );
       },
+
     );
   }
 
@@ -404,3 +420,4 @@ class _TraineeTrainerDetailState extends State<TraineeTrainerDetail> {
     });
   }
 }
+
