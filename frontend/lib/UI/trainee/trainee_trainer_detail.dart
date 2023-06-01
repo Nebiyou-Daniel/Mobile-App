@@ -3,7 +3,6 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-import '../../custom_widgets/bottom_navigation.dart';
 import '../../custom_widgets/header_banner_with_icons.dart';
 
 
@@ -399,7 +398,6 @@ class _TraineeTrainerDetailState extends State<TraineeTrainerDetail> {
                 ]),
               ),
             ),
-            bottomNavigationBar: BottomNavigation(selectedIndex: 2,),
             );
       }
     );

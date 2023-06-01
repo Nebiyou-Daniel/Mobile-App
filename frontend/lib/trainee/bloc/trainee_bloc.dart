@@ -63,14 +63,14 @@ class TraineeBloc extends Bloc<TraineeEvent, TraineeState> {
       await Future.delayed(const Duration(seconds: 3));
 
       emit(TraineeLoadSuccess(
-        trainees: [Trainee(
+        trainee: Trainee(
           id: 1,
           name: "Ahmed",
           email: "ahmed@gmail.com",
           phone: "+251988173671",
           address: "22 iraq street",
           photo: "This is a fake photo",
-        ),]
+        ),
       ));
     });
 
