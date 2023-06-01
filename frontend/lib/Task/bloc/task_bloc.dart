@@ -10,16 +10,28 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   TaskBloc() : super(TaskInitial()) {
     ApiDataProvider apiDataProvider = ApiDataProvider();
 
+    // loading task for trainee, need to pass trainee id and date
     on<TaskTrainerLoadingEvent>((event, emit) async {
       emit(TaskLoading());
       try {
-        // get the task for the day from the API.
-        final tasks = await apiDataProvider.getTaskByDateAndTraineeId(event.userId, event.date);
-        
+        final String accessToken = preferences.getString("access_token")!;
+        print(event.date.toString());
+        final _task = await apiDataProvider.getTaskData(
+            traineeId: event.userId,
+            date: event.date.toString(),
+            accessToken: accessToken);
 
+        emit(TaskLoadedSuccessfully(task: _task));
       } catch (error) {
         emit(TaskLoadingError(error: error.toString()));
       }
+    });
+
+    // loading task for trainee, need to pass date.
+    on<TaskTraineeLoadingEvent>((event, emit) async {
+      try {
+        final String accessToken = preferences.getString("access_token")!;
+      } catch (error) {}
     });
 
     on<TaskAddEvent>((event, emit) async {
@@ -30,9 +42,9 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         await apiDataProvider.createTask(
             task: event.task, accessToken: accessToken);
         emit(TaskAddSuccess(task: event.task));
-        add(TaskTrainerLoadingEvent(userId: event.userId, date: event.task.date));
+        add(TaskTrainerLoadingEvent(
+            userId: event.userId, date: event.task.date));
       } catch (error) {
-        // else emit the error state
         emit(TaskAddError(error: error.toString()));
       }
     });
@@ -45,7 +57,6 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         await apiDataProvider.updateTask(
             task: event.task, accessToken: accessToken);
       } catch (error) {
-        // else emit the error state
         emit(TaskUpdateError(error: error.toString()));
         return;
       }
@@ -54,12 +65,31 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
     on<TaskDeleteEvent>((event, emit) async {
       emit(TaskLoading());
+      print("delete event");
 
       try {
         final String accessToken = preferences.getString("access_token")!;
 
         await apiDataProvider.deleteTask(
             taskId: event.task.id, accessToken: accessToken);
+      } catch (error) {
+        // else emit the error state
+        emit(TaskDeleteError(error: error.toString()));
+      }
+      emit(TaskInitial());
+    });
+
+    on<TaskCompletedToggleEvent>((event, emit) async {
+      emit(TaskLoading());
+
+      try {
+        final String accessToken = preferences.getString("access_token")!;
+        Task updatedTask = event.task;
+        updatedTask.isCompleted = !updatedTask.isCompleted;
+        await apiDataProvider.setAsDone(
+            task: updatedTask, accessToken: accessToken);
+
+        emit(TaskLoadedSuccessfully(task: updatedTask));
       } catch (error) {
         // else emit the error state
         emit(TaskDeleteError(error: error.toString()));
