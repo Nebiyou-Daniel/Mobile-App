@@ -9,7 +9,7 @@ import 'package:frontend/auth/auth.dart';
 import 'package:frontend/trainee/trainee.dart';
 import 'package:frontend/Theme/theme.dart';
 
-import '../../Custom_Widgets/header_banner.dart';
+import '../../custom_widgets/header_banner.dart';
 
 class TrainerHomePage extends StatelessWidget {
   const TrainerHomePage({super.key});

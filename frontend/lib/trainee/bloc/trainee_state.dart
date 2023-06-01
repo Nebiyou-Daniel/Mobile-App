@@ -55,7 +55,7 @@ class TraineeListEmpty extends TraineeState {}
 class TraineeLoadSuccess extends TraineeState {
   final Trainee trainee;
 
-  TraineeLoadSuccess({required this.trainee});
+  const TraineeLoadSuccess({required this.trainee});
 
   @override
   List<Object> get props => [trainee];

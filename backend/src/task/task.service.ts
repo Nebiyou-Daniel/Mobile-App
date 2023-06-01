@@ -1,9 +1,27 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { CreateTaskDto, EditTaskDto } from './dto';
+import { CreateTaskDto, EditTaskDto, GetTaskDto, GetTaskDtoTrainee } from './dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class TaskService {
+    getTaskByDateTrainee(traineeId: number, dto: GetTaskDtoTrainee) {
+        return this.prisma.task.findFirst({
+            where: {
+                traineeId: traineeId,
+                trainerId: dto.trainerId,
+                assignedDate: dto.assignedDate
+            }
+        }) ;
+    }
+    getTaskByDate(trainerId: number, dto: GetTaskDto) {
+        return this.prisma.task.findFirst({
+            where: {
+                trainerId: trainerId,
+                traineeId: dto.traineeId,
+                assignedDate: dto.assignedDate
+            }
+        })  
+    }
     constructor(private prisma: PrismaService){}
 
     async createTask(trainerId: number, dto: CreateTaskDto){
@@ -44,7 +62,9 @@ export class TaskService {
         if (!task || task.trainerId !== trainerId){
             throw new ForbiddenException('Access to resource denied')
         }
-
+        if (task.taskDone){
+            throw new ForbiddenException('You can not change a task that is done by the trainee. Create new task for the trainee.')
+        }
         return this.prisma.task.update({
             where: {
                 id: taskId

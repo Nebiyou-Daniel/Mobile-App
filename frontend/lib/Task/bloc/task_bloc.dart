@@ -3,6 +3,8 @@ import 'package:frontend/Task/bloc/task_event.dart';
 import 'package:frontend/Task/bloc/task_state.dart';
 import 'package:frontend/Task/data_provider/api_data_provider.dart';
 import 'package:frontend/Task/Model/task_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../serviceLocator.dart';
 
 class TaskBloc extends Bloc<TaskEvent, TaskState> {
   TaskBloc() : super(TaskInitial()) {
@@ -24,7 +26,9 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       emit(TaskLoading());
 
       try {
-        await apiDataProvider.addTask(event.task, event.userId);
+        final String accessToken = preferences.getString("access_token")!;
+        await apiDataProvider.createTask(
+            task: event.task, accessToken: accessToken);
         emit(TaskAddSuccess(task: event.task));
         add(TaskTrainerLoadingEvent(userId: event.userId, date: event.task.date));
       } catch (error) {
@@ -37,7 +41,9 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       emit(TaskLoading());
 
       try {
-        await apiDataProvider.updateTask(event.task);
+        final String accessToken = preferences.getString("access_token")!;
+        await apiDataProvider.updateTask(
+            task: event.task, accessToken: accessToken);
       } catch (error) {
         // else emit the error state
         emit(TaskUpdateError(error: error.toString()));
@@ -50,7 +56,10 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       emit(TaskLoading());
 
       try {
-        await apiDataProvider.deleteTask(event.task);
+        final String accessToken = preferences.getString("access_token")!;
+
+        await apiDataProvider.deleteTask(
+            taskId: event.task.id, accessToken: accessToken);
       } catch (error) {
         // else emit the error state
         emit(TaskDeleteError(error: error.toString()));

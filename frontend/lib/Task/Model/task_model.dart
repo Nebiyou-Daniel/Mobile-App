@@ -3,15 +3,16 @@ class Task {
   final String title;
   final String description;
   final DateTime date;
-  final int userId;
+  final int traineeId;
+  // final int trainerId;
   bool isCompleted = false;
   Task(
     this.id, {
     required this.title,
     required this.description,
     required this.date,
-    required this.userId,
-    required this.isCompleted,
+    required this.traineeId,
+    this.isCompleted = false,
   });
 
   // implement a fromJson for task
@@ -25,7 +26,7 @@ class Task {
       // a: it is expecting a string in the format of "YYYY-MM-DD"
       // q: give me an example
       // a: "2021-09-01"
-      userId: json['userId'],
+      traineeId: json['traineeId'],
       isCompleted: json['isCompleted'],
     );
   }
@@ -36,7 +37,7 @@ class Task {
       'title': title,
       'description': description,
       'date': date.toIso8601String(),
-      'userId': userId,
+      'traineeId': traineeId,
       'isCompleted': isCompleted,
     };
   }
@@ -55,7 +56,7 @@ class Task {
       title: title ?? this.title,
       description: description ?? this.description,
       date: date ?? this.date,
-      userId: userId ?? this.userId,
+      traineeId: traineeId,
       isCompleted: isCompleted ?? this.isCompleted,
     );
   }
