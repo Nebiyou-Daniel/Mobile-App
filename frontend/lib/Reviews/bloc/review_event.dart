@@ -8,10 +8,16 @@ class ReviewsGetAllEvent extends ReviewEvent {
   ReviewsGetAllEvent({required this.trainerId});
 }
 
-class ReviewsGetByTraineeEvent extends ReviewEvent {
+class ReviewCreateEvent extends ReviewEvent {
+  final Review review;
+
+  ReviewCreateEvent({required this.review});
+}
+
+class ReviewGetTraineeReview extends ReviewEvent {
   final int trainerId;
 
-  ReviewsGetByTraineeEvent(
+  ReviewGetTraineeReview(
       {required this.trainerId});
 }
 

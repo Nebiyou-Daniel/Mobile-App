@@ -13,6 +13,7 @@ import 'package:frontend/UI/common/settings.dart';
 import 'package:frontend/UI/common/signup.dart';
 import 'package:frontend/trainer/trainer.dart';
 import 'package:frontend/trainer/views/trainerDetailPageForTrainee.dart';
+import 'package:frontend/trainer/views/trainerProfile.dart';
 import 'package:frontend/trainerHiring/bloc/trainer_hiring_bloc.dart';
 import 'package:frontend/weight/bloc/weight_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -23,6 +24,7 @@ import 'UI/common/about.dart';
 import 'UI/common/contacts.dart';
 import 'UI/trainee/traineeProgressPage.dart';
 
+import 'profile/profile.dart';
 import 'trainee/views/traineeHomePage.dart';
 import 'trainee/views/trainee_detail_for_trainer.dart';
 import 'trainee/views/trainerChoosingPage.dart';
@@ -41,7 +43,6 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-
   MyApp({super.key});
 
   final _router = GoRouter(
@@ -126,6 +127,10 @@ class MyApp extends StatelessWidget {
           );
         },
       ),
+      GoRoute(
+        path: '/trainer/profile',
+        builder: (context, state) => TrainerProfile(),
+      ),
 
       GoRoute(
         path: '/notifications',
@@ -145,10 +150,6 @@ class MyApp extends StatelessWidget {
         path: '/trainee/progress',
         builder: (context, state) => TraineeProgressPage(),
       ),
-      // GoRoute(
-      //   path: '/trainee/workoutPlan',
-      //   builder: (context, state) => const TraineeWorkoutPlanPage(),
-      // ),
       GoRoute(
         path: '/trainee/chooseTrainer',
         builder: (context, state) => const TrainerChoosingPage(),
@@ -194,6 +195,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<ReviewBloc>(
           create: (context) => ReviewBloc(),
+        ),
+        BlocProvider<ProfileBloc>(
+          create: (context) => ProfileBloc(),
         ),
       ],
       child: MaterialApp.router(

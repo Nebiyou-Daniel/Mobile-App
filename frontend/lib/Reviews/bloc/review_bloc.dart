@@ -9,7 +9,5 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
     ApiDataProvidor apiDataProvidor = ApiDataProvidor();
     SharedPreferences preferences = ServiceLocator().preferences;
 
-    
-
   }
 }

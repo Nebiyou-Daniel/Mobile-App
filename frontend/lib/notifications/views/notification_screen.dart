@@ -16,7 +16,15 @@ class NotificationScreen extends StatelessWidget {
       home: BlocProvider<NotificationBloc>(
         create: (context) => NotificationBloc()..add(NotificationLoadEvent()),
         child: Scaffold(
+          // a back button to pop back of the context
+
           appBar: AppBar(
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
             title: const Text("Notifications"),
           ),
           body: BlocBuilder<NotificationBloc, NotificationState>(
@@ -43,8 +51,6 @@ class NotificationScreen extends StatelessWidget {
                         // subtitle: Text(notification.createdAt.toString()),
                         children: [
                           Text(notification.message),
-
-                          // Text(notification.createdAt.toString()),
                         ],
                       ),
                     );

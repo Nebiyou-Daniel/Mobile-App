@@ -8,11 +8,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emit(ProfileLoadingState());
       await Future.delayed(const Duration(seconds: 1));
       try {
-        emit(ProfileLoadSuccessState(
-            name: "John Adamu",
-            bio: "I am a trainer",
-            image:
-                "https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png"));
+        emit(const ProfileLoadSuccessState(
+          name: "John Adamu",
+          bio: "I am a trainer",
+          email: 'thisisemail@gmail.com',
+        ));
       } catch (e) {
         emit(ProfileLoadFailureState());
       }
@@ -22,10 +22,13 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emit(ProfileLoadingState());
       await Future.delayed(const Duration(seconds: 1));
       try {
-        emit(
-            ProfileOperationSuccessState(name: event.fullname, bio: event.bio));
+        emit(const ProfileOperationSuccessState(
+          name: "John Adamu",
+          bio: "I am a trainer",
+          email: 'thisisemail@gmail.com',
+        ));
       } catch (e) {
-        emit(ProfileOperationErrorState());
+        emit(ProfileOperationErrorState(message: "Inexpected error occurred when updating profile!"));
       }
     });
   }

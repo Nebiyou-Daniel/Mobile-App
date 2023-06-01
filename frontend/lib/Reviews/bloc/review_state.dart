@@ -10,7 +10,7 @@ class ReviewInitial extends ReviewState {
   List<Object?> get props => [];
 }
 
-class ReviewLoading extends ReviewState {
+class ReviewLoadingState extends ReviewState {
   @override
   List<Object?> get props => [];
 }
@@ -50,6 +50,13 @@ class ReviewLoadError extends ReviewState {
 class ReviewOperationFailure extends ReviewState {
   final String message;
   ReviewOperationFailure({required this.message});
+  @override
+  List<Object?> get props => [message];
+}
+
+class ReviewOperationSuccess extends ReviewState {
+  final String message;
+  ReviewOperationSuccess({required this.message});
   @override
   List<Object?> get props => [message];
 }
