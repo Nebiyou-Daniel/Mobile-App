@@ -10,6 +10,7 @@ import 'package:frontend/Theme/theme.dart';
 import '../../Task/views/traineeTask.dart';
 import '../../custom_widgets/header_banner.dart';
 import '../../custom_widgets/bottom_navigation_trainee.dart';
+import '../../custom_widgets/header_banner.dart';
 import '../../weight/views/weight_chart.dart';
 import '../../weight/weight.dart';
 

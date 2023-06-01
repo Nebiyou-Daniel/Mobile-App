@@ -10,6 +10,70 @@ class ApiDataProvider {
 
   ApiDataProvider();
 
+// define the url base and so
+  getSelfTaskData({required int trainerId, 
+  required String date, 
+  required String accessToken}) async{
+    try {
+      final http.Response response = await http
+        .post(
+          Uri.parse('http://localhost:3050/task/trainee'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'authorization': accessToken
+          },
+          body: jsonEncode(<String, dynamic>{
+            "trainerId": trainerId,
+            "assignedDate": date
+          }),
+        )
+        .timeout(const Duration(seconds: 2));
+
+      // if successfull return something, else throw an error
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        Task task = Task.fromJson(jsonDecode(response.body));
+        return task;
+      } else {
+        String errorMessage = jsonDecode(response.body)['message'][0];
+        throw Exception('Failed to get task: $errorMessage');
+      }
+    }catch(e){
+      throw Exception('Failed to get task: $e');
+    }
+  }
+
+  getTaskData({required int traineeId, 
+  required String date, 
+  required String accessToken}) async{
+    try {
+      final http.Response response = await http
+        .post(
+          Uri.parse('http://localhost:3050/task/trainer'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'authorization': accessToken
+          },
+          body: jsonEncode(<String, dynamic>{
+            "traineeId": traineeId,
+            "assignedDate": date
+          }),
+        )
+        .timeout(const Duration(seconds: 2));
+
+      // if successfull return something, else throw an error
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        Task task = Task.fromJson(jsonDecode(response.body));
+        return task;
+      } else {
+        String errorMessage = jsonDecode(response.body)['message'][0];
+        throw Exception('Failed to get task: $errorMessage');
+      }
+    }catch(e){
+      throw Exception('Failed to get task: $e');
+    }
+
+  }
+
   createTask({required Task  task,
     required String accessToken,
     }) async {
