@@ -39,6 +39,7 @@ dependencies:
   # equatable for bloc
   equatable: ^2.0.0
   # flutter package to store session keys and tokens securely
+  flutter_secure_storage: ^4.2.0
   flutter_rating_bar: 4.0.1
   # shared preference
   shared_preferences: ^2.0.6
