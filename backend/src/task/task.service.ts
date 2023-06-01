@@ -44,7 +44,9 @@ export class TaskService {
         if (!task || task.trainerId !== trainerId){
             throw new ForbiddenException('Access to resource denied')
         }
-
+        if (task.taskDone){
+            throw new ForbiddenException('You can not change a task that is done by the trainee. Create new task for the trainee.')
+        }
         return this.prisma.task.update({
             where: {
                 id: taskId
