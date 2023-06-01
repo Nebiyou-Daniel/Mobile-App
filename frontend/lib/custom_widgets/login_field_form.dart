@@ -28,7 +28,6 @@ class LoginFormFieldState extends State<LoginFormField> {
     if (_emailController.text.isEmpty) {
       return 'Please enter your email';
     }
-    // You can add more validation logic for the email format if needed
     return null;
   }
 
@@ -36,7 +35,6 @@ class LoginFormFieldState extends State<LoginFormField> {
     if (_passwordController.text.isEmpty) {
       return 'Please enter your password';
     }
-    // You can add more validation logic for the password if needed
     return null;
   }
 
@@ -67,13 +65,11 @@ class LoginFormFieldState extends State<LoginFormField> {
                     padding: EdgeInsets.only(right: 10),
                     child: Icon(Icons.info),
                   ),
-              
                   Expanded(
                     child: Text(
                       "Fill the following information to Login.",
                       softWrap: true,
                     ),
-
                   ),
                 ],
               ),

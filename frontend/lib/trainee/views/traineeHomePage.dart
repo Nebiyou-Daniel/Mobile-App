@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/UI/common/loading_paragraph.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../Task/views/traineeTask.dart';
 
 import 'package:frontend/auth/auth.dart';
 import 'package:frontend/trainee/trainee.dart';
 import 'package:frontend/Theme/theme.dart';
 
 import '../../custom_widgets/header_banner.dart';
+import '../../Task/views/traineeTask.dart';
 import '../../custom_widgets/bottom_navigation_trainee.dart';
 import '../../custom_widgets/header_banner.dart';
 import '../../weight/views/weight_chart.dart';
 import '../../weight/weight.dart';
 
-// import 'package:fl_chart/fl_chart.dart' as charts;
+
 class TraineeHomePage extends StatelessWidget {
   const TraineeHomePage({super.key});
 
@@ -72,7 +72,7 @@ class TraineeHomePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 180, child: WeightChartHandeler(id: -1)),
+                const SizedBox(height: 180, child: WeightChartHandler(id: -1)),
                 const Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Text(

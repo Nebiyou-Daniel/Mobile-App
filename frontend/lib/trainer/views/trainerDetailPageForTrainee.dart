@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frontend/trainee/views/trainee_personal_information.dart';
+import 'package:frontend/trainee/trainee.dart';
 import 'package:go_router/go_router.dart';
+
 import '../../Reviews/views/list_of_reviews.dart';
+import '../../trainee/views/trainee_personal_information.dart';
 import '../../trainerHiring/trainer_hiring.dart';
 import '../trainer.dart';
-
 
 class TrainerDetailForTrainee extends StatelessWidget {
   final int id;
 
   const TrainerDetailForTrainee({Key? key, required this.id}) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +37,9 @@ class TrainerDetailForTrainee extends StatelessWidget {
           ),
           body: SingleChildScrollView(
               child: Column(children: [
-
-                Text("Trainer $id"),
-            // TraineePersonalInformation(id: id),
+            TraineePersonalInformation(id: id),
             // ReviewList(trainerId: id),
-            // TrainerHiringButton(id: id),
-
+            TrainerHiringButton(id: id),
           ])));
     });
   }

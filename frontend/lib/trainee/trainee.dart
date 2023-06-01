@@ -5,4 +5,4 @@
 export './bloc/trainee_bloc.dart';
 export './bloc/trainee_event.dart';
 export './bloc/trainee_state.dart';
-export './views/trainee_detail.dart';
+export 'views/trainee_detail_for_admin.dart';
