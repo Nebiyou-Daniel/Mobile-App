@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/custom_widgets/header_banner.dart';
 import 'package:frontend/custom_widgets/signup_field_form.dart';
 import 'package:go_router/go_router.dart';
+import '../../Theme/theme.dart';
 import '../../auth/bloc/auth_bloc.dart';
 import '../../auth/bloc/auth_event.dart';
 import '../../auth/bloc/auth_state.dart';
@@ -67,17 +68,20 @@ class _SignupHandlerState extends State<SignupHandler> {
 
     if (state is AuthSignupSuccess) {
       if (state.role == "admin") {
+        print("onto admin page");
         WidgetsBinding.instance.addPostFrameCallback((_) {
           navigateToPage(context, "/admin/homePage");
         });
         // context.go("/admin/homePage");
         return const SizedBox();
       } else if (state.role == "trainer") {
+        print("onto trainer page");
         WidgetsBinding.instance.addPostFrameCallback((_) {
           navigateToPage(context, "/trainer/homePage");
         });
         return const SizedBox();
       } else if (state.role == "trainee") {
+        print("onto trainee page");
         WidgetsBinding.instance.addPostFrameCallback((_) {
           navigateToPage(context, "/trainee/homePage");
         });

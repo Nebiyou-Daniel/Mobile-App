@@ -8,10 +8,24 @@ class ReviewsGetAllEvent extends ReviewEvent {
   ReviewsGetAllEvent({required this.trainerId});
 }
 
-class ReviewPostReviewEvent extends ReviewEvent {
+class ReviewCreateEvent extends ReviewEvent {
   final Review review;
 
-  ReviewPostReviewEvent(this.review);
+  ReviewCreateEvent({required this.review});
+}
+
+class ReviewGetTraineeReview extends ReviewEvent {
+  final int trainerId;
+
+  ReviewGetTraineeReview(
+      {required this.trainerId});
+}
+
+class ReviewPostForTrainerEvent extends ReviewEvent {
+  final Review review;
+  final int trainerId;
+
+  ReviewPostForTrainerEvent({required this.review, required this.trainerId});
 }
 
 class ReviewDeleteReviewEvent extends ReviewEvent {

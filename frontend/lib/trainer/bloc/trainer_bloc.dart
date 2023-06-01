@@ -1,5 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../serviceLocator.dart';
 import '../../trainee/model/trainee_model.dart';
 import '../../trainer/bloc/trainer_state.dart';
 import '../data_provider/api_data_providor.dart';
@@ -10,6 +12,7 @@ import 'trainer_event.dart';
 class TrainerBloc extends Bloc<TrainerEvent, TrainerState> {
   TrainerBloc() : super(TrainerInitial()) {
     ApiDataProvider apiDataProvider = ApiDataProvider();
+    SharedPreferences preferences = ServiceLocator().preferences;
 
     on<TrainerListLoadEvent>((event, emit) async {
       emit(TrainerListLoading());
@@ -92,6 +95,28 @@ class TrainerBloc extends Bloc<TrainerEvent, TrainerState> {
           id: 1,
           name: "Ahmed",
           email: "ahmed@gmail.com",
+          phoneNumber: "+123456789",
+          bio: "Fitness",
+          rating: 4.5,
+          numberOfTrainees: 10,
+        ),
+      ));
+    });
+
+    on<LoadMyTrainer>((event, emit) async {
+      emit(TrainerLoading());
+
+      // get the current user id from the shared preferences
+      int userId = preferences.getInt('userId')!;
+      // make a request to server to get the trainer details of the current user
+      // Trainer? trainer = await apiDataProvider.getTrainerDetails(userId);
+
+      await Future.delayed(const Duration(seconds: 3));
+      emit(TrainerLoadSuccess(
+        trainer: Trainer(
+          id: 1,
+          name: "Ahmed",
+          email: "hjdsfhjasd",
           phoneNumber: "+123456789",
           bio: "Fitness",
           rating: 4.5,

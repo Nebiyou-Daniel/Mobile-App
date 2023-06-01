@@ -2,33 +2,43 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/Reviews/bloc/review_bloc.dart';
 import 'package:frontend/notifications/views/notification_screen.dart';
-import 'package:frontend/theme/bloc/theme_bloc.dart';
+import 'package:frontend/serviceLocator.dart';
+import 'package:frontend/Theme/bloc/theme_bloc.dart';
 
 import 'package:frontend/auth/bloc/auth_bloc.dart';
 import 'package:frontend/UI/common/splashScreen.dart';
-import 'package:frontend/trainee/views/trainee_profile.dart';
+import 'package:frontend/profile/views/trainee_profile.dart';
 import 'package:frontend/UI/common/login.dart';
 import 'package:frontend/UI/common/settings.dart';
 import 'package:frontend/UI/common/signup.dart';
 import 'package:frontend/trainer/trainer.dart';
 import 'package:frontend/trainer/views/trainerDetailPageForTrainee.dart';
-import 'package:frontend/trainer/views/trainerList.dart';
 import 'package:frontend/trainer/views/trainerProfile.dart';
 import 'package:frontend/trainerHiring/bloc/trainer_hiring_bloc.dart';
 import 'package:frontend/weight/bloc/weight_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:frontend/trainee/trainee.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'UI/admin/admin_home.dart';
 import 'UI/common/about.dart';
 import 'UI/common/contacts.dart';
 import 'UI/trainee/traineeProgressPage.dart';
 
+import 'profile/profile.dart';
 import 'trainee/views/traineeHomePage.dart';
-import 'trainee/views/traineeList.dart';
 import 'trainee/views/trainee_detail_for_trainer.dart';
 import 'trainee/views/trainerChoosingPage.dart';
 import 'trainer/views/trainerHomePage.dart';
 import 'UI/trainer/workoutPlanCreationPage.dart';
-void main() {
+
+// void main() {
+//   runApp(MyApp());
+// }
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final SharedPreferences preferences = await SharedPreferences.getInstance();
+  ServiceLocator().registerPreferences(preferences);
   runApp(MyApp());
 }
 
@@ -74,10 +84,10 @@ class MyApp extends StatelessWidget {
       ),
 
       // admin routes
-      // GoRoute(
-      //   path: '/admin/homePage',
-      //   builder: (context, state) => const AdminHomePage(),
-      // ),
+      GoRoute(
+        path: '/admin/homePage',
+        builder: (context, state) => const AdminHomePage(),
+      ),
       // GoRoute(
       //   path: '/admin/listOfTrainees',
       //   builder: (context, state) => const AdminListOfTraineesPage(),
@@ -94,11 +104,6 @@ class MyApp extends StatelessWidget {
       //   path: '/admin/notifications',
       //   builder: (context, state) => const AdminNotifications(),
       // ),
-      // GoRoute(
-      //   path: '/admin/enterCode',
-      //   builder: (context, state) => const AdminEnterCodePage(),
-      // ),
-      // // watch trainer profile
       // GoRoute(
       //   path: '/admin/trainer_profile',
       //   builder: (context, state) => const AdminTrainerProfilePage(),
@@ -122,6 +127,10 @@ class MyApp extends StatelessWidget {
           );
         },
       ),
+      GoRoute(
+        path: '/trainer/profile',
+        builder: (context, state) => TrainerProfile(),
+      ),
 
       GoRoute(
         path: '/notifications',
@@ -141,13 +150,9 @@ class MyApp extends StatelessWidget {
         path: '/trainee/progress',
         builder: (context, state) => TraineeProgressPage(),
       ),
-      // GoRoute(
-      //   path: '/trainee/workoutPlan',
-      //   builder: (context, state) => const TraineeWorkoutPlanPage(),
-      // ),
       GoRoute(
         path: '/trainee/chooseTrainer',
-        builder: (context, state) => TrainerChoosingPage(),
+        builder: (context, state) => const TrainerChoosingPage(),
       ),
       GoRoute(
         path: '/trainee/trainer_profile/:id',
@@ -190,6 +195,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<ReviewBloc>(
           create: (context) => ReviewBloc(),
+        ),
+        BlocProvider<ProfileBloc>(
+          create: (context) => ProfileBloc(),
         ),
       ],
       child: MaterialApp.router(

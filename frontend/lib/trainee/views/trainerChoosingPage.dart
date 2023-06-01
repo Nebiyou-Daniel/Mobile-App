@@ -34,6 +34,21 @@ class TrainerChoosingPage extends StatelessWidget {
                 },
               );
             } else if (state is TrainerListLoadingError) {
+              // a button to retry loading trainers
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Failed to load trainers'),
+                    ElevatedButton(
+                      onPressed: () {
+                        trainerBloc.add(const TrainerListLoadEvent());
+                      },
+                      child: const Icon(Icons.refresh),
+                    ),
+                  ],
+                ),
+              );
               return const Center(child: Text('Failed to load trainers'));
             }
 
