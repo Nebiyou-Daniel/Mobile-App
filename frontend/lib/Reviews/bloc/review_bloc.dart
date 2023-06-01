@@ -14,8 +14,7 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
       emit(ReviewLoadingState());
       try {
         final String accessToken = preferences.getString('access_token')!;
-        final reviews = await apiDataProvidor.getAllReviews(
-            trainerId: event.trainerId, accessToken: accessToken);
+        final reviews = await apiDataProvidor.getAllReviewsForTrainer(accessToken: accessToken);
         emit(ReviewListLoadSuccess(reviews: reviews));
       } catch (error) {
         emit(ReviewListLoadError(message: error.toString()));
@@ -27,7 +26,7 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
       emit(ReviewLoadingState());
       try {
         final String accessToken = preferences.getString('access_token')!;
-        final review = await apiDataProvidor.createReview(
+        final review = await apiDataProvidor.postReview(
             review: event.review, accessToken: accessToken);
         emit(ReviewOperationSuccess(message: "Review Created Successfully"));
       } catch (error) {
