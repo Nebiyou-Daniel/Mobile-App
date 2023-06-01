@@ -3,53 +3,21 @@ import 'package:frontend/Task/bloc/task_event.dart';
 import 'package:frontend/Task/bloc/task_state.dart';
 import 'package:frontend/Task/data_provider/api_data_provider.dart';
 import 'package:frontend/Task/Model/task_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../serviceLocator.dart';
 
 class TaskBloc extends Bloc<TaskEvent, TaskState> {
   TaskBloc() : super(TaskInitial()) {
     ApiDataProvider apiDataProvider = ApiDataProvider();
-
-    // on<TaskLoadingEvent>((event, emit) async {
-    //   emit(TaskLoading());
-    //   await Future.delayed(const Duration(seconds: 3));
-    //   emit(
-    //     TaskLoadedSuccessfully(
-    //       taskData: Task.fromJson(
-    //         {
-    //           "title": "${event.date.weekday} Do 40 Pushups",
-    //           "description": "=> Do 10 pushups for 4 rounds\n Take 5 minutes rest between each round",
-    //           "date": "2021-07-01",
-    //           "time": "12:00:00",
-    //           "isCompleted": false,
-    //           "id": 1,
-    //           "userId": 1
-    //         },
-    //       ),
-    //     ),
-    //   );
-
-    // try fetching the task
-    // try {
-    //   Map<String, dynamic> taskData;
-    //   // if successfull emit success state
-    //   if (event.userId == -1) {
-    //     taskData = await apiDataProvider.getSelfTaskData();
-    //   } else {
-    //     taskData = await apiDataProvider.getTaskData(event.userId);
-    //   }
-
-    //   emit(taskData.isNotEmpty
-    //       ? TaskLoadedSuccessfully(taskData: Task.fromJson(taskData))
-    //       : TaskIsEmpty());
-    // } catch (error) {
-    //   // else emit the error state
-    //   emit(TaskLoadingError(error: error.toString()));
-    // }
-    // });
+    SharedPreferences preferences = ServiceLocator().preferences;
 
     on<TaskLoadingEvent>((event, emit) async {
       emit(TaskLoading());
       try {
-        // await Future.delayed(const Duration(seconds: 3));
+        await Future.delayed(const Duration(seconds: 3));
+        final String accessToken = preferences.getString("access_token")!;
+        // We have to send the date clocked from the frontend to the backend.
+
       } catch (error) {
         emit(TaskLoadingError(error: error.toString()));
       }
@@ -76,7 +44,9 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       emit(TaskLoading());
 
       try {
-        await apiDataProvider.addTask(event.task, event.userId);
+        final String accessToken = preferences.getString("access_token")!;
+        await apiDataProvider.createTask(
+            task: event.task, accessToken: accessToken);
         emit(TaskAddSuccess(task: event.task));
         add(TaskLoadingEvent(userId: event.userId, date: event.task.date));
       } catch (error) {
@@ -89,7 +59,9 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       emit(TaskLoading());
 
       try {
-        await apiDataProvider.updateTask(event.task);
+        final String accessToken = preferences.getString("access_token")!;
+        await apiDataProvider.updateTask(
+            task: event.task, accessToken: accessToken);
       } catch (error) {
         // else emit the error state
         emit(TaskUpdateError(error: error.toString()));
@@ -102,7 +74,10 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       emit(TaskLoading());
 
       try {
-        await apiDataProvider.deleteTask(event.task);
+        final String accessToken = preferences.getString("access_token")!;
+
+        await apiDataProvider.deleteTask(
+            taskId: event.task.id, accessToken: accessToken);
       } catch (error) {
         // else emit the error state
         emit(TaskDeleteError(error: error.toString()));
