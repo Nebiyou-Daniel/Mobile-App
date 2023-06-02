@@ -9,25 +9,20 @@ class ApiDataProvider {
   ApiDataProvider();
 
 // define the url base and so
-  getSelfTaskData({
-      required String date,
-      required String accessToken}) async {
+  getSelfTaskData({required String date, required String accessToken}) async {
     try {
-      final http.Response response = await http
-          .get(
-            Uri.parse('http://localhost:3050/task/trainee/$date'),
-            headers: <String, String>{
-              'Content-Type': 'application/json; charset=UTF-8',
-              'authorization': accessToken
-            },
-            // body: jsonEncode(<String, dynamic>{
-            //   "trainerId": trainerId,
-            //   "assignedDate": date
-            // }),
-          )
-          .timeout(const Duration(seconds: 2));
+      final http.Response response = await http.get(
+        Uri.parse('http://localhost:3050/task/trainee/$date'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $accessToken',
+        },
+        // body: jsonEncode(<String, dynamic>{
+        //   "trainerId": trainerId,
+        //   "assignedDate": date
+        // }),
+      ).timeout(const Duration(seconds: 2));
 
-      
       // if successfull return something, else throw an error
       if (response.statusCode >= 200 && response.statusCode < 300) {
         Task task = Task.fromJson(jsonDecode(response.body));
@@ -46,22 +41,19 @@ class ApiDataProvider {
       required String date,
       required String accessToken}) async {
     try {
-      final http.Response response = await http
-        .get(
-          Uri.parse('http://localhost:3050/task/trainer/$traineeId/$date'),
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-            'authorization': accessToken
-          },
-          // body: jsonEncode(<String, dynamic>{
-          //   "traineeId": traineeId,
-          //   "assignedDate": date
-          // }),
-        )
-        .timeout(const Duration(seconds: 2));
-      
+      final http.Response response = await http.get(
+        Uri.parse('http://localhost:3050/task/trainer/$traineeId/$date'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $accessToken',
+        },
+      ).timeout(const Duration(seconds: 2));
+
+      print(response.body.runtimeType);
       // if successfull return something, else throw an error
-      if (response.statusCode >= 200 && response.statusCode < 300) {
+      if (response.body == "") {
+        return null;  
+      } else if (response.statusCode >= 200 && response.statusCode < 300) {
         Task task = Task.fromJson(jsonDecode(response.body));
         return task;
       } else {
@@ -83,7 +75,7 @@ class ApiDataProvider {
             Uri.parse('http://localhost:3050/task'),
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
-              'authorization': accessToken
+              'Authorization': 'Bearer $accessToken',
             },
             body: jsonEncode(<String, dynamic>{
               'taskName': task.title,
@@ -115,7 +107,7 @@ class ApiDataProvider {
             Uri.parse('http://localhost:3050/task/${task.id}'),
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
-              'authorization': accessToken
+              'Authorization': 'Bearer $accessToken',
             },
             body: jsonEncode(<String, dynamic>{
               'taskName': task.title,
@@ -144,7 +136,7 @@ class ApiDataProvider {
         Uri.parse('http://localhost:3050/task/$taskId'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'authorization': accessToken
+          'Authorization': 'Bearer $accessToken',
         },
         // body: jsonEncode(<String, dynamic>{
         //   'taskName': task.title,
@@ -172,7 +164,7 @@ class ApiDataProvider {
             Uri.parse('http://localhost:3050/task/${task.id}/taskDone'),
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
-              'authorization': accessToken
+              'Authorization': 'Bearer $accessToken',
             },
             body: jsonEncode(<String, dynamic>{
               'taskDone': task.isCompleted,

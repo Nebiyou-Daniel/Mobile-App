@@ -7,6 +7,16 @@ import { PasswordUpdateDto } from './dto/passwordUpdate.dto';
 @Injectable()
 export class AdminService {
     constructor(private prisma: PrismaService){}
+    
+    async getTrainees() {
+        const trainees = await this.prisma.trainee.findMany();
+        return trainees;
+    }
+    
+    async getTrainers() {
+        const trainers = await this.prisma.trainer.findMany();
+        return trainers;
+    }
 
     async updateAdmin(adminId: number, dto: EditAdminDto){
         const admin = await this.prisma.admin.update({
@@ -18,24 +28,24 @@ export class AdminService {
             }
         });
         delete admin.password;
-
+        
         return admin;
     }
     async updatePassword(adminId: number, dto: PasswordUpdateDto){
         if(adminId == null){
             throw new ForbiddenException('Not authenticated')
-          }
+        }
         const pass: string = await argon.hash(dto.newPassword)
-          //verify if password is correct
+        //verify if password is correct
         const use=await this.prisma.admin.findFirst({
             where:{
                 id: adminId
             }
         })
         const correct = await argon.verify(use.password, dto.oldPassword)
-
+        
         if(correct){
-
+            
             const returnObj= await this.prisma.admin.update({
                 where:{
                     id: adminId
@@ -45,7 +55,7 @@ export class AdminService {
                 }
             })
             delete returnObj.password
-
+            
             return returnObj
         } else {
             throw new ForbiddenException('Old password is wrong')

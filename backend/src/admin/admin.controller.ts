@@ -9,31 +9,40 @@ import { PasswordUpdateDto } from './dto/passwordUpdate.dto';
 @UseGuards(JwtGuard)
 @Controller('admin')
 export class AdminController {
-    constructor(private adminService: AdminService){}
+    constructor(private adminService: AdminService) { }
 
     @Get('me')
-    getMe(@GetAdmin() admin: Admin){ 
+    getMe(@GetAdmin() admin: Admin) {
         return admin;
     }
 
+    @Get('/trainees')
+    getTrainees() {
+        return this.adminService.getTrainees();
+    }
+    @Get('/trainers')
+    getTrainers() {
+        return this.adminService.getTrainers();
+    }
+
     @Patch('/profile')
-    editTrainee(@GetAdmin('id') adminId: number, @Body() dto: EditAdminDto){
+    editTrainee(@GetAdmin('id') adminId: number, @Body() dto: EditAdminDto) {
         return this.adminService.updateAdmin(adminId, dto);
     }
     @Patch('/password')
-    updatePassword(@GetAdmin('id') adminId: number, @Body() dto: PasswordUpdateDto){
+    updatePassword(@GetAdmin('id') adminId: number, @Body() dto: PasswordUpdateDto) {
         return this.adminService.updatePassword(adminId, dto);
     }
-    @Delete('deleteAdmin')    
-    deleteAdmin(@GetAdmin('id') adminId: number){
+    @Delete('deleteAdmin')
+    deleteAdmin(@GetAdmin('id') adminId: number) {
         return this.adminService.deleteAdmin(adminId);
     }
-    @Delete('deleteTrainee')    
-    deleteTrainee(@GetTrainee('id') traineeId: number){
+    @Delete('deleteTrainee')
+    deleteTrainee(@GetTrainee('id') traineeId: number) {
         return this.adminService.deleteTrainee(traineeId);
     }
-    @Delete('deleteTrainer')    
-    deleteTrainer(@GetTrainer('id') trainerId: number){
+    @Delete('deleteTrainer')
+    deleteTrainer(@GetTrainer('id') trainerId: number) {
         return this.adminService.deleteTrainer(trainerId);
     }
 }

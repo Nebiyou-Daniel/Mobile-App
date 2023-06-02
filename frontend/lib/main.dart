@@ -97,23 +97,6 @@ class MyApp extends StatelessWidget {
       //   path: '/admin/listOfTrainers',
       //   builder: (context, state) => const AdminListOfTrainersPage(),
       // ),
-      // GoRoute(
-      //   path: '/admin/approvalPage',
-      //   builder: (context, state) => const AdminApprovalPage(),
-      // ),
-      // GoRoute(
-      //   path: '/admin/notifications',
-      //   builder: (context, state) => const AdminNotifications(),
-      // ),
-      // GoRoute(
-      //   path: '/admin/trainer_profile',
-      //   builder: (context, state) => const AdminTrainerProfilePage(),
-      // ),
-      // GoRoute(
-      //   path: '/admin/trainee_profile',
-      //   builder: (context, state) => const AdminTraineeProfilePage(),
-      // ),
-
       // trainer routes
       GoRoute(
         path: '/trainer/homePage',

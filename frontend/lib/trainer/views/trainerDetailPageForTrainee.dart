@@ -6,6 +6,7 @@ import '../../Reviews/views/trainerListOfReviews.dart';
 import '../../trainee/views/trainee_personal_information.dart';
 import '../../trainerHiring/trainer_hiring.dart';
 import '../trainer.dart';
+import 'trainerPersonalInformationPage.dart';
 
 class TrainerDetailForTrainee extends StatelessWidget {
   final int id;
@@ -23,24 +24,27 @@ class TrainerDetailForTrainee extends StatelessWidget {
         return const Center(
           child: Text('Error'),
         );
-      }
-      return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              context.pop();
-            },
+      } else if (state is TrainerLoadSuccess) {
+        return Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                context.pop();
+              },
+            ),
+            title: const Text('Trainer Details Page'),
           ),
-          title: const Text('Trainer Details Page'),
-        ),
-        body: SingleChildScrollView(
-            child: Column(children: [
-          TraineePersonalInformation(id: id),
-          ReviewList(trainerId: id),
-        ])),
-        // bottomNavigationBar: TrainerHiringButton(id: id),
-      );
+          body: SingleChildScrollView(
+              child: Column(children: [
+            TrainerPersonalInformation(trainer: state.trainer),
+            // ReviewList(trainerId: id),
+          ])),
+          // bottomNavigationBar: TrainerHiringButton(id: id),
+        );
+      } else {
+        return const Text("Unexpected stae incurred");
+      }
     });
   }
 }

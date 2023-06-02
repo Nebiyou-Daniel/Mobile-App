@@ -13,7 +13,7 @@ class TraineeLoadEvent extends TraineeEvent {
 }
 
 class TraineeDeleteEvent extends TraineeEvent {
-  final String id;
+  final int id;
 
   TraineeDeleteEvent({required this.id});
 }
@@ -50,11 +50,7 @@ class TraineeRemoveFromTraineeListEvent extends TraineeEvent {
 
 class TraineeAddToTraineeListSuccessEvent extends TraineeEvent {}
 
-class TraineeAddToTraineeListErrorEvent extends TraineeEvent {}
 
-class TraineeRemoveFromTraineeListSuccessEvent extends TraineeEvent {}
-
-class TraineeRemoveFromTraineeListErrorEvent extends TraineeEvent {}
 
 class TraineeLoadListOfTrainersEvent extends TraineeEvent {}
 

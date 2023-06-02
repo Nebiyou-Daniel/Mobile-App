@@ -29,3 +29,8 @@ class WeightLoadingError extends WeightState {
   @override
   List<Object?> get props => [];
 }
+
+class WeightOperationSuccess extends WeightState {
+  @override
+  List<Object?> get props => [];
+}

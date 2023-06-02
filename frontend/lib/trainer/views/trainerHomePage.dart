@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/UI/common/loading_paragraph.dart';
 import 'package:frontend/custom_widgets/bottom_navigation_trainer.dart';
-import 'package:frontend/trainee/views/trainee_detail_for_trainer.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:frontend/auth/auth.dart';
@@ -19,9 +18,7 @@ class TrainerHomePage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthBloc>(create: (context) => AuthBloc()),
-        // BlocProvider<ThemeBloc>(create: (context) => ThemeBloc()),
         BlocProvider<TraineeBloc>(create: (context) => TraineeBloc()),
-        // BlocProvider<WeightBloc>(create: (context) => WeightBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -96,7 +93,7 @@ class TrainerHomePage extends StatelessWidget {
 }
 
 class _ListOfTrainees extends StatelessWidget {
-  const _ListOfTrainees({super.key});
+  const _ListOfTrainees();
 
   @override
   Widget build(BuildContext context) {
@@ -105,9 +102,12 @@ class _ListOfTrainees extends StatelessWidget {
         final traineeBloc = BlocProvider.of<TraineeBloc>(context);
         print(traineeBloc.state);
 
+        if (state is TraineeInitial) {
+          traineeBloc.add(TraineesListLoadEvent());
+          return Text("init");
+        }
         // if the state is loading, show a progress indicator
         if (state is TraineeLoading) {
-          print("Trainees loading");
           return const Center(
             child: LoadingParagraphWidget(
               numberOfLines: 13,
@@ -123,7 +123,7 @@ class _ListOfTrainees extends StatelessWidget {
             itemCount: state.trainees.length,
             itemBuilder: (context, index) {
               return ListTile(
-                title: Text(state.trainees[index].name),
+                title: Text(state.trainees[index].fullName),
                 subtitle: Text(state.trainees[index].email),
                 onTap: () {
                   GoRouter.of(context).push(
@@ -139,7 +139,9 @@ class _ListOfTrainees extends StatelessWidget {
           return const Center(
             child: Text('👀 Failed to load trainees'),
           );
-        } else if (state is TraineeListEmpty) {
+        }
+        
+        else if (state is TraineeListEmpty) {
           print("Trainees list empty");
           return Center(
             // no trainees

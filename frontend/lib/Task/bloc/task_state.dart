@@ -65,7 +65,6 @@ class TaskIsEmpty extends TaskState {}
 
 class TaskDeleteSuccess extends TaskState {}
 
-class TaskUpdate extends TaskState {}
 
 class TaskUpdateError extends TaskState {
   final String error;

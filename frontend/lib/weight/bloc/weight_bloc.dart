@@ -1,24 +1,37 @@
-
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/serviceLocator.dart';
+import 'package:frontend/weight/Model/weight_mode.dart';
 import 'package:frontend/weight/data_provider/api_data_providor.dart';
 import 'package:frontend/weight/bloc/weight_event.dart';
 import 'package:frontend/weight/bloc/weight_state.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WeightBloc extends Bloc<WeightEvent, WeightState> {
   WeightBloc() : super(WeightInitial()) {
     ApiDataProvidor apiDataProvider = ApiDataProvidor();
+    SharedPreferences preferences = ServiceLocator().preferences;
 
     on<WeightLoadingEvent>((event, emit) async {
       emit(WeightLoading());
       try {
-        Map<double, double> weightData;
+        List<Weight> weightData;
         // if successfull emit success state
-        if (event.userId == -1) {
-          weightData = await apiDataProvider.getSelfWeightData();
-        } else {
-          weightData = await apiDataProvider.getWeightData(event.userId);
+        // if (event.userId == -1) {
+        // get access token
+        String accessToken = preferences.getString("access_token")!;
+        weightData =
+            await apiDataProvider.getSelfWeightData(accessToken: accessToken);
+
+        print(weightData.toList());
+
+        Map<double, double> weightDataMap = {};
+        for (var i = 0; i < weightData.length; i++) {
+          weightDataMap[i.toDouble()] = double.parse(weightData[i].weight);
         }
-        emit(WeightLoadedSuccessfully(weightData: weightData));
+        // } else {
+        // weightData = await apiDataProvider.getWeightData(event.userId);
+        // }
+        emit(WeightLoadedSuccessfully(weightData: weightDataMap));
       } catch (error) {
         // else emit the error state
         emit(WeightLoadingError(error: error.toString()));
@@ -26,11 +39,21 @@ class WeightBloc extends Bloc<WeightEvent, WeightState> {
     });
 
     on<WeightAddEvent>((event, emit) async {
-      emit(WeightLoading());
-      await Future.delayed(const Duration(seconds: 2));
-      Map<double, double> weightData =
-          await apiDataProvider.getSelfWeightData();
-      emit(WeightLoadedSuccessfully(weightData: weightData));
+      String accessToken = preferences.getString("access_token")!;
+
+      try {
+        await apiDataProvider.addWeightForTrainee(
+          weight: event.weightData,
+          accessToken: accessToken,
+        );
+        print("Successfull adding weight");
+        emit(WeightOperationSuccess());
+        // add a reload event
+        add(WeightLoadingEvent());
+        print("Added a reload event.");
+      } catch (error) {
+        emit(WeightLoadingError(error: "Error adding Weight."));
+      }
     });
   }
 }

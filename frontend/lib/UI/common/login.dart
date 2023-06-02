@@ -43,7 +43,8 @@ class LoginPage extends StatelessWidget {
 }
 
 class LoginHandler extends StatelessWidget {
-  const LoginHandler({super.key});
+  LoginHandler({super.key});
+  final LocalDataProvider localDataProvider = LocalDataProvider();
 
 
   void navigateToPage(BuildContext context, String route) {
@@ -54,6 +55,7 @@ class LoginHandler extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = context.watch<AuthBloc>();
     final state = bloc.state;
+    print(state);
 
     if (state is AuthInitial) {
       return const LoginFormField();
@@ -93,8 +95,19 @@ class LoginHandler extends StatelessWidget {
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       });
+      return const LoginFormField();
     }
 
     return const LoginFormField();
+  }
+    getLocalDataProvider() async {
+    try {
+      final token = await localDataProvider.getAccessToken();
+      print('Access Token: $token');
+      // Do something with the access token
+    } catch (e) {
+      print('Error: $e');
+      // Handle the error
+    }
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/UI/common/loading_paragraph.dart';
@@ -29,9 +27,23 @@ class NotificationScreen extends StatelessWidget {
           ),
           body: BlocBuilder<NotificationBloc, NotificationState>(
             builder: (context, state) {
+              if (state is NotificationInitial) {
+                final NotificationBloc notificationBloc =
+                    BlocProvider.of<NotificationBloc>(context);
+                notificationBloc.add(NotificationLoadEvent());
+                return const LoadingParagraphWidget(numberOfLines: 3);
+              }
               if (state is NotificationsLoading) {
                 return const LoadingParagraphWidget(numberOfLines: 3);
               } else if (state is NotificationsLoadedSuccess) {
+                if (state.notifications.isEmpty) {
+                  return const Center(
+                    child: Text(
+                      "🌵 All Caught Up 🏜",
+                      style: TextStyle(color: Colors.blueAccent, fontSize: 25),
+                    ),
+                  );
+                }
                 return ListView.builder(
                   itemCount: state.notifications.length,
                   itemBuilder: (context, index) {
@@ -40,7 +52,7 @@ class NotificationScreen extends StatelessWidget {
                       key: Key(notification.id.toString()),
                       onDismissed: (direction) {
                         BlocProvider.of<NotificationBloc>(context).add(
-                          NotificationMarkAsDoneEvent(
+                          NotificationMarkAsSeenEvent(
                               notification: notification),
                         );
                       },

@@ -7,9 +7,12 @@ import 'package:http/http.dart' as http;
 class ApiDataProvider {
   ApiDataProvider();
 
-  login(
+  traineeLogin(
+      
       {required String email,
+     
       required String password,
+      required String role,
       required String role}) async {
     Map<String, String> roleToBaseUrl = {
       "trainee": "http://127.0.0.1:3050/auth/traineeLogin",
@@ -32,27 +35,29 @@ class ApiDataProvider {
             }),
           )
           .timeout(const Duration(seconds: 2));
-      print("response");
-      print(response.body);
+      // print("response");
+      // print(response.body);
 
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        print("response successfull");
+        // print("response successfull");
         String accessToken = jsonDecode(response.body)['access_token'];
         return accessToken;
       } else {
-        print("response failed");
+        // print("response failed");
         String errorMessage = jsonDecode(response.body)['message'];
+        print(errorMessage);
         throw Exception('Failed to login: Invalid Credentials.');
       }
     } on TimeoutException {
       throw Exception(
+          
           'Login request timed out: Check your Internet Connection.');
     } catch (e) {
       throw Exception('$e');
     }
   }
 
-  signUp({
+  traineeSignUp({
     required String email,
     required String password,
     required String name,
@@ -85,6 +90,7 @@ class ApiDataProvider {
         return accessToken;
       } else {
         String errorMessage = jsonDecode(response.body)['message'][0];
+        print("5");
         throw Exception('Failed to Signup: $errorMessage');
       }
     } on TimeoutException {

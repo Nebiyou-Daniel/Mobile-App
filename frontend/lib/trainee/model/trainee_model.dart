@@ -1,35 +1,36 @@
-
+// id: true,
+// fullName: true,
+// email: true,
+// bio: true,
+// phoneNumber: true
 
 class Trainee {
-
   // Trainee model class
   // this class is used for trainee list and detail
 
   int id;
-  String name;
+  String fullName;
   String email;
-  String phone;
-  String address;
-  String photo;
+  String? bio;
+  String? phone;
+  String? address;
 
   Trainee({
     required this.id,
-    required this.name,
+    required this.fullName,
     required this.email,
     required this.phone,
     required this.address,
-    required this.photo,
   });
 
   // factory method to create Trainee instance from json data
   factory Trainee.fromJson(Map<String, dynamic> json) {
     return Trainee(
       id: json['id'],
-      name: json['name'],
+      fullName: json['fullName'],
       email: json['email'],
       phone: json['phone'],
       address: json['address'],
-      photo: json['photo'],
     );
   }
 
@@ -37,11 +38,10 @@ class Trainee {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'name': name,
+      'fullName': fullName,
       'email': email,
       'phone': phone,
       'address': address,
-      'photo': photo,
     };
   }
 }
