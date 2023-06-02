@@ -9,22 +9,21 @@ class ApiDataProvider {
   ApiDataProvider();
 
 // define the url base and so
-  getSelfTaskData(
-      {required int trainerId,
+  getSelfTaskData({
       required String date,
       required String accessToken}) async {
     try {
       final http.Response response = await http
-          .post(
-            Uri.parse('http://localhost:3050/task/trainee'),
+          .get(
+            Uri.parse('http://localhost:3050/task/trainee/$date'),
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
               'authorization': accessToken
             },
-            body: jsonEncode(<String, dynamic>{
-              "trainerId": trainerId,
-              "assignedDate": date
-            }),
+            // body: jsonEncode(<String, dynamic>{
+            //   "trainerId": trainerId,
+            //   "assignedDate": date
+            // }),
           )
           .timeout(const Duration(seconds: 2));
 
