@@ -27,13 +27,11 @@ class ApiDataProvider {
       // if successfull return something, else throw an error
       if (response.statusCode >= 200 && response.statusCode < 300) {
         List jsonList = jsonDecode(response.body);
-        print(jsonList.runtimeType);
+
         List<Trainer> trainers = [];
         for (var json in jsonList) {
           trainers.add(Trainer.fromJson(json));
         }
-        print(trainers);
-
         return trainers;
       } else {
         String errorMessage = jsonDecode(response.body)['message'][0];

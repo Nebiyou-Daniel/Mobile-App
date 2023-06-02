@@ -2,17 +2,17 @@ class Trainer {
   // id
   final int id;
   final String fullName;
-  final String bio;
-  final double rating;
-  final int numberOfTrainees;
+  String? bio;
+  final double averageRating;
+  int? numberOfTrainees;
   final String email;
-  final String phoneNumber;
+  String? phoneNumber;
 
   Trainer({
     required this.id,
     required this.fullName,
     required this.bio,
-    required this.rating,
+    required this.averageRating,
     required this.numberOfTrainees,
     required this.email,
     required this.phoneNumber,
@@ -24,7 +24,7 @@ class Trainer {
       id: json['id'],
       fullName: json['fullName'],
       bio: json['bio'],
-      rating: json['rating'],
+      averageRating: json['averageRating'],
       numberOfTrainees: json['numberOfTrainees'],
       email: json["email"],
       phoneNumber: json["phoneNumber"],

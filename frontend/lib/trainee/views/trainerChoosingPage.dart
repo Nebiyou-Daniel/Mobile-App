@@ -86,7 +86,7 @@ class TrainerCard extends StatelessWidget {
             SizedBox(
               width: 400,
               child: RatingBarIndicator(
-                rating: double.parse('${trainer.rating}'),
+                rating: double.parse('${trainer.averageRating}'),
                 itemSize: 15,
                 itemBuilder: (context, index) => const Icon(
                   Icons.star,

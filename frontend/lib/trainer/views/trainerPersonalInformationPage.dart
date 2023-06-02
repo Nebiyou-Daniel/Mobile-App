@@ -35,13 +35,13 @@ class TrainerPersonalInformation extends StatelessWidget {
           ),
           Text(trainer.fullName),
           Text(trainer.email),
-          Text(trainer.bio),
-          Text(trainer.phoneNumber),
+          Text(trainer.bio!),
+          Text(trainer.phoneNumber!),
           Text('Current active Trainees: ${trainer.numberOfTrainees}'),
 
           // The trainer's rating ***
           RatingBar.builder(
-            initialRating: trainer.rating,
+            initialRating: trainer.averageRating,
             itemSize: 15,
             minRating: 1,
             direction: Axis.horizontal,

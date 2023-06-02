@@ -39,7 +39,7 @@ class TrainerBloc extends Bloc<TrainerEvent, TrainerState> {
             email: "hjdsfhjasd",
             phoneNumber: "+123456789",
             bio: "Fitness",
-            rating: 4.5,
+            averageRating: 4.5,
             numberOfTrainees: 10,
           ),
         ));
