@@ -28,7 +28,6 @@ class SignUpFieldFormState extends State<SignUpFieldForm> {
 
     super.dispose();
   }
-  
 
   String? _validateEmail() {
     if (_emailController.text.isEmpty) {
@@ -72,11 +71,11 @@ class SignUpFieldFormState extends State<SignUpFieldForm> {
     if (_formKey.currentState!.validate()) {
       bloc.add(
         AuthSignUpEvent(
-            name: _fullNameController.text,
-            email: _emailController.text,
-            password: _passwordController.text,
-            role: roleSelection,
-            ),
+          name: _fullNameController.text,
+          email: _emailController.text,
+          password: _passwordController.text,
+          role: roleSelection,
+        ),
       );
     }
   }
@@ -110,6 +109,7 @@ class SignUpFieldFormState extends State<SignUpFieldForm> {
               ),
 
               TextFormField(
+                key: Key('email_field'),
                 controller: _emailController,
                 decoration: const InputDecoration(
                   icon: Icon(Icons.email),
@@ -123,6 +123,7 @@ class SignUpFieldFormState extends State<SignUpFieldForm> {
               Container(margin: const EdgeInsets.only(top: 20.0)),
 
               TextFormField(
+                key: Key('full_name_field'),
                 controller: _fullNameController,
                 decoration: const InputDecoration(
                   icon: Icon(Icons.person_rounded),
@@ -139,6 +140,7 @@ class SignUpFieldFormState extends State<SignUpFieldForm> {
               Container(margin: const EdgeInsets.only(top: 20.0)),
 
               TextFormField(
+                key: Key('password_field'),
                 controller: _passwordController,
                 decoration: const InputDecoration(
                   icon: Icon(Icons.password),
@@ -151,6 +153,7 @@ class SignUpFieldFormState extends State<SignUpFieldForm> {
 
               Container(margin: const EdgeInsets.only(top: 20.0)),
               TextFormField(
+                key: Key('confirm_password_field'),
                 controller: _confirmPasswordController,
                 decoration: const InputDecoration(
                   icon: Icon(Icons.password),
@@ -179,6 +182,7 @@ class SignUpFieldFormState extends State<SignUpFieldForm> {
               Container(
                 margin: const EdgeInsets.only(top: 20.0),
                 child: DropdownButton<String>(
+                   key: const Key('preference_dropdown'),
                   value: roleSelection,
                   icon: const Icon(Icons.arrow_downward),
                   iconSize: 24,
@@ -197,6 +201,7 @@ class SignUpFieldFormState extends State<SignUpFieldForm> {
                   // only trainer and trainee roles are allowed to signup now
                   items: <String>['trainee', 'trainer']
                       .map<DropdownMenuItem<String>>((String value) {
+
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value.toUpperCase()),
