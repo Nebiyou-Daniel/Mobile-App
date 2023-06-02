@@ -23,20 +23,21 @@ export class TaskController {
     // ){
     //     return this.taskService.getAllTasks(traineeId);
     // }
-    @Post('trainer')
+    @Get('trainer/:id/:date')
     getTaskByDateForTrainer(
         @GetTrainer('id') trainerId: number,
-        @Body() dto: GetTaskDto
+        @Param('date') date: string,
+        @Param('id', ParseIntPipe) traineeId: number
     ){
-        return this.taskService.getTaskByDate(trainerId, dto)
+        return this.taskService.getTaskByDate(trainerId, traineeId, date)
     }
 
-    @Post('trainee')
+    @Get('trainee/:date')
     getTaskByDateForTrainee(
         @GetTrainee('id') traineeId: number,
-        @Body() dto: GetTaskDtoTrainee
+        @Param('date') date: string
     ){
-        return this.taskService.getTaskByDateTrainee(traineeId, dto)
+        return this.taskService.getTaskByDateTrainee(traineeId, date)
     }
     
     @Get(':id')

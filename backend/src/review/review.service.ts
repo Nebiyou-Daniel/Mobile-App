@@ -4,7 +4,21 @@ import { CreateReviewDto, EditReviewDto } from './dto';
 
 @Injectable()
 export class ReviewService {
+    
     constructor(private prisma: PrismaService){}
+
+    async getTraineeReview(traineeId: number, trainerId: number) {
+        const review = await this.prisma.review.findFirst({
+            where: {
+                traineeId: traineeId,
+                trainerId: trainerId
+            }
+        })
+        if (!review){
+            throw new ForbiddenException('No Review.')
+        }
+        return review
+    }
 
     async createReview(traineeId: number, dto: CreateReviewDto){
         const review = await this.prisma.review.create({

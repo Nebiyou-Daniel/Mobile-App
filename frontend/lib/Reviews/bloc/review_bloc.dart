@@ -75,7 +75,5 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
       }
     });
 
-
-
   }
 }

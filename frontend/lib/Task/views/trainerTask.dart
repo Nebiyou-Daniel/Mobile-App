@@ -46,7 +46,6 @@ class DatePicker extends StatelessWidget {
           firstDate: DateTime(2020),
           lastDate: DateTime(2025),
           onDateChanged: (DateTime date) {
-            print("Date changed to $date")
             taskBloc
                 .add(TaskTrainerLoadingEvent(date: date, userId: traineeId));
             showDialog(

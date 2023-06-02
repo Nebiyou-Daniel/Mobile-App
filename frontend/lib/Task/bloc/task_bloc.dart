@@ -66,7 +66,6 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
     on<TaskDeleteEvent>((event, emit) async {
       emit(TaskLoading());
-      print("delete event");
 
       try {
         final String accessToken = preferences.getString("access_token")!;
@@ -74,11 +73,11 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         await apiDataProvider.deleteTask(
             taskId: event.task.id, accessToken: accessToken);
       } catch (error) {
-        // else emit the error state
         emit(TaskDeleteError(error: error.toString()));
       }
       emit(TaskInitial());
     });
+
     on<TaskCompletedToggleEvent>((event, emit) async {
       emit(TaskLoading());
 
