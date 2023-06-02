@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import '../../lib/notifications/bloc/notification_state.dart';
-import 'package:frontend/notifications/Model/notification_model.dart';
+import '../../lib/application/notifications/bloc/notification_state.dart';
+import 'package:frontend/domain/notifications/Model/notification_model.dart';
 void main(){
   group("NotificationState",(){
     Notification createNSubject()=>Notification(id:0,recipientId:0,

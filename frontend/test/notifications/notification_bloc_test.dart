@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:frontend/notifications/bloc/notification_bloc.dart';
-import 'package:frontend/notifications/bloc/notification_state.dart';
-import 'package:frontend/notifications/bloc/notification_event.dart';
-import 'package:frontend/notifications/Model/notification_model.dart';
+import 'package:frontend/application/notifications/bloc/notification_bloc.dart';
+import 'package:frontend/application/notifications/bloc/notification_state.dart';
+import 'package:frontend/application/notifications/bloc/notification_event.dart';
+import 'package:frontend/domain/notifications/Model/notification_model.dart';
 import 'package:bloc_test/bloc_test.dart';
 void main(){
   group('Notification bloc',(){

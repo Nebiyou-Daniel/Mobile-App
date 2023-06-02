@@ -1,36 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frontend/Reviews/bloc/review_bloc.dart';
-import 'package:frontend/notifications/views/notification_screen.dart';
+import 'package:frontend/application/Reviews/bloc/review_bloc.dart';
+import 'package:frontend/presentation/notifications/views/notification_screen.dart';
 import 'package:frontend/serviceLocator.dart';
-import 'package:frontend/Theme/bloc/theme_bloc.dart';
+import 'package:frontend/application/Theme/bloc/theme_bloc.dart';
 
-import 'package:frontend/auth/bloc/auth_bloc.dart';
-import 'package:frontend/UI/common/splashScreen.dart';
-import 'package:frontend/profile/views/trainee_profile.dart';
-import 'package:frontend/UI/common/login.dart';
-import 'package:frontend/UI/common/settings.dart';
-import 'package:frontend/UI/common/signup.dart';
-import 'package:frontend/trainer/trainer.dart';
-import 'package:frontend/trainer/views/trainerDetailPageForTrainee.dart';
-import 'package:frontend/profile/views/trainerProfile.dart';
-import 'package:frontend/trainerHiring/bloc/trainer_hiring_bloc.dart';
-import 'package:frontend/weight/bloc/weight_bloc.dart';
+import 'package:frontend/application/auth/bloc/auth_bloc.dart';
+import 'package:frontend/presentation/common/splashScreen.dart';
+import 'package:frontend/presentation/views/trainee_profile.dart';
+import 'package:frontend/presentation/common/login.dart';
+import 'package:frontend/presentation/common/settings.dart';
+import 'package:frontend/presentation/common/signup.dart';
+import 'package:frontend/application/trainer/trainer.dart';
+import 'package:frontend/presentation/trainer/views/trainerDetailPageForTrainee.dart';
+import 'package:frontend/presentation/views/trainerProfile.dart';
+import 'package:frontend/application/trainerHiring/bloc/trainer_hiring_bloc.dart';
+import 'package:frontend/application/Weight/bloc/weight_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:frontend/trainee/trainee.dart';
+import 'package:frontend/application/trainee/trainee.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'UI/admin/admin_home.dart';
-import 'UI/common/about.dart';
-import 'UI/common/contacts.dart';
-import 'UI/trainee/traineeProgressPage.dart';
+import 'presentation/admin/admin_home.dart';
+import 'presentation/common/about.dart';
+import 'presentation/common/contacts.dart';
+import 'presentation/trainee/traineeProgressPage.dart';
 
-import 'profile/profile.dart';
-import 'trainee/views/traineeHomePage.dart';
-import 'trainee/views/trainee_detail_for_trainer.dart';
-import 'trainee/views/trainerChoosingPage.dart';
-import 'trainer/views/trainerHomePage.dart';
+import 'application/profile/profile.dart';
+import 'presentation/trainee/views/traineeHomePage.dart';
+import 'presentation/trainee/views/trainee_detail_for_trainer.dart';
+import 'presentation/trainee/views/trainerChoosingPage.dart';
+import 'presentation/trainer/views/trainerHomePage.dart';
 
-import 'UI/trainer/workoutPlanCreationPage.dart';
+import 'presentation/trainer/workoutPlanCreationPage.dart';
 
 // void main() {
 //   runApp(MyApp());

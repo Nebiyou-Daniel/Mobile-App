@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:frontend/Reviews/model/review_model.dart';
-import 'package:frontend/Reviews/bloc/review_state.dart';
+import 'package:frontend/domain/Reviews/model/review_model.dart';
+import 'package:frontend/application/Reviews/bloc/review_state.dart';
 void main(){
   Review createReview()=>Review(rating: 10, comment: "", 
   traineeId: 1, trainerId: 1);
