@@ -30,6 +30,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     // signing up ...
     on<AuthSignUpEvent>((event, emit) async {
       emit(AuthSigningUp());
+
       try {
         dynamic accessToken;
         accessToken = await apiDataProvider.signUp(

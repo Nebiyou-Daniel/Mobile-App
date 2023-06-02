@@ -13,7 +13,7 @@ class TraineeLoadEvent extends TraineeEvent {
 }
 
 class TraineeDeleteEvent extends TraineeEvent {
-  final String id;
+  final int id;
 
   TraineeDeleteEvent({required this.id});
 }

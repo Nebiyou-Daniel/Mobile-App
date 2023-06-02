@@ -37,9 +37,10 @@ packages:
     dependency: transitive
     description:
       name: bloc
-      sha256: "6f1b87b6eca9041d5672b6e29273cd1594db48ebb66fd2471066e9f3c3a516bd"
+      sha256: "3820f15f502372d979121de1f6b97bfcf1630ebff8fe1d52fb2b0bfa49be5b49"
       url: "https://pub.dev"
     source: hosted
+
     version: "7.2.1"
   bloc_test:
     dependency: "direct main"
@@ -80,6 +81,7 @@ packages:
       sha256: "4a07be6cb69c84d677a6c3096fcf960cc3285a8330b4603e0d463d15d9bd934c"
       url: "https://pub.dev"
     source: hosted
+
     version: "1.17.1"
   convert:
     dependency: transitive
@@ -137,22 +139,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.1"
-  ffi:
-    dependency: transitive
-    description:
-      name: ffi
-      sha256: ed5337a5660c506388a9f012be0288fb38b49020ce2b45fe1f8b8323fe429f99
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.2"
-  file:
-    dependency: transitive
-    description:
-      name: file
-      sha256: "1b92bec4fc2a72f59a8e15af5f52cd441e4a7860b49499d69dfa817af20e925d"
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.1.4"
   fl_chart:
     dependency: "direct main"
     description:
@@ -170,15 +156,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_bloc
-      sha256: cdd1351ced09eeb46cfa7946e095b7679344af927415ca9cd972928fa6d5b23f
+      sha256: e74efb89ee6945bcbce74a5b3a5a3376b088e5f21f55c263fc38cbdc6237faae
       url: "https://pub.dev"
     source: hosted
     version: "7.3.3"
-  flutter_driver:
-    dependency: transitive
-    description: flutter
-    source: sdk
-    version: "0.0.0"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -226,6 +207,7 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+
   glob:
     dependency: transitive
     description:
@@ -266,6 +248,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
+
   integration_test:
     dependency: "direct dev"
     description: flutter
@@ -279,6 +262,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+
   js:
     dependency: transitive
     description:
@@ -334,15 +318,18 @@ packages:
       sha256: e4ff8e8564c03f255408decd16e7899da1733852a9110a58fe6d1b817684a63e
       url: "https://pub.dev"
     source: hosted
+
     version: "1.0.4"
   mocktail:
     dependency: transitive
     description:
       name: mocktail
+
       sha256: dd85ca5229cf677079fd9ac740aebfc34d9287cdf294e6b2ba9fae25c39e4dc2
       url: "https://pub.dev"
     source: hosted
     version: "0.2.0"
+
   nested:
     dependency: transitive
     description:
@@ -407,6 +394,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.4.0"
+
   platform:
     dependency: transitive
     description:
@@ -447,6 +435,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.5"
+
   pub_semver:
     dependency: transitive
     description:
@@ -489,27 +478,25 @@ packages:
     version: "2.2.0"
   shared_preferences_platform_interface:
     dependency: transitive
-    description:
-      name: shared_preferences_platform_interface
-      sha256: fb5cf25c0235df2d0640ac1b1174f6466bd311f621574997ac59018a6664548d
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.0"
-  shared_preferences_web:
+    description: flutter
+    source: sdk
+    version: "0.0.99"
+  source_map_stack_trace:
     dependency: transitive
     description:
-      name: shared_preferences_web
-      sha256: "74083203a8eae241e0de4a0d597dbedab3b8fef5563f33cf3c12d7e93c655ca5"
+      name: source_map_stack_trace
+      sha256: "84cf769ad83aa6bb61e0aa5a18e53aea683395f196a6f39c4c881fb90ed4f7ae"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.0"
-  shared_preferences_windows:
+    version: "2.1.1"
+  source_maps:
     dependency: transitive
     description:
-      name: shared_preferences_windows
-      sha256: "5e588e2efef56916a3b229c3bfe81e6a525665a454519ca51dbcc4236a274173"
+      name: source_maps
+      sha256: "708b3f6b97248e5781f493b765c3337db11c5d2c81c3094f10904bfa8004c703"
       url: "https://pub.dev"
     source: hosted
+
     version: "2.2.0"
   shelf:
     dependency: transitive
@@ -640,10 +627,12 @@ packages:
     dependency: transitive
     description:
       name: test
+
       sha256: "3dac9aecf2c3991d09b9cdde4f98ded7b30804a88a0d7e4e7e1678e78d6b97f4"
       url: "https://pub.dev"
     source: hosted
     version: "1.24.1"
+
   test_api:
     dependency: transitive
     description:
@@ -652,6 +641,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.1"
+
   test_core:
     dependency: transitive
     description:
@@ -660,6 +650,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.1"
+
   typed_data:
     dependency: transitive
     description:
@@ -676,6 +667,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+
   vm_service:
     dependency: transitive
     description:
@@ -740,6 +732,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.2"
+
 sdks:
   dart: ">=3.0.0 <4.0.0"
   flutter: ">=3.3.0"

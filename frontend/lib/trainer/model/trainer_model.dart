@@ -15,7 +15,7 @@ class Trainer {
     required this.averageRating,
     required this.numberOfTrainees,
     required this.email,
-    required this.phoneNumber,
+    required this.phoneNumber, required int id,
   });
 
   // from json
