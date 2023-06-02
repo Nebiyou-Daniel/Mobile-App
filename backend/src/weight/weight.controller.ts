@@ -1,15 +1,17 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards } from '@nestjs/common';
 import { WeightService } from './weight.service';
 import { GetTrainee, GetTrainer } from 'src/auth/decorator';
 import { CreateWeightDto } from './dto';
+import { JwtGuard } from 'src/auth/guard';
 
+@UseGuards(JwtGuard)
 @Controller('weight')
 export class WeightController {
     constructor(private weightService: WeightService){}
 
     @Post('trainee')
     addWeightForTrainee(
-        @GetTrainee() traineeId: number,
+        @GetTrainee('id') traineeId: number,
         @Body() dto: CreateWeightDto
     ){
         return this.weightService.addWeightForTrainee(traineeId, dto);
@@ -17,7 +19,7 @@ export class WeightController {
 
     @Post('trainer')
     addWeightForTrainer(
-        @GetTrainer() trainerId: number,
+        @GetTrainer('id') trainerId: number,
         @Body() dto: CreateWeightDto
     ){
         return this.weightService.addWeightForTrainer(trainerId, dto);
@@ -25,14 +27,14 @@ export class WeightController {
 
     @Get('trainee')
     getAllWeightsForTrainee(
-        @GetTrainee() traineeId: number,
+        @GetTrainee('id') traineeId: number,
     ){
         return this.weightService.getAllWeightsForTrainee(traineeId);
     }
 
     @Get('trainer')
     getAllWeightsForTrainer(
-        @GetTrainer() trainerId: number,
+        @GetTrainer('id') trainerId: number,
     ){
         return this.weightService.getAllWeightsForTrainer(trainerId);
     }
@@ -47,4 +49,3 @@ export class WeightController {
         @Param('id', ParseIntPipe) weightId: number
     ){}
 }
-

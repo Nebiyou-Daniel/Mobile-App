@@ -7,12 +7,9 @@ import 'package:http/http.dart' as http;
 class ApiDataProvider {
   ApiDataProvider();
 
-  traineeLogin(
-      
+  login(
       {required String email,
-     
       required String password,
-      required String role,
       required String role}) async {
     Map<String, String> roleToBaseUrl = {
       "trainee": "http://127.0.0.1:3050/auth/traineeLogin",
@@ -50,14 +47,13 @@ class ApiDataProvider {
       }
     } on TimeoutException {
       throw Exception(
-          
           'Login request timed out: Check your Internet Connection.');
     } catch (e) {
       throw Exception('$e');
     }
   }
 
-  traineeSignUp({
+  signUp({
     required String email,
     required String password,
     required String name,
@@ -90,7 +86,6 @@ class ApiDataProvider {
         return accessToken;
       } else {
         String errorMessage = jsonDecode(response.body)['message'][0];
-        print("5");
         throw Exception('Failed to Signup: $errorMessage');
       }
     } on TimeoutException {
