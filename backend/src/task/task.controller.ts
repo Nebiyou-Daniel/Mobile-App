@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGua
 import { TaskService } from './task.service';
 import { JwtGuard } from 'src/auth/guard';
 import { GetTrainee, GetTrainer } from 'src/auth/decorator';
-import { CreateTaskDto, EditTaskDto } from './dto';
+import { CreateTaskDto, EditTaskDto, GetTaskDto, GetTaskDtoTrainee } from './dto';
 
 @UseGuards(JwtGuard)
 @Controller('task')
@@ -23,7 +23,23 @@ export class TaskController {
     // ){
     //     return this.taskService.getAllTasks(traineeId);
     // }
+    @Post('trainer/:id/:date')
+    getTaskByDateForTrainer(
+        @GetTrainer('id') trainerId: number,
+        @Param('date') date: string,
+        @Param('id', ParseIntPipe) traineeId: number
+    ){
+        return this.taskService.getTaskByDate(trainerId, traineeId, date)
+    }
 
+    @Get('trainee/:date')
+    getTaskByDateForTrainee(
+        @GetTrainee('id') traineeId: number,
+        @Param('date') date: string
+    ){
+        return this.taskService.getTaskByDateTrainee(traineeId, date)
+    }
+    
     @Get(':id')
     getTaskById(
         @GetTrainer('id') trainerId: number,
@@ -31,6 +47,7 @@ export class TaskController {
     ){
         return this.taskService.getTaskById(trainerId, taskId);
     }
+
 
     @Patch(':id')
     editTaskById(

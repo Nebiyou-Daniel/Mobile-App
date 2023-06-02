@@ -7,24 +7,24 @@ import '../Model/task_model.dart';
 import '../task.dart';
 
 class TrainerTask extends StatelessWidget {
-  final int id;
+  final int traineeId;
 
-  const TrainerTask({Key? key, required this.id}) : super(key: key);
+  const TrainerTask({Key? key, required this.traineeId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => TaskBloc(),
-      child: DatePicker(userID: id),
+      child: DatePicker(traineeId: traineeId),
     );
   }
 }
 
 class DatePicker extends StatelessWidget {
   final double defaultPadding = 10.0;
-  final int userID;
+  final int traineeId;
 
-  const DatePicker({Key? key, required this.userID}) : super(key: key);
+  const DatePicker({Key? key, required this.traineeId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,8 @@ class DatePicker extends StatelessWidget {
           firstDate: DateTime(2020),
           lastDate: DateTime(2025),
           onDateChanged: (DateTime date) {
-            taskBloc.add(TaskTrainerLoadingEvent(date: date, userId: userID));
+            taskBloc
+                .add(TaskTrainerLoadingEvent(date: date, userId: traineeId));
             showDialog(
                 context: context,
                 builder: (BuildContext context) {
@@ -144,7 +145,10 @@ class DatePicker extends StatelessWidget {
                           ),
                           const Padding(padding: EdgeInsets.all(10.0)),
                           if (taskBlocState is TaskLoading)
-                            const LoadingParagraphWidget(numberOfLines: 3, message: "Loading Task Description",)
+                            const LoadingParagraphWidget(
+                              numberOfLines: 3,
+                              message: "Loading Task Description",
+                            )
                           else if (taskBlocState is TaskLoadedSuccessfully)
                             TextField(
                               controller: TextEditingController(
@@ -176,9 +180,18 @@ class DatePicker extends StatelessWidget {
                           ? [
                               TextButton(
                                 onPressed: () {
-                                  taskBloc.add(
-                                    TaskAddEvent(task: Task.fromJson(), userId: -1),
-                                  );
+                                  taskBloc.add(TaskAddEvent(
+                                      task: Task.fromJson({
+                                        "title": "",
+                                        "description": "",
+                                        "isCompleted": false,
+                                        "date": date.toString(),
+                                        "userId": traineeId
+                                      }),
+                                      userId: traineeId));
+                                  // add the task loading event
+                                  taskBloc.add(TaskTrainerLoadingEvent(
+                                      date: date, userId: traineeId));
                                 },
                                 child: Row(
                                   children: const [

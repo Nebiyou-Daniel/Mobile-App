@@ -1,10 +1,33 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { CreateTaskDto, EditTaskDto } from './dto';
+import { CreateTaskDto, EditTaskDto, GetTaskDto, GetTaskDtoTrainee } from './dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class TaskService {
+    
     constructor(private prisma: PrismaService){}
+    
+    getTaskByDateTrainee(traineeId: number, date: string) {
+        let Date = date.split(':');
+        let assignedDate = `${Date[0]}/${Date[1]}/${Date[2]}`;        
+        return this.prisma.task.findFirst({
+            where: {
+                traineeId: traineeId,
+                assignedDate: assignedDate
+            }
+        }) ;
+    }
+    getTaskByDate(trainerId: number, traineeId: number, date: string ) {
+        let Date = date.split(':');
+        let assignedDate = `${Date[0]}/${Date[1]}/${Date[2]}`;
+        return this.prisma.task.findFirst({
+            where: {
+                trainerId: trainerId,
+                traineeId: traineeId,
+                assignedDate: assignedDate
+            }
+        })  
+    }
 
     async createTask(trainerId: number, dto: CreateTaskDto){
         const task = await this.prisma.task.create({

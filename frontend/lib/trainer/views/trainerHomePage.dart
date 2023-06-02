@@ -9,7 +9,7 @@ import 'package:frontend/auth/auth.dart';
 import 'package:frontend/trainee/trainee.dart';
 import 'package:frontend/Theme/theme.dart';
 
-import '../../Custom_Widgets/header_banner.dart';
+import '../../custom_widgets/header_banner.dart';
 
 class TrainerHomePage extends StatelessWidget {
   const TrainerHomePage({super.key});
@@ -26,10 +26,10 @@ class TrainerHomePage extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: "Workout Warrior",
+        theme: context.watch<ThemeBloc>().state.theme,
         home: Scaffold(
           appBar: AppBar(
             title: const Text("Workout Warrior"),
-            backgroundColor: const Color(0xFF0A568A),
             actions: <Widget>[
               IconButton(
                 icon: const Icon(Icons.notifications),
