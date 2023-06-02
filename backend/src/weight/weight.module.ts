@@ -1,4 +1,9 @@
 import { Module } from '@nestjs/common';
+import { WeightController } from './weight.controller';
+import { WeightService } from './weight.service';
 
-@Module({})
+@Module({
+  controllers: [WeightController],
+  providers: [WeightService]
+})
 export class WeightModule {}

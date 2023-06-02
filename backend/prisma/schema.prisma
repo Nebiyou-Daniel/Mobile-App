@@ -16,14 +16,17 @@ model Trainee {
   email String @unique
   password String
   phoneNumber String? @unique
-  role String
-  Bio String?
+  role String @default("trainee")
+  bio String?
   tasks Task[]
   reviews Review[]
   notifications Notification[]
   weights Weight[]
   trainerId Int?
   trainer Trainer? @relation(fields:[trainerId], references: [id])
+  previousJobXp String?
+  yearsOfXp Int?
+  previousWorkPlace String?
 
   @@map("trainee")
 }
@@ -34,8 +37,8 @@ model Trainer{
   email String @unique
   password String
   phoneNumber String? @unique
-  role String
-  Bio String?
+  role String @default("trainer")
+  bio String?
   tasks Task[]
   reviews Review[]
   notifications Notification[]
@@ -55,8 +58,8 @@ model Admin{
   email String @unique
   password String
   phoneNumber String? @unique
-  role String
-  Bio String?
+  role String @default("admin")
+  bio String?
   notifications Notification[]
 
   @@map("admin")
@@ -66,6 +69,8 @@ model Task{
   id Int @id @default(autoincrement())
   taskName String
   description String
+  assignedDate String
+  taskDone Boolean @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   traineeId Int
@@ -93,21 +98,23 @@ model Notification{
   id Int @id @default(autoincrement())
   title String
   details String
+  markAsRead Boolean @default(false)
   createdAt DateTime @default(now())
-  traineeId Int
-  trainee Trainee @relation(fields:[traineeId], references: [id])
-  trainerId Int
-  trainer Trainer @relation(fields:[trainerId], references: [id])
-  adminId Int
-  admin Admin @relation(fields:[adminId], references: [id])
+  traineeId Int?
+  trainee Trainee? @relation(fields:[traineeId], references: [id])
+  trainerId Int?
+  trainer Trainer? @relation(fields:[trainerId], references: [id])
+  adminId Int?
+  admin Admin? @relation(fields:[adminId], references: [id])
 }
 
 model Weight{
   id Int @id @default(autoincrement())
   weight String
+  height String?
   createdAt DateTime @default(now())
-  traineeId Int
-  trainee Trainee @relation(fields:[traineeId], references: [id])
-  trainerId Int
-  trainer Trainer @relation(fields:[trainerId], references: [id])
+  traineeId Int?
+  trainee Trainee? @relation(fields:[traineeId], references: [id])
+  trainerId Int?
+  trainer Trainer? @relation(fields:[trainerId], references: [id])
 }

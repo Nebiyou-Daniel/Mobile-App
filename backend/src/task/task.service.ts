@@ -1,15 +1,39 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { CreateTaskDto, EditTaskDto } from './dto';
+import { CreateTaskDto, EditTaskDto, GetTaskDto, GetTaskDtoTrainee } from './dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class TaskService {
+    
     constructor(private prisma: PrismaService){}
+    
+    getTaskByDateTrainee(traineeId: number, date: string) {
+        let Date = date.split(':');
+        let assignedDate = `${Date[0]}/${Date[1]}/${Date[2]}`;        
+        return this.prisma.task.findFirst({
+            where: {
+                traineeId: traineeId,
+                assignedDate: assignedDate
+            }
+        }) ;
+    }
+    getTaskByDate(trainerId: number, traineeId: number, date: string ) {
+        let Date = date.split(':');
+        let assignedDate = `${Date[0]}/${Date[1]}/${Date[2]}`;
+        return this.prisma.task.findFirst({
+            where: {
+                trainerId: trainerId,
+                traineeId: traineeId,
+                assignedDate: assignedDate
+            }
+        })  
+    }
 
     async createTask(trainerId: number, dto: CreateTaskDto){
         const task = await this.prisma.task.create({
             data: {
                 trainerId,
+                traineeId: dto.traineeId,
                 ...dto
             }
         })
@@ -43,7 +67,9 @@ export class TaskService {
         if (!task || task.trainerId !== trainerId){
             throw new ForbiddenException('Access to resource denied')
         }
-
+        if (task.taskDone){
+            throw new ForbiddenException('You can not change a task that is done by the trainee. Create new task for the trainee.')
+        }
         return this.prisma.task.update({
             where: {
                 id: taskId
@@ -69,5 +95,25 @@ export class TaskService {
                 id: taskId
             }
         })
+    }
+    async setTaskAsDone(traineeId: number, taskId: number, dto: EditTaskDto){
+        const task = await this.prisma.task.findUnique({
+            where: {
+                id: taskId
+            }
+
+        })
+        if (!task || task.traineeId !== traineeId){
+            throw new ForbiddenException('Access to resource denied')
+        }
+
+        return this.prisma.task.update({
+            where: {
+                id: taskId
+            },
+            data: {
+                ...dto
+            }
+        })        
     }
 }
