@@ -21,12 +21,17 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
             traineeId: event.userId,
             date: event.date.toString().split(" ")[0],
             accessToken: accessToken);
+<<<<<<< HEAD
         // check if taksk is not null
         if (task != null) {
           emit(TaskLoadedSuccessfully(task: task));
         } else {
           emit(TaskIsEmpty());
         }
+=======
+
+        emit(TaskLoadedSuccessfully(task: _task));
+>>>>>>> 60ca18862cb017eb7b31669159849d5d1423633f
       } catch (error) {
         emit(TaskLoadingError(error: error.toString()));
       }

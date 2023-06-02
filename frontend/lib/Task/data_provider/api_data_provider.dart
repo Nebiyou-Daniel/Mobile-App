@@ -9,6 +9,7 @@ class ApiDataProvider {
   ApiDataProvider();
 
 // define the url base and so
+<<<<<<< HEAD
   getSelfTaskData({required String date, required String accessToken}) async {
     try {
       final http.Response response = await http.get(
@@ -22,7 +23,28 @@ class ApiDataProvider {
         //   "assignedDate": date
         // }),
       ).timeout(const Duration(seconds: 2));
+=======
+  getSelfTaskData(
+      {required int trainerId,
+      required String date,
+      required String accessToken}) async {
+    try {
+      final http.Response response = await http
+          .post(
+            Uri.parse('http://localhost:3050/task/trainee'),
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+              'authorization': accessToken
+            },
+            body: jsonEncode(<String, dynamic>{
+              "trainerId": trainerId,
+              "assignedDate": date
+            }),
+          )
+          .timeout(const Duration(seconds: 2));
+>>>>>>> 60ca18862cb017eb7b31669159849d5d1423633f
 
+      
       // if successfull return something, else throw an error
       if (response.statusCode >= 200 && response.statusCode < 300) {
         Task task = Task.fromJson(jsonDecode(response.body));
@@ -41,6 +63,7 @@ class ApiDataProvider {
       required String date,
       required String accessToken}) async {
     try {
+<<<<<<< HEAD
       final http.Response response = await http.get(
         Uri.parse('http://localhost:3050/task/trainer/$traineeId/$date'),
         headers: <String, String>{
@@ -50,6 +73,23 @@ class ApiDataProvider {
       ).timeout(const Duration(seconds: 2));
 
       print(response.body.runtimeType);
+=======
+      final http.Response response = await http
+        .get(
+          Uri.parse('http://localhost:3050/task/trainer/$traineeId/$date'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'authorization': accessToken
+          },
+          // body: jsonEncode(<String, dynamic>{
+          //   "traineeId": traineeId,
+          //   "assignedDate": date
+          // }),
+        )
+        .timeout(const Duration(seconds: 2));
+
+      
+>>>>>>> 60ca18862cb017eb7b31669159849d5d1423633f
       // if successfull return something, else throw an error
       if (response.body == "") {
         return null;  

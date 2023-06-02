@@ -33,7 +33,7 @@ class ApiDataProvider {
           trainers.add(Trainer.fromJson(json));
         }
 
-        return traingiers;
+        return trainers;
       } else {
         String errorMessage = jsonDecode(response.body)['message'][0];
         throw Exception('Failed to get Trainer: $errorMessage');

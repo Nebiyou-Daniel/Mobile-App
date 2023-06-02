@@ -14,8 +14,12 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
       emit(ReviewLoadingState());
       try {
         final String accessToken = preferences.getString('access_token')!;
+<<<<<<< HEAD
         final reviews = await apiDataProvidor.getAllReviewsForTrainer(
             accessToken: accessToken);
+=======
+        final reviews = await apiDataProvidor.getAllReviewsForTrainer(accessToken: accessToken);
+>>>>>>> 60ca18862cb017eb7b31669159849d5d1423633f
         emit(ReviewListLoadSuccess(reviews: reviews));
       } catch (error) {
         emit(ReviewListLoadError(message: error.toString()));
@@ -27,7 +31,11 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
       emit(ReviewLoadingState());
       try {
         final String accessToken = preferences.getString('access_token')!;
+<<<<<<< HEAD
         await apiDataProvidor.postReview(
+=======
+        final review = await apiDataProvidor.postReview(
+>>>>>>> 60ca18862cb017eb7b31669159849d5d1423633f
             review: event.review, accessToken: accessToken);
         emit(ReviewOperationSuccess(message: "Review Created Successfully"));
       } catch (error) {
@@ -39,9 +47,20 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
     on<ReviewGetTraineeReview>((event, emit) async {
       emit(ReviewLoadingState());
       try {
+<<<<<<< HEAD
         final String accessToken = preferences.getString('access_token')!;
         final review = await apiDataProvidor.getTraineeReview(
             accessToken: accessToken, trainerId: event.trainerId);
+=======
+        await Future.delayed(const Duration(seconds: 1));
+        // TODO: not implement yet ......................
+        final Review review = Review(
+            id: 2,
+            rating: 3,
+            comment: "You are the best",
+            traineeId: 3,
+            trainerId: 3);
+>>>>>>> 60ca18862cb017eb7b31669159849d5d1423633f
 
         if (review != null) {
           emit(ReviewLoadSuccess(review: review));
@@ -76,5 +95,9 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
         emit(ReviewOperationFailure(message: error.toString()));
       }
     });
+<<<<<<< HEAD
+=======
+
+>>>>>>> 60ca18862cb017eb7b31669159849d5d1423633f
   }
 }
