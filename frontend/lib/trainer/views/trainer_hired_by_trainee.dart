@@ -24,14 +24,13 @@ class TrainerHiredByTrainee extends StatelessWidget {
           return Column(
             children: [
               // Show trainer info here
-              Text('Trainer: ${trainer.name}'),
+              Text('Trainer: ${trainer.fullName}'),
               Text('Trainer ID: ${trainer.id}'),
               Text('Trainer Email: ${trainer.email}'),
               // change trainer button that redirects you to choose trainer page
               ElevatedButton(
                 onPressed: () {
-                  // Navigator.pushNamed(context, '/trainee/chooseTrainer');
-                  context.pushNamed('/trainee/chooseTrainer');
+                  context.go('/trainee/chooseTrainer');
                 },
                 child: const Text('Change Trainer'),
               ),
@@ -39,48 +38,49 @@ class TrainerHiredByTrainee extends StatelessWidget {
               // Add review section
               BlocBuilder<ReviewBloc, ReviewState>(
                 builder: (context, state) {
+                  print(state);
                   if (state is ReviewInitial) {
                     ReviewBloc reviewBloc =
                         BlocProvider.of<ReviewBloc>(context);
                     reviewBloc
                         .add(ReviewGetTraineeReview(trainerId: trainer.id));
                     return const LoadingScreen();
-                  }
-                  if (state is ReviewLoadSuccess) {
+                  } else if (state is ReviewLoadSuccess) {
                     final review = state.review;
-                    // ignore: unnecessary_null_comparison
-                    if (review != null) {
-                      return Column(
-                        children: [
-                          // Show existing review
-                          ReviewCard(review: review),
-                          ElevatedButton(
-                            onPressed: () {
-                              // Show edit review alert dialog
-                              _showEditReviewDialog(context, review);
-                            },
-                            child: const Text('Edit Review'),
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              // Show delete review alert dialog
-                              _showDeleteReviewDialog(context, review);
-                            },
-                            child: const Text('Delete Review'),
-                          ),
-                        ],
-                      );
-                    } else {
-                      return ElevatedButton(
-                        onPressed: () {
-                          // Show add review alert dialog
-                          _showAddReviewDialog(context);
-                        },
-                        child: const Text('Add a Review'),
-                      );
-                    }
+                    return Column(
+                      children: [
+                        Container(height: 10),
+                        // Show existing review
+                        ReviewCard(review: review),
+                        Container(height: 10),
+                        ElevatedButton(
+                          onPressed: () {
+                            // Show edit review alert dialog
+                            _showEditReviewDialog(context, review);
+                          },
+                          child: const Text('Edit Review'),
+                        ),
+                        Container(height: 10),
+                        ElevatedButton(
+                          onPressed: () {
+                            // Show delete review alert dialog
+                            _showDeleteReviewDialog(context, review);
+                          },
+                          child: const Text('Delete Review'),
+                        ),
+                        Container(height: 10),
+                      ],
+                    );
+                  } else if (state is ReviewEmpty) {
+                    return ElevatedButton(
+                      onPressed: () {
+                        // Show add review alert dialog
+                        _showAddReviewDialog(context);
+                      },
+                      child: const Text('Add a Review'),
+                    );
                   } else if (state is ReviewLoadingState) {
-                    return const CircularProgressIndicator();
+                    return const LoadingScreen();
                   } else {
                     return const Text('Failed to load review');
                   }
@@ -92,7 +92,7 @@ class TrainerHiredByTrainee extends StatelessWidget {
           // Show error message or redirect to choose trainer page
           return const Text('Failed to load trainer');
         } else {
-          return const CircularProgressIndicator();
+          return const LoadingScreen();
         }
       },
     );

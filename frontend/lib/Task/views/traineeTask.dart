@@ -41,6 +41,7 @@ class DatePicker extends StatelessWidget {
       lastDate: DateTime(2025),
       onDateChanged: (DateTime date) {
         taskBloc.add(TaskTraineeLoadingEvent(date: date));
+
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -64,6 +65,7 @@ class DatePicker extends StatelessWidget {
                   Padding(padding: EdgeInsets.all(defaultPadding - 5)),
                   const Text("Task", style: TextStyle(color: Colors.blue)),
                   const Padding(padding: EdgeInsets.all(10.0)),
+                  
                   if (taskBlocState is TaskLoadedSuccessfully)
                     Row(
                       children: [

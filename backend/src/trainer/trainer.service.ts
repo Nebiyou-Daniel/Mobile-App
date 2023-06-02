@@ -9,7 +9,7 @@ import { Trainee } from '@prisma/client';
 @Injectable()
 export class TrainerService {
     constructor(private prisma: PrismaService){}
-
+    
     async updateTrainer(trainerId: number, dto: EditTrainerDto){
         const trainer = await this.prisma.trainer.update({
             where: {
@@ -20,25 +20,25 @@ export class TrainerService {
             }
         });
         delete trainer.password;
-
+        
         return trainer;
     }
     
     async updatePassword(trainerId: number, dto: PasswordUpdateDto){
         if(trainerId == null){
             throw new ForbiddenException('Not authenticated')
-          }
+        }
         const pass: string = await argon.hash(dto.newPassword)
-          //verify if password is correct
+        //verify if password is correct
         const use=await this.prisma.trainer.findFirst({
             where:{
                 id: trainerId
             }
         })
         const correct = await argon.verify(use.password,dto.oldPassword)
-
+        
         if(correct){
-
+            
             const returnObj= await this.prisma.trainer.update({
                 where:{
                     id: trainerId
@@ -48,7 +48,7 @@ export class TrainerService {
                 }
             })
             delete returnObj.password
-
+            
             return returnObj
         } else {
             throw new ForbiddenException('Old password is wrong')
@@ -59,7 +59,7 @@ export class TrainerService {
             where: {
                 id: trainerId
             }
-
+            
         })
         if (!trainer){
             throw new ForbiddenException('Access to resource denied')
@@ -71,7 +71,7 @@ export class TrainerService {
         })
     }
     async getMyTrainees(trainerId: number){
-
+        
         const trainees = await this.prisma.trainee.findMany({
             where: {
                 trainerId: trainerId,
@@ -86,7 +86,23 @@ export class TrainerService {
         });
         return trainees;
     }
-
+    
+    async getMyTraineeById(trainerId: number, traineeId: number) {
+        const trainee = await this.prisma.trainee.findFirst({
+            where: {
+                id: traineeId,
+                trainerId: trainerId,
+            },
+            select: {
+                id: true,
+                fullName: true,
+                email: true,
+                bio: true,
+                phoneNumber: true
+            }
+        });
+        return trainee;
+    }
     async removeTraineeById(traineeId: number){
         const trainee = await this.prisma.trainee.update({
             where: {

@@ -22,10 +22,6 @@ class Task {
       title: json['title'],
       description: json['description'],
       date: DateTime.parse(json['date']),
-      // q: what kind of date string format is this expectinf 
-      // a: it is expecting a string in the format of "YYYY-MM-DD"
-      // q: give me an example
-      // a: "2021-09-01"
       traineeId: json['traineeId'],
       isCompleted: json['isCompleted'],
     );
@@ -60,5 +56,4 @@ class Task {
       isCompleted: isCompleted ?? this.isCompleted,
     );
   }
-
 }

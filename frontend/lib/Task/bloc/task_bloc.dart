@@ -16,13 +16,17 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       emit(TaskLoading());
       try {
         final String accessToken = preferences.getString("access_token")!;
-        print(event.date.toString());
-        final _task = await apiDataProvider.getTaskData(
+        // print(event.date.toString().split(" ")[0]);
+        final task = await apiDataProvider.getTaskData(
             traineeId: event.userId,
-            date: event.date.toString(),
+            date: event.date.toString().split(" ")[0],
             accessToken: accessToken);
-
-        emit(TaskLoadedSuccessfully(task: _task));
+        // check if taksk is not null
+        if (task != null) {
+          emit(TaskLoadedSuccessfully(task: task));
+        } else {
+          emit(TaskIsEmpty());
+        }
       } catch (error) {
         emit(TaskLoadingError(error: error.toString()));
       }

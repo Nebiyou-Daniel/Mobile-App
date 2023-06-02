@@ -52,10 +52,10 @@ class TrainerChoosingPage extends StatelessWidget {
                     ],
                   ),
                 );
-                return const Center(child: Text('Failed to load trainers'));
               }
+              return const Center(child: Text('Failed to load trainers'));
 
-              return const SizedBox();
+              // return const SizedBox();
             },
           ),
         ),
@@ -71,14 +71,14 @@ class TrainerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-    //on clicked navigate to the trainer detail page
+      //on clicked navigate to the trainer detail page
 
       child: GestureDetector(
         child: Container(
           padding: const EdgeInsets.all(8),
           height: 80,
           child: Column(children: [
-            SizedBox(width: 400, child: Text('Name: ${trainer.name}')),
+            SizedBox(width: 400, child: Text('Name: ${trainer.fullName}')),
             SizedBox(width: 400, child: Text('Speciality: ${trainer.bio}')),
             SizedBox(
                 width: 400,

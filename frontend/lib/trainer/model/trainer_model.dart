@@ -1,7 +1,7 @@
 class Trainer {
   // id
   final int id;
-  final String name;
+  final String fullName;
   final String bio;
   final double rating;
   final int numberOfTrainees;
@@ -10,7 +10,7 @@ class Trainer {
 
   Trainer({
     required this.id,
-    required this.name,
+    required this.fullName,
     required this.bio,
     required this.rating,
     required this.numberOfTrainees,
@@ -22,7 +22,7 @@ class Trainer {
   factory Trainer.fromJson(Map<String, dynamic> json) {
     return Trainer(
       id: json['id'],
-      name: json['name'],
+      fullName: json['fullName'],
       bio: json['bio'],
       rating: json['rating'],
       numberOfTrainees: json['numberOfTrainees'],

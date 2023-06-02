@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:frontend/auth/bloc/auth_event.dart';
 import 'package:frontend/auth/bloc/auth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,23 +12,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     // login event ...
     on<AuthLoginEvent>((event, emit) async {
-      _print(preferences);
       emit(AuthLoggingIn());
       try {
-        dynamic accessToken;
+
+        String accessToken;
         accessToken = await apiDataProvider.login(
-          email: event.email,
-          password: event.password,
-          role: event.role,
-        );
-        await preferences.setString("access_token", accessToken);
-        await preferences.setString("role", event.role);
-        // TODO: add a getme  
+            email: event.email, password: event.password, role: event.role);
+
+        preferences.setString("access_token", accessToken);
+        preferences.setString("role", event.role);
         emit(AuthLoginSuccess(role: event.role));
       } catch (error) {
         emit(AuthLoginError(error: error.toString()));
       }
-      _print(preferences);
     });
 
     // signing up ...
@@ -44,10 +39,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             role: event.role);
         await preferences.setString("access_token", accessToken);
         await preferences.setString("role", event.role);
+        emit(AuthSignupSuccess(role: event.role));
       } catch (error) {
         emit(AuthSignupError(error: error.toString()));
       }
-      _print(preferences);
     });
 
     // logout event ...
@@ -61,7 +56,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthLogoutError(
             error: "An error occurred while logging out. Please try again."));
       }
-      _print(preferences);
     });
 
     // delete account ...
@@ -71,21 +65,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       String role = preferences.getString("role")!;
       emit(AuthDeletingAccount());
       try {
-        bool accountDeleted =
-            apiDataProvider.deleteSelfAccount(accessToken: accessToken, role: role);
+        bool accountDeleted = apiDataProvider.deleteSelfAccount(
+            accessToken: accessToken, role: role);
         if (accountDeleted) {
           emit(AuthDeleteAccountSuccess());
         } else {
           emit(AuthDeleteAccountError(
-            error:"An error occurred while deleting your account. Please try again."));
+              error:
+                  "An error occurred while deleting your account. Please try again."));
         }
       } catch (error) {
         emit(AuthDeleteAccountError(
-          error:"An error occurred while deleting your account. Please try again."));}
+            error:
+                "An error occurred while deleting your account. Please try again."));
+      }
     });
-  
 
-  on<AuthDeleteAccountByIdEvent> ((event, emit) {
+    on<AuthDeleteAccountByIdEvent>((event, emit) {
       // get access token
       String accessToken = preferences.getString("access_token")!;
       emit(AuthDeletingAccount());
@@ -97,12 +93,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(AuthDeleteAccountSuccess());
         } else {
           emit(AuthDeleteAccountError(
-            error:"An error occurred while deleting your account. Please try again."));
+              error:
+                  "An error occurred while deleting your account. Please try again."));
         }
-
       } catch (error) {
         emit(AuthDeleteAccountError(
-          error:"An error occurred while deleting your account. Please try again."));}
+            error: "An error occurred while deleting your account. Please try again."));
+      }
     });
   }
 
@@ -112,4 +109,3 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
   }
 }
-

@@ -14,7 +14,8 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
       emit(ReviewLoadingState());
       try {
         final String accessToken = preferences.getString('access_token')!;
-        final reviews = await apiDataProvidor.getAllReviewsForTrainer(accessToken: accessToken);
+        final reviews = await apiDataProvidor.getAllReviewsForTrainer(
+            accessToken: accessToken);
         emit(ReviewListLoadSuccess(reviews: reviews));
       } catch (error) {
         emit(ReviewListLoadError(message: error.toString()));
@@ -26,7 +27,7 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
       emit(ReviewLoadingState());
       try {
         final String accessToken = preferences.getString('access_token')!;
-        final review = await apiDataProvidor.postReview(
+        await apiDataProvidor.postReview(
             review: event.review, accessToken: accessToken);
         emit(ReviewOperationSuccess(message: "Review Created Successfully"));
       } catch (error) {
@@ -38,42 +39,42 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
     on<ReviewGetTraineeReview>((event, emit) async {
       emit(ReviewLoadingState());
       try {
-        await Future.delayed(const Duration(seconds: 1));
-        // TODO: not implement yet ......................
-        final Review review = Review(
-            id: 2,
-            rating: 3,
-            comment: "You are the best",
-            traineeId: 3,
-            trainerId: 3);
+        final String accessToken = preferences.getString('access_token')!;
+        final review = await apiDataProvidor.getTraineeReview(
+            accessToken: accessToken, trainerId: event.trainerId);
 
-        emit(ReviewLoadSuccess(review: review));
+        if (review != null) {
+          emit(ReviewLoadSuccess(review: review));
+        } else {
+          emit(ReviewEmpty());
+        }
       } catch (error) {
         emit(ReviewOperationFailure(message: error.toString()));
       }
     });
 
-    on<ReviewDeleteReviewEvent> ((event, emit) async {
+    on<ReviewDeleteReviewEvent>((event, emit) async {
       emit(ReviewLoadingState());
       try {
         final String accessToken = preferences.getString('access_token')!;
-        await apiDataProvidor.deleteReview(reviewId: event.reviewId, accessToken: accessToken);
+        await apiDataProvidor.deleteReview(
+            reviewId: event.reviewId, accessToken: accessToken);
         emit(ReviewOperationSuccess(message: "Review Deleted Successfully"));
       } catch (error) {
         emit(ReviewOperationFailure(message: error.toString()));
       }
     });
 
-    on<ReviewUpdateReviewEvent> ((event, emit) async {
+    on<ReviewUpdateReviewEvent>((event, emit) async {
       emit(ReviewLoadingState());
       try {
         final String accessToken = preferences.getString('access_token')!;
-        await apiDataProvidor.updateReview(review: event.review, accessToken: accessToken);
+        await apiDataProvidor.updateReview(
+            review: event.review, accessToken: accessToken);
         emit(ReviewOperationSuccess(message: "Review Updated Successfully"));
       } catch (error) {
         emit(ReviewOperationFailure(message: error.toString()));
       }
     });
-
   }
 }

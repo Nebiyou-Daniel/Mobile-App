@@ -32,16 +32,17 @@ class ApiDataProvider {
             }),
           )
           .timeout(const Duration(seconds: 2));
-      print("response");
-      print(response.body);
+      // print("response");
+      // print(response.body);
 
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        print("response successfull");
+        // print("response successfull");
         String accessToken = jsonDecode(response.body)['access_token'];
         return accessToken;
       } else {
-        print("response failed");
+        // print("response failed");
         String errorMessage = jsonDecode(response.body)['message'];
+        print(errorMessage);
         throw Exception('Failed to login: Invalid Credentials.');
       }
     } on TimeoutException {

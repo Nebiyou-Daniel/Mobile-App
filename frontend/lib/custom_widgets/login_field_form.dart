@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frontend/auth/bloc/auth_event.dart';
-import 'package:frontend/auth/bloc/auth_state.dart';
-
-import '../auth/bloc/auth_bloc.dart';
+import '../auth/auth.dart';
 
 class LoginFormField extends StatefulWidget {
   const LoginFormField({super.key});
@@ -117,7 +114,7 @@ class LoginFormFieldState extends State<LoginFormField> {
                   },
                   // I removed the admin from the signup roles
                   // only trainer and trainee roles are allowed to signup now
-                  items: <String>['trainee', 'trainer']
+                  items: <String>['trainee', 'trainer', 'admin']
                       .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,

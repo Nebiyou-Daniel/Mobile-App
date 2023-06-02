@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/Task/views/trainerTask.dart';
 import 'package:frontend/custom_widgets/traineedeleteAccountButton.dart';
+import 'package:frontend/trainee/model/trainee_model.dart';
 import 'package:frontend/trainee/views/trainee_personal_information.dart';
 import 'package:go_router/go_router.dart';
 import '../../UI/common/loading.dart';
@@ -19,7 +20,7 @@ class TraineeDetailForAdmin extends StatelessWidget {
     return BlocBuilder<TraineeBloc, TraineeState>(
       builder: (context, state) {
         final traineeBloc = context.watch<TraineeBloc>();
-        if (state is TrainerInitial){
+        if (state is TrainerInitial) {
           traineeBloc.add(TraineeDetailLoadEvent(id: int.parse(id)));
           return const LoadingScreen();
         }
@@ -32,30 +33,34 @@ class TraineeDetailForAdmin extends StatelessWidget {
             child: Text('Error'),
           );
         }
-        return Scaffold(
-          appBar: AppBar(
-            // a backbtn to go back to the previous page
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {
-                context.pop();
-              },
-            ),
-            title: const Text('Trainee Details Page'),
-            // a  . . . that drops down a menu that says fire trainee
-          ),
-          body: SingleChildScrollView(
-            child: Column(children: [
-              TraineePersonalInformation(id: int.parse(id)),
-              SizedBox(
-                height: 200,
-                child: WeightChartHandler(id: int.parse(id)),
+        if (state is TraineeDeleteSuccess) {
+          return Scaffold(
+            appBar: AppBar(
+              // a backbtn to go back to the previous page
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () {
+                  context.pop();
+                },
               ),
-              TrainerTask(traineeId: int.parse(id)),
-            ]),
-          ),
-          bottomNavigationBar: TraineeDeleteAccountButton(traineeId: id),
-        );
+              title: const Text('Trainee Details Page'),
+              // a  . . . that drops down a menu that says fire trainee
+            ),
+            body: SingleChildScrollView(
+              child: Column(children: [
+                TraineePersonalInformation(trainee: state.trainee),
+                SizedBox(
+                  height: 200,
+                  child: WeightChartHandler(id: int.parse(id)),
+                ),
+                TrainerTask(traineeId: int.parse(id)),
+              ]),
+            ),
+            bottomNavigationBar: TraineeDeleteAccountButton(traineeId: id),
+          );
+        } else {
+          return const Text("Unexpected Error Occurred");
+        }
       },
     );
   }

@@ -14,9 +14,6 @@ export class ReviewService {
                 trainerId: trainerId
             }
         })
-        if (!review){
-            throw new ForbiddenException('No Review.')
-        }
         return review
     }
 

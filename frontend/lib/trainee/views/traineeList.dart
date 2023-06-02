@@ -75,7 +75,7 @@ class TraineeCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(trainee.name),
+                      Text(trainee.fullName),
                       Text(trainee.email),
                     ],
                   ),

@@ -10,6 +10,7 @@ class AdminHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authBloc = BlocProvider.of<AuthBloc>(context);
     return MaterialApp(
       title: "app",
       debugShowCheckedModeBanner: false,
@@ -24,7 +25,7 @@ class AdminHomePage extends StatelessWidget {
                 PopupMenuItem(
                   child: TextButton(
                     onPressed: () {
-                      BlocProvider.of<AuthBloc>(context).add(AuthLogoutEvent());
+                      authBloc.add(AuthLogoutEvent());
                     },
                     child: const Text("Logout"),
                   ),
@@ -34,6 +35,11 @@ class AdminHomePage extends StatelessWidget {
           ),
         ),
         body: Builder(builder: (context) {
+        print(authBloc.state);
+          if (authBloc.state is AuthLogoutSuccess) {
+            context.go("/login");
+            return Container();
+          }
           return SingleChildScrollView(
             child: Column(
               children: <Widget>[

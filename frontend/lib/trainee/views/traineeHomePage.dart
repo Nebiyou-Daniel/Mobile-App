@@ -11,6 +11,7 @@ import '../../Task/views/traineeTask.dart';
 import '../../custom_widgets/header_banner.dart';
 import '../../custom_widgets/bottom_navigation_trainee.dart';
 import '../../custom_widgets/header_banner.dart';
+import '../../weight/views/addWeightpage.dart';
 import '../../weight/views/weight_chart.dart';
 import '../../weight/weight.dart';
 
@@ -88,6 +89,7 @@ class TraineeHomePage extends StatelessWidget {
                     ),
                   ),
                 ),
+                const AddWeightWidget(),
                 const SizedBox(height: 180, child: WeightChartHandler(id: -1)),
                 const Padding(
                   padding: EdgeInsets.all(8.0),
@@ -99,7 +101,6 @@ class TraineeHomePage extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 SizedBox(
                   width: MediaQuery.of(context).size.width - 40,
                   child: const TaskDatePickerHandeler(),
@@ -119,6 +120,6 @@ class TaskDatePickerHandeler extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const TraineeTask();
+    return TraineeTask();
   }
 }

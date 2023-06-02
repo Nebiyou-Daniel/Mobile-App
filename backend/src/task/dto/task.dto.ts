@@ -33,28 +33,3 @@ export class EditTaskDto{
     @IsBoolean()
     taskDone?: boolean
 }
-
-export class GetTaskDto{
-
-
-    @IsNotEmpty()
-    @IsString()
-    assignedDate: string
-
-    @IsNotEmpty()
-    @IsNumber()
-    traineeId: number
-}
-
-export class GetTaskDtoTrainee{
-
-
-    @IsNotEmpty()
-    @IsString()
-    assignedDate: string
-
-    @IsNotEmpty()
-    @IsNumber()
-    trainerId: number
-}
-

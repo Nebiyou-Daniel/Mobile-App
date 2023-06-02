@@ -60,3 +60,9 @@ class ReviewOperationSuccess extends ReviewState {
   @override
   List<Object?> get props => [message];
 }
+
+
+class ReviewEmpty extends ReviewState {
+  @override
+  List<Object?> get props => [];
+}
