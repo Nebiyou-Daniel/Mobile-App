@@ -10,6 +10,7 @@ import 'package:frontend/Theme/theme.dart';
 import '../../Task/views/traineeTask.dart';
 import '../../custom_widgets/header_banner.dart';
 import '../../custom_widgets/bottom_navigation_trainee.dart';
+import '../../custom_widgets/header_banner.dart';
 import '../../weight/views/weight_chart.dart';
 import '../../weight/weight.dart';
 
@@ -28,10 +29,10 @@ class TraineeHomePage extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: "Workout Warrior",
+        theme: context.watch<ThemeBloc>().state.theme,
         home: Scaffold(
           appBar: AppBar(
             title: const Text("Workout Warrior"),
-            backgroundColor: const Color(0xFF0A568A),
             actions: <Widget>[
               IconButton(
                 icon: const Icon(Icons.notifications),

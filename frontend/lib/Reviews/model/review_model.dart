@@ -1,15 +1,12 @@
-
-
-
 class Review {
-  final int id;
+  final int? id;
   final int rating;
   final String comment;
   final int traineeId;
   final int trainerId;
 
   Review({
-    required this.id,
+    this.id,
     required this.rating,
     required this.comment,
     required this.traineeId,
@@ -34,5 +31,22 @@ class Review {
       'traineeId': traineeId,
       'trainerId': trainerId,
     };
+  }
+
+  // copyWith
+  Review copyWith({
+    int? id,
+    int? rating,
+    String? comment,
+    int? traineeId,
+    int? trainerId,
+  }) {
+    return Review(
+      id: id ?? this.id,
+      rating: rating ?? this.rating,
+      comment: comment ?? this.comment,
+      traineeId: traineeId ?? this.traineeId,
+      trainerId: trainerId ?? this.trainerId,
+    );
   }
 }

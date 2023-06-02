@@ -3,84 +3,48 @@ import 'package:frontend/Task/bloc/task_event.dart';
 import 'package:frontend/Task/bloc/task_state.dart';
 import 'package:frontend/Task/data_provider/api_data_provider.dart';
 import 'package:frontend/Task/Model/task_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../serviceLocator.dart';
 
 class TaskBloc extends Bloc<TaskEvent, TaskState> {
   TaskBloc() : super(TaskInitial()) {
     ApiDataProvider apiDataProvider = ApiDataProvider();
 
-    // on<TaskLoadingEvent>((event, emit) async {
-    //   emit(TaskLoading());
-    //   await Future.delayed(const Duration(seconds: 3));
-    //   emit(
-    //     TaskLoadedSuccessfully(
-    //       taskData: Task.fromJson(
-    //         {
-    //           "title": "${event.date.weekday} Do 40 Pushups",
-    //           "description": "=> Do 10 pushups for 4 rounds\n Take 5 minutes rest between each round",
-    //           "date": "2021-07-01",
-    //           "time": "12:00:00",
-    //           "isCompleted": false,
-    //           "id": 1,
-    //           "userId": 1
-    //         },
-    //       ),
-    //     ),
-    //   );
-
-    // try fetching the task
-    // try {
-    //   Map<String, dynamic> taskData;
-    //   // if successfull emit success state
-    //   if (event.userId == -1) {
-    //     taskData = await apiDataProvider.getSelfTaskData();
-    //   } else {
-    //     taskData = await apiDataProvider.getTaskData(event.userId);
-    //   }
-
-    //   emit(taskData.isNotEmpty
-    //       ? TaskLoadedSuccessfully(taskData: Task.fromJson(taskData))
-    //       : TaskIsEmpty());
-    // } catch (error) {
-    //   // else emit the error state
-    //   emit(TaskLoadingError(error: error.toString()));
-    // }
-    // });
-
-    on<TaskLoadingEvent>((event, emit) async {
+    // loading task for trainee, need to pass trainee id and date
+    on<TaskTrainerLoadingEvent>((event, emit) async {
       emit(TaskLoading());
       try {
-        // await Future.delayed(const Duration(seconds: 3));
+        final String accessToken = preferences.getString("access_token")!;
+        print(event.date.toString());
+        final _task = await apiDataProvider.getTaskData(
+            traineeId: event.userId,
+            date: event.date.toString(),
+            accessToken: accessToken);
+
+        emit(TaskLoadedSuccessfully(task: _task));
       } catch (error) {
         emit(TaskLoadingError(error: error.toString()));
       }
-      emit(
-        TaskLoadedSuccessfully(
-          task: Task.fromJson(
-            {
-              "title": "${event.date.weekday} Do 40 Pushups",
-              "description":
-                  "=> Do 10 pushups for 4 rounds\n Take 5 minutes rest between each round",
-              "date": "2021-07-01",
-              "time": "12:00:00",
-              "isCompleted": false,
-              "id": 1,
-              "userId": 1
-            },
-          ),
-        ),
-      );
-      // emit(TaskIsEmpty());
+    });
+
+    // loading task for trainee, need to pass date.
+    on<TaskTraineeLoadingEvent>((event, emit) async {
+      try {
+        final String accessToken = preferences.getString("access_token")!;
+      } catch (error) {}
     });
 
     on<TaskAddEvent>((event, emit) async {
       emit(TaskLoading());
 
       try {
-        await apiDataProvider.addTask(event.task, event.userId);
+        final String accessToken = preferences.getString("access_token")!;
+        await apiDataProvider.createTask(
+            task: event.task, accessToken: accessToken);
         emit(TaskAddSuccess(task: event.task));
-        add(TaskLoadingEvent(userId: event.userId, date: event.task.date));
+        add(TaskTrainerLoadingEvent(
+            userId: event.userId, date: event.task.date));
       } catch (error) {
-        // else emit the error state
         emit(TaskAddError(error: error.toString()));
       }
     });
@@ -89,9 +53,10 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       emit(TaskLoading());
 
       try {
-        await apiDataProvider.updateTask(event.task);
+        final String accessToken = preferences.getString("access_token")!;
+        await apiDataProvider.updateTask(
+            task: event.task, accessToken: accessToken);
       } catch (error) {
-        // else emit the error state
         emit(TaskUpdateError(error: error.toString()));
         return;
       }
@@ -100,41 +65,35 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
     on<TaskDeleteEvent>((event, emit) async {
       emit(TaskLoading());
+      print("delete event");
 
       try {
-        await apiDataProvider.deleteTask(event.task);
+        final String accessToken = preferences.getString("access_token")!;
+
+        await apiDataProvider.deleteTask(
+            taskId: event.task.id, accessToken: accessToken);
       } catch (error) {
-        // else emit the error state
         emit(TaskDeleteError(error: error.toString()));
       }
       emit(TaskInitial());
     });
 
-    on<TaskAddDummyEvent>((event, emit) {
-      // emit a fake task added event to show a placeholder task
-      String year = DateTime.now().year.toString();
+    on<TaskCompletedToggleEvent>((event, emit) async {
+      emit(TaskLoading());
 
-      String month = DateTime.now().month.toString().length == 1
-          ? "0${DateTime.now().month}"
-          : DateTime.now().month.toString();
-      String day = DateTime.now().day.toString().length == 1
-          ? "0${DateTime.now().day}"
-          : DateTime.now().day.toString();
+      try {
+        final String accessToken = preferences.getString("access_token")!;
+        Task updatedTask = event.task;
+        updatedTask.isCompleted = !updatedTask.isCompleted;
+        await apiDataProvider.setAsDone(
+            task: updatedTask, accessToken: accessToken);
 
-      emit(TaskLoadedSuccessfully(
-          task: Task.fromJson({
-        "title": "New Task",
-        "description": "New Task Description",
-        // current date in the format 2021-09-01
-        "date": "$year-$month-$day",
-        "time":
-            "${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}",
-        "isCompleted": false,
-        "id": 0,
-        "userId": 0
-      })));
-
-      print("Task Loaded emitted");
+        emit(TaskLoadedSuccessfully(task: updatedTask));
+      } catch (error) {
+        // else emit the error state
+        emit(TaskDeleteError(error: error.toString()));
+      }
+      emit(TaskInitial());
     });
   }
 }
