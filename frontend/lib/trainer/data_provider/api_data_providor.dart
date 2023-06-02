@@ -32,6 +32,7 @@ class ApiDataProvider {
         for (var json in jsonList) {
           trainers.add(Trainer.fromJson(json));
         }
+        print(trainers);
 
         return trainers;
       } else {
