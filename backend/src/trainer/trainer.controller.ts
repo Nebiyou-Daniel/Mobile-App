@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Patch, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, UseGuards } from '@nestjs/common';
 import { JwtGuard } from 'src/auth/guard';
 import { TrainerService } from './trainer.service';
 import { GetTrainee, GetTrainer } from 'src/auth/decorator';
@@ -19,6 +19,11 @@ export class TrainerController {
     @Get('/myTrainees')
     getMyTrainees(@GetTrainer('id') trainerId: number){
         return this.trainerService.getMyTrainees(trainerId);
+    }
+    @Get('/myTrainees/:id')
+    getMyTraineeById(@GetTrainer('id') trainerId: number,
+    @Param('id', ParseIntPipe) traineeId: number){
+        return this.trainerService.getMyTraineeById(trainerId, traineeId);
     }
     
     @Patch('/removeTrainee')

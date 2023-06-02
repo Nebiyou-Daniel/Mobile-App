@@ -6,7 +6,6 @@ import '../data_providor/api_providor.dart';
 
 class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
   NotificationBloc() : super(NotificationInitial()) {
-    
     final ApiDataProvidor apiDataProvidor = ApiDataProvidor();
     SharedPreferences preferences = ServiceLocator().preferences;
 
@@ -17,19 +16,21 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
     on<NotificationLoadEvent>((event, emit) async {
       try {
         // get role from sharedPreference
+        final String accessToken = preferences.getString("access_token")!;
         final String role = preferences.getString("role")!;
-        final notifications = await apiDataProvidor.getNotifications(role);
+        final notifications = await apiDataProvidor.getNotifications(
+            accessToken: accessToken, role: role);
         emit(NotificationsLoadedSuccess(notifications: notifications));
       } catch (e) {
         emit(NotificationsLoadedError(message: e.toString()));
       }
     });
 
-    on<NotificationMarkAsDoneEvent>((event, emit) async {
+    on<NotificationMarkAsSeenEvent>((event, emit) async {
       try {
-        await apiDataProvidor.markNotificationAsDone(event.notification);
-        // emit(NotificationsLoading());
-        await apiDataProvidor.markNotificationAsDone(event.notification);
+        final String accessToken = preferences.getString("access_token")!;
+        await apiDataProvidor.markNotificationAsSeen(
+            event.notification, accessToken);
       } catch (e) {
         emit(NotificationsLoadedError(message: e.toString()));
       }

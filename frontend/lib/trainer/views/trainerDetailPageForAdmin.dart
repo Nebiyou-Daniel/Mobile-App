@@ -31,45 +31,47 @@ class TrainerDetailForAdmin extends StatelessWidget {
         return const Center(
           child: Text('Error'),
         );
-      }
-
-      final trainer = (state as TrainerLoadSuccess).trainer;
-      return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              context.go('/trainers');
-            },
-          ),
-          title: const Text('Trainer Details Page'),
-          actions: [
-            PopupMenuButton(
-              itemBuilder: (BuildContext context) => [
-                const PopupMenuItem(
-                  value: 'Fire',
-                  child: Text('Fire Trainer'),
-                ),
-              ],
-              onSelected: (value) {
-                if (value == 'Fire') {
-                  // Perform action to fire the trainer
-                  context
-                      .read<TrainerHiringBloc>()
-                      .add(TrainerHiringFireEvent(id: int.parse(id)));
-                }
+      } else if (state is TrainerLoadSuccess) {
+        return Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                context.go('/trainers');
               },
             ),
-          ],
-        ),
-        // the trainer's personal information should be displayed here
-        body: TrainerPersonalInformation(id: int.parse(id)),
-        bottomNavigationBar: DeleteAccountButton(trainerId: id),
-      );
+            title: const Text('Trainer Details Page'),
+            actions: [
+              PopupMenuButton(
+                itemBuilder: (BuildContext context) => [
+                  const PopupMenuItem(
+                    value: 'Fire',
+                    child: Text('Fire Trainer'),
+                  ),
+                ],
+                onSelected: (value) {
+                  if (value == 'Fire') {
+                    // Perform action to fire the trainer
+                    context
+                        .read<TrainerHiringBloc>()
+                        .add(TrainerHiringFireEvent(id: int.parse(id)));
+                  }
+                },
+              ),
+            ],
+          ),
+          // the trainer's personal information should be displayed here
+          body: TrainerPersonalInformation(trainer: state.trainer),
+          bottomNavigationBar: DeleteAccountButton(trainerId: id),
+        );
+      } else {
+        return const Center(
+          child: Text('Error'),
+        );
+      }
     });
   }
 }
-
 
 class DeleteAccountButton extends StatelessWidget {
   final String trainerId;

@@ -50,11 +50,7 @@ class TraineeRemoveFromTraineeListEvent extends TraineeEvent {
 
 class TraineeAddToTraineeListSuccessEvent extends TraineeEvent {}
 
-class TraineeAddToTraineeListErrorEvent extends TraineeEvent {}
 
-class TraineeRemoveFromTraineeListSuccessEvent extends TraineeEvent {}
-
-class TraineeRemoveFromTraineeListErrorEvent extends TraineeEvent {}
 
 class TraineeLoadListOfTrainersEvent extends TraineeEvent {}
 

@@ -9,19 +9,20 @@ import '../../serviceLocator.dart';
 class TaskBloc extends Bloc<TaskEvent, TaskState> {
   TaskBloc() : super(TaskInitial()) {
     ApiDataProvider apiDataProvider = ApiDataProvider();
+    SharedPreferences preferences = ServiceLocator().preferences;
 
     // loading task for trainee, need to pass trainee id and date
     on<TaskTrainerLoadingEvent>((event, emit) async {
       emit(TaskLoading());
       try {
         final String accessToken = preferences.getString("access_token")!;
-        print(event.date.toString());
-        final _task = await apiDataProvider.getTaskData(
+        // print(event.date.toString().split(" ")[0]);
+        final task = await apiDataProvider.getTaskData(
             traineeId: event.userId,
-            date: event.date.toString(),
+            date: event.date.toString().split(" ")[0],
             accessToken: accessToken);
 
-        emit(TaskLoadedSuccessfully(task: _task));
+        emit(TaskLoadedSuccessfully(task: task));
       } catch (error) {
         emit(TaskLoadingError(error: error.toString()));
       }
@@ -65,7 +66,6 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
     on<TaskDeleteEvent>((event, emit) async {
       emit(TaskLoading());
-      print("delete event");
 
       try {
         final String accessToken = preferences.getString("access_token")!;

@@ -4,7 +4,7 @@ abstract class NotificationEvent {}
 
 class NotificationLoadEvent extends NotificationEvent {}
 
-class NotificationMarkAsDoneEvent extends NotificationEvent {
+class NotificationMarkAsSeenEvent extends NotificationEvent {
   final Notification notification;
-  NotificationMarkAsDoneEvent({required this.notification});
+  NotificationMarkAsSeenEvent({required this.notification});
 }

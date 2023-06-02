@@ -33,10 +33,8 @@ class TaskUpdateEvent extends TaskEvent {
   TaskUpdateEvent({required this.task});
 }
 
-
 class TaskCompletedToggleEvent extends TaskEvent {
 
   final Task task;
   TaskCompletedToggleEvent({required this.task});
 }
-

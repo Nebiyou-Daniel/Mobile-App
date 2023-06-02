@@ -16,6 +16,12 @@ export class TraineeController {
     getMe(@GetTrainee() trainee: Trainee){ 
         return trainee;
     }
+
+    @Get('/trainers')
+    getTrainers(){
+        return this.traineeService.getTrainers();
+    }
+
     @Patch('/newTrainer')
     getNewTrainer(@GetTrainee('id') traineeId: number, @Body() dto: NewTrainerDto){
         return this.traineeService.newTrainer(traineeId, dto);

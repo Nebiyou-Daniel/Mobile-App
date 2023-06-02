@@ -70,7 +70,7 @@ class ListOfTrainees extends StatelessWidget {
             itemCount: state.trainees.length,
             itemBuilder: (context, index) {
               return ListTile(
-                title: Text(state.trainees[index].name),
+                title: Text(state.trainees[index].fullName),
                 subtitle: Text(state.trainees[index].email),
                 onTap: () {
                   context.go('/trainee/${state.trainees[index].id}');
@@ -93,13 +93,3 @@ class ListOfTrainees extends StatelessWidget {
   }
 }
 
-
-
-// class TaskDatePickerHandeler extends StatelessWidget {
-//   const TaskDatePickerHandeler({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return const TrainerTask();
-//   }
-// }

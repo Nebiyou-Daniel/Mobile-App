@@ -22,7 +22,7 @@ class LoginPage extends StatelessWidget {
               const HeaderBanner(),
               Container(
                 padding: const EdgeInsets.all(39.5),
-                child: LoginHandler(),
+                child: const LoginHandler(),
               ),
               Container(
                   padding: const EdgeInsets.all(39.5),
@@ -45,7 +45,6 @@ class LoginPage extends StatelessWidget {
 class LoginHandler extends StatelessWidget {
   const LoginHandler({super.key});
 
-
   void navigateToPage(BuildContext context, String route) {
     context.go(route);
   }
@@ -54,6 +53,7 @@ class LoginHandler extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = context.watch<AuthBloc>();
     final state = bloc.state;
+    print(state);
 
     if (state is AuthInitial) {
       return const LoginFormField();
@@ -93,8 +93,9 @@ class LoginHandler extends StatelessWidget {
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       });
+      return const LoginFormField();
     }
 
-    return const LoginFormField();
+    return Container();
   }
 }

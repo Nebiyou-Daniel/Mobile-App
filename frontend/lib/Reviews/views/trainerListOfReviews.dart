@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:frontend/UI/common/loading.dart';
 
 import '../../custom_widgets/reviewCard.dart';
@@ -27,6 +26,12 @@ class ReviewList extends StatelessWidget {
           if (state is ReviewLoadingState) {
             return const LoadingScreen();
           } else if (state is ReviewListLoadSuccess) {
+
+            if (state.reviews.isEmpty) {
+              return const Center(
+                child: Text('No Reviews yet'),
+              );
+            }
             return ListView.builder(
               itemCount: state.reviews.length,
               itemBuilder: (context, index) {
@@ -39,7 +44,7 @@ class ReviewList extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("An Error Occured loading reviews!"),
+                  // Text("An Error Occured loading reviews!"),
                   ElevatedButton(
                     onPressed: () {
                       BlocProvider.of<ReviewBloc>(context)
