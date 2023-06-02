@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/UI/common/loading_paragraph.dart';
 import 'package:go_router/go_router.dart';
 
+import '../Model/task_model.dart';
 import '../task.dart';
 
 class TraineeTask extends StatelessWidget {
@@ -39,7 +40,7 @@ class DatePicker extends StatelessWidget {
       firstDate: DateTime(2020),
       lastDate: DateTime(2025),
       onDateChanged: (DateTime date) {
-        taskBloc.add(TaskLoadingEvent(date: date, userId: -1));
+        taskBloc.add(TaskTraineeLoadingEvent(date: date));
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -47,7 +48,7 @@ class DatePicker extends StatelessWidget {
 
             return AlertDialog(
               title: Card(
-                // Text("${dayNames[date.weekday-1]}  ${date.month}/${date.day}/${date.year}",style: const TextStyle(fontSize: 35)),
+                // display the date in the title
                 child: Column(
                   children: [
                     Text(dayNames[date.weekday - 1],
@@ -68,13 +69,9 @@ class DatePicker extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            print("Tabbed");
-                            final taskData = taskBlocState.task;
-                            final newTaskData = taskData.copyWith(
-                              isCompleted: !taskData.isCompleted,
-                            );
+                            final Task taskData = taskBlocState.task.copyWith();
                             taskBloc.add(
-                              TaskUpdateEvent(task: newTaskData),
+                              TaskCompletedToggleEvent(task: taskData),
                             );
                           },
                           child: Icon(
@@ -102,7 +99,7 @@ class DatePicker extends StatelessWidget {
                         SizedBox(width: 10.0),
                         Expanded(
                           child: Text(
-                            "Loading...",
+                            "Loading Task for this day...",
                             style: TextStyle(fontSize: 16.0),
                           ),
                         ),
@@ -122,13 +119,26 @@ class DatePicker extends StatelessWidget {
                   ),
                   const Padding(padding: EdgeInsets.all(10.0)),
                   if (taskBlocState is TaskLoading)
-                    const LoadingParagraphWidget(numberOfLines: 3, message: "Loading task details.",)
+                    const LoadingParagraphWidget(
+                      numberOfLines: 3,
+                      message: "Loading task details.",
+                    )
                   else if (taskBlocState is TaskLoadedSuccessfully)
                     Text(taskBlocState.task.description)
                   else if (taskBlocState is TaskLoadingError)
+                    TextButton(
+                      onPressed: () {
+                        taskBloc.add(TaskTraineeLoadingEvent(date: date));
+                      },
+                      child: const Text("Failed to load task, Reload"),
+                    )
+                  else if (taskBlocState is TaskIsEmpty)
+                    const Text("🏜 Looks like there are no tasks for the day.")
+                  else if (taskBlocState is TaskUpdateError)
                     Text(taskBlocState.error)
                   else
-                    const Text("Looks like there are no tasks for the day."),
+                    const Text("Unexpected Error Happened !",
+                        style: TextStyle(fontSize: 50.0)),
                 ],
               ),
               actions: [
@@ -136,7 +146,8 @@ class DatePicker extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: const Text("Close", style: TextStyle(color: Colors.blue)),
+                  child:
+                      const Text("Close", style: TextStyle(color: Colors.blue)),
                 ),
               ],
             );

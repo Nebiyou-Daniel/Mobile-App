@@ -1,41 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frontend/custom_widgets/logoutButton.dart';
+import 'package:frontend/UI/common/loading.dart';
+import 'package:frontend/custom_widgets/initial_avatar.dart';
 
-import '../auth/auth.dart';
-import 'deleteSelfAccountButton.dart';
+import '../profile/profile.dart';
 
 class ProfileForm extends StatefulWidget {
-  const ProfileForm({super.key});
+  const ProfileForm({Key? key}) : super(key: key);
 
   @override
   _ProfileFormState createState() => _ProfileFormState();
 }
 
 class _ProfileFormState extends State<ProfileForm> {
-  String name = "John Doe";
-  String bio = "A passionate developer and a lifelong learner.";
-  String image = "https://picsum.photos/200";
-  String email = "";
-  String phoneNumber = "";
-
-  bool isEditingName = false;
-  bool isEditingBio = false;
-  bool isEditingEmail = false;
-  bool isEditingPhoneNumber = false;
-
-  TextEditingController nameController = TextEditingController();
-  TextEditingController bioController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController phoneNumberController = TextEditingController();
+  late TextEditingController nameController;
+  late TextEditingController bioController;
+  late TextEditingController emailController;
+  late TextEditingController phoneNumberController;
+  bool isNameEditable = false;
+  bool isBioEditable = false;
+  bool isEmailEditable = false;
+  bool isPhoneNumberEditable = false;
 
   @override
   void initState() {
     super.initState();
-    nameController.text = name;
-    bioController.text = bio;
-    emailController.text = email;
-    phoneNumberController.text = phoneNumber;
+    nameController = TextEditingController();
+    bioController = TextEditingController();
+    emailController = TextEditingController();
+    phoneNumberController = TextEditingController();
   }
 
   @override
@@ -47,191 +40,177 @@ class _ProfileFormState extends State<ProfileForm> {
     super.dispose();
   }
 
-  save() {
-    saveBio();
-    saveName();
-    saveEmail();
-    savePhoneNumber();
-  }
-
-  void saveName() {
-    setState(() {
-      name = nameController.text;
-      isEditingName = false;
-    });
-  }
-
-  void saveBio() {
-    setState(() {
-      bio = bioController.text;
-      isEditingBio = false;
-    });
-  }
-
-  void saveEmail() {
-    setState(() {
-      email = emailController.text;
-      isEditingEmail = false;
-    });
-  }
-
-  void savePhoneNumber() {
-    setState(() {
-      phoneNumber = phoneNumberController.text;
-      isEditingPhoneNumber = false;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(18.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: 200,
-            child: CircleAvatar(
-              radius: 80,
-              backgroundImage: NetworkImage(image),
-            ),
+    return BlocBuilder<ProfileBloc, ProfileState>(
+      builder: (context, state) {
+        final profileBloc = BlocProvider.of<ProfileBloc>(context);
+        print(profileBloc.state);
+
+        if (state is ProfileInitial) {
+          profileBloc.add(ProfileLoadEvent());
+          return const LoadingScreen();
+        }
+
+        if (state is ProfileLoadingState) {
+          return const LoadingScreen();
+        }
+
+        if (state is ProfileLoadSuccessState) {
+          nameController.text = state.name;
+          bioController.text = state.bio;
+          emailController.text = state.email;
+          phoneNumberController.text = state.phoneNumber;
+        }
+
+        if (state is ProfileOperationSuccessState) {
+          profileBloc.add(ProfileLoadEvent());
+        }
+
+        return Padding(
+          padding: const EdgeInsets.all(18.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              InitialsAvatar(
+                initials: nameController.text,
+              ),
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  const Icon(Icons.person),
+                  Container(margin: const EdgeInsets.only(left: 20.0)),
+                  Expanded(
+                    child: isNameEditable
+                        ? TextField(
+                            controller: nameController,
+                          )
+                        : Text(nameController.text),
+                  ),
+                  IconButton(
+                    icon: isNameEditable
+                        ? const Icon(Icons.save)
+                        : const Icon(Icons.edit),
+                    onPressed: () {
+                      setState(() {
+                        isNameEditable = !isNameEditable;
+                        if (isNameEditable) {
+                          nameController.text = nameController.text;
+                        } else {
+                          _updateProfile(
+                              profileBloc, 'name', nameController.text);
+                        }
+                      });
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  const Icon(Icons.info),
+                  Container(margin: const EdgeInsets.only(left: 20.0)),
+                  Expanded(
+                    child: isBioEditable
+                        ? TextField(
+                            controller: bioController,
+                          )
+                        : Text(bioController.text),
+                  ),
+                  IconButton(
+                    icon: isBioEditable
+                        ? const Icon(Icons.save)
+                        : const Icon(Icons.edit),
+                    onPressed: () {
+                      setState(() {
+                        isBioEditable = !isBioEditable;
+                        if (isBioEditable) {
+                          bioController.text = bioController.text;
+                        } else {
+                          _updateProfile(
+                              profileBloc, 'bio', bioController.text);
+                        }
+                      });
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  const Icon(Icons.email),
+                  Container(margin: const EdgeInsets.only(left: 20.0)),
+                  Expanded(
+                    child: isEmailEditable
+                        ? TextField(
+                            controller: emailController,
+                          )
+                        : Text(emailController.text),
+                  ),
+                  IconButton(
+                    icon: isEmailEditable
+                        ? const Icon(Icons.save)
+                        : const Icon(Icons.edit),
+                    onPressed: () {
+                      setState(() {
+                        isEmailEditable = !isEmailEditable;
+                        if (isEmailEditable) {
+                          emailController.text = emailController.text;
+                        } else {
+                          _updateProfile(
+                              profileBloc, 'email', emailController.text);
+                        }
+                      });
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  const Icon(Icons.phone),
+                  Container(margin: const EdgeInsets.only(left: 20.0)),
+                  Expanded(
+                    child: isPhoneNumberEditable
+                        ? TextField(
+                            controller: phoneNumberController,
+                          )
+                        : Text(phoneNumberController.text),
+                  ),
+                  IconButton(
+                    icon: isPhoneNumberEditable
+                        ? const Icon(Icons.save)
+                        : const Icon(Icons.edit),
+                    onPressed: () {
+                      setState(() {
+                        isPhoneNumberEditable = !isPhoneNumberEditable;
+                        if (isPhoneNumberEditable) {
+                          phoneNumberController.text =
+                              phoneNumberController.text;
+                        } else {
+                          _updateProfile(profileBloc, 'phoneNumber',
+                              phoneNumberController.text);
+                        }
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ],
           ),
-          const SizedBox(height: 20),
-          isEditingName
-              ? Row(
-                  children: [
-                    const Icon(Icons.person),
-                    Container(margin: const EdgeInsets.only(left: 20.0)),
-                    Expanded(
-                      child: TextField(
-                        controller: nameController,
-                      ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.save),
-                      onPressed: saveName,
-                    ),
-                  ],
-                )
-              : Row(
-                  children: [
-                    const Icon(Icons.person),
-                    Container(margin: const EdgeInsets.only(left: 20.0)),
-                    Expanded(child: Text(name)),
-                    IconButton(
-                      icon: const Icon(Icons.edit),
-                      onPressed: () {
-                        save();
-                        setState(() {
-                          isEditingName = true;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-          const SizedBox(height: 10),
-          isEditingBio
-              ? Row(
-                  children: [
-                    const Icon(Icons.info),
-                    Container(margin: const EdgeInsets.only(left: 20.0)),
-                    Expanded(
-                      child: TextField(
-                        controller: bioController,
-                      ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.save),
-                      onPressed: saveBio,
-                    ),
-                  ],
-                )
-              : Row(
-                  children: [
-                    const Icon(Icons.info),
-                    Container(margin: const EdgeInsets.only(left: 20.0)),
-                    Expanded(child: Text(bio)),
-                    IconButton(
-                      icon: const Icon(Icons.edit),
-                      onPressed: () {
-                        save();
-                        setState(() {
-                          isEditingBio = true;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-          const SizedBox(height: 10),
-          isEditingEmail
-              ? Row(
-                  children: [
-                    const Icon(Icons.email),
-                    Container(margin: const EdgeInsets.only(left: 20.0)),
-                    Expanded(
-                      child: TextField(
-                        controller: emailController,
-                      ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.save),
-                      onPressed: saveEmail,
-                    ),
-                  ],
-                )
-              : Row(
-                  children: [
-                    const Icon(Icons.email),
-                    Container(margin: const EdgeInsets.only(left: 20.0)),
-                    const Expanded(child: Text("Email")),
-                    IconButton(
-                      icon: const Icon(Icons.edit),
-                      onPressed: () {
-                        save();
-                        setState(() {
-                          isEditingEmail = true;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-          const SizedBox(height: 10),
-          isEditingPhoneNumber
-              ? Row(
-                  children: [
-                    const Icon(Icons.phone),
-                    Container(margin: const EdgeInsets.only(left: 20.0)),
-                    Expanded(
-                      child: TextField(
-                        controller: phoneNumberController,
-                      ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.save),
-                      onPressed: savePhoneNumber,
-                    ),  
-                  ],
-                )
-              : Row(
-                  children: [
-                    const Icon(Icons.phone),
-                    Container(margin: const EdgeInsets.only(left: 20.0)),
-                    const Expanded(child: Text("Phone Number")),
-                    IconButton(
-                      icon: const Icon(Icons.edit),
-                      onPressed: () {
-                        save();
-                        setState(() {
-                          isEditingPhoneNumber = true;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-          Container(height: 20),
-        ],
-      ),
+        );
+      },
     );
   }
-}
 
+  void _updateProfile(ProfileBloc profileBloc, String field, String value) {
+    print("Updating profile");
+    final String fullname = nameController.text;
+    final String bio = bioController.text;
+    final String email = emailController.text;
+    final String phoneNumber = phoneNumberController.text;
+
+    profileBloc.add(ProfileUpdateEvent(
+        fullname: fullname, bio: bio, email: email, phonenumber: phoneNumber));
+  }
+}

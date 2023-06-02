@@ -19,9 +19,13 @@ class ProfileLoadSuccessState extends ProfileState {
   final String name;
   final String email;
   final String bio;
+  final String phoneNumber;
 
   const ProfileLoadSuccessState(
-      {required this.name, required this.bio, required this.email});
+      {required this.name,
+      required this.bio,
+      required this.email,
+      required this.phoneNumber});
 
   @override
   List<Object> get props => [name, bio];
@@ -33,8 +37,10 @@ class ProfileOperationSuccessState extends ProfileState {
   final String name;
   final String email;
   final String bio;
+  final String phoneNumber;
 
-  const ProfileOperationSuccessState({required this.name, required this.email, required this.bio});
+  const ProfileOperationSuccessState(
+      {required this.name, required this.email, required this.bio, required this.phoneNumber});
 
   @override
   List<Object> get props => [name, bio];

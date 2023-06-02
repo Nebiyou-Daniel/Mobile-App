@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:frontend/UI/common/loading.dart';
 
 import '../../custom_widgets/reviewCard.dart';
 import '../review.dart';
@@ -16,16 +17,38 @@ class ReviewList extends StatelessWidget {
         create: (context) =>
             ReviewBloc()..add(ReviewsGetAllEvent(trainerId: trainerId)),
         child: BlocBuilder<ReviewBloc, ReviewState>(builder: (context, state) {
+          print(state);
+          if (state is ReviewInitial) {
+            // add review loading event to bloc
+            BlocProvider.of<ReviewBloc>(context)
+                .add(ReviewsGetAllEvent(trainerId: trainerId));
+            return const LoadingScreen();
+          }
           if (state is ReviewLoadingState) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const LoadingScreen();
           } else if (state is ReviewListLoadSuccess) {
             return ListView.builder(
               itemCount: state.reviews.length,
               itemBuilder: (context, index) {
                 return ReviewCard(review: state.reviews[index]);
               },
+            );
+          } else if (state is ReviewListLoadError) {
+            // refresh button and error message
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("An Error Occured loading reviews!"),
+                  ElevatedButton(
+                    onPressed: () {
+                      BlocProvider.of<ReviewBloc>(context)
+                          .add(ReviewsGetAllEvent(trainerId: trainerId));
+                    },
+                    child: const Text('Refresh'),
+                  )
+                ],
+              ),
             );
           } else {
             return const Center(

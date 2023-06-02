@@ -24,6 +24,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         );
         await preferences.setString("access_token", accessToken);
         await preferences.setString("role", event.role);
+        // TODO: add a getme  
         emit(AuthLoginSuccess(role: event.role));
       } catch (error) {
         emit(AuthLoginError(error: error.toString()));

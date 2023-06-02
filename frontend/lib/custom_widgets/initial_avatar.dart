@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 class InitialsAvatar extends StatelessWidget {
   final String initials;
+  final Color? color;
 
   const InitialsAvatar({
     super.key,
     required this.initials,
+    this.color = Colors.blue,
   });
 
   @override

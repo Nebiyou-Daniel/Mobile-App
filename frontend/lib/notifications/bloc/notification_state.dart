@@ -7,7 +7,6 @@ abstract class NotificationState extends Equatable {
 
   @override
   List<Object?> get props => [];
-
 }
 
 class NotificationInitial extends NotificationState {}
