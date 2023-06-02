@@ -23,7 +23,6 @@ class ApiDataProvider {
         // }),
       ).timeout(const Duration(seconds: 2));
 
-      
       // if successfull return something, else throw an error
       if (response.statusCode >= 200 && response.statusCode < 300) {
         Task task = Task.fromJson(jsonDecode(response.body));
