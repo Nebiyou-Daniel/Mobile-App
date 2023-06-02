@@ -9,23 +9,23 @@ class ApiDataProvider {
   ApiDataProvider();
 
 // define the url base and so
-  getSelfTaskData({required int trainerId, 
-  required String date, 
-  required String accessToken}) async{
+  getSelfTaskData({
+      required String date,
+      required String accessToken}) async {
     try {
       final http.Response response = await http
-        .get(
-          Uri.parse('http://localhost:3050/task/trainee/$date'),
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-            'authorization': accessToken
-          },
-          // body: jsonEncode(<String, dynamic>{
-          //   "trainerId": trainerId,
-          //   "assignedDate": date
-          // }),
-        )
-        .timeout(const Duration(seconds: 2));
+          .get(
+            Uri.parse('http://localhost:3050/task/trainee/$date'),
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+              'authorization': accessToken
+            },
+            // body: jsonEncode(<String, dynamic>{
+            //   "trainerId": trainerId,
+            //   "assignedDate": date
+            // }),
+          )
+          .timeout(const Duration(seconds: 2));
 
       // if successfull return something, else throw an error
       if (response.statusCode >= 200 && response.statusCode < 300) {

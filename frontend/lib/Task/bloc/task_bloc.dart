@@ -73,7 +73,6 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         await apiDataProvider.deleteTask(
             taskId: event.task.id, accessToken: accessToken);
       } catch (error) {
-        // else emit the error state
         emit(TaskDeleteError(error: error.toString()));
       }
       emit(TaskInitial());
