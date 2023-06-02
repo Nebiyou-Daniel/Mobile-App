@@ -22,7 +22,7 @@ class LoginPage extends StatelessWidget {
               const HeaderBanner(),
               Container(
                 padding: const EdgeInsets.all(39.5),
-                child: LoginHandler(),
+                child: const LoginHandler(),
               ),
               Container(
                   padding: const EdgeInsets.all(39.5),
@@ -43,9 +43,7 @@ class LoginPage extends StatelessWidget {
 }
 
 class LoginHandler extends StatelessWidget {
-  LoginHandler({super.key});
-  final LocalDataProvider localDataProvider = LocalDataProvider();
-
+  const LoginHandler({super.key});
 
   void navigateToPage(BuildContext context, String route) {
     context.go(route);
@@ -98,16 +96,6 @@ class LoginHandler extends StatelessWidget {
       return const LoginFormField();
     }
 
-    return const LoginFormField();
-  }
-    getLocalDataProvider() async {
-    try {
-      final token = await localDataProvider.getAccessToken();
-      print('Access Token: $token');
-      // Do something with the access token
-    } catch (e) {
-      print('Error: $e');
-      // Handle the error
-    }
+    return Container();
   }
 }
