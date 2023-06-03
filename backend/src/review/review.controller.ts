@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards } from '@nestjs/common';
 import { JwtGuard } from 'src/auth/guard';
 import { ReviewService } from './review.service';
-import { GetTrainee } from 'src/auth/decorator';
+import { GetTrainee, GetTrainer } from 'src/auth/decorator';
 import { CreateReviewDto, EditReviewDto } from './dto';
 
 @UseGuards(JwtGuard)
@@ -18,9 +18,17 @@ export class ReviewController {
     
     @Get()
     getAllReviews(
-        @GetTrainee('id') trainerId: number
+        @GetTrainer('id') trainerId: number
     ){
         return this.reviewService.getAllReviewsOfTrainer(trainerId);
+    }
+
+    @Get('trainee/:id')
+    getTraineeReview(
+        @GetTrainee('id') traineeId: number,
+        @Param('id',ParseIntPipe) trainerId: number
+    ){
+        return this.reviewService.getTraineeReview(traineeId,trainerId);
     }
 
     @Get(':id')

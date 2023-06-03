@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../custom_widgets/header_banner.dart';
 import '../../auth/auth.dart';
-import '../../auth/data_provider/local_data_providor.dart';
-
+import '../../custom_widgets/header_banner.dart';
 import '../../custom_widgets/login_field_form.dart';
 import 'loading.dart';
 
@@ -57,6 +55,7 @@ class LoginHandler extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = context.watch<AuthBloc>();
     final state = bloc.state;
+    print(state);
 
     if (state is AuthInitial) {
       return const LoginFormField();
@@ -66,20 +65,19 @@ class LoginHandler extends StatelessWidget {
     }
     if (state is AuthLoginSuccess) {
       if (state.role == "admin") {
+        print("Navigating to admin home page");
         WidgetsBinding.instance.addPostFrameCallback((_) {
           navigateToPage(context, "/admin/homePage");
         });
         return const SizedBox();
       } else if (state.role == "trainer") {
-        getLocalDataProvider();
-
+        print("Navigating to trainer home page");
         WidgetsBinding.instance.addPostFrameCallback((_) {
           navigateToPage(context, "/trainer/homePage");
         });
         return const SizedBox();
       } else if (state.role == "trainee") {
-        getLocalDataProvider();
-
+        print("Navigating to trainee home page");
         WidgetsBinding.instance.addPostFrameCallback((_) {
           navigateToPage(context, "/trainee/homePage");
         });
@@ -97,6 +95,7 @@ class LoginHandler extends StatelessWidget {
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       });
+      return const LoginFormField();
     }
 
     return const LoginFormField();

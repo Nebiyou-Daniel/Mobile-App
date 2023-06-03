@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frontend/auth/bloc/auth_event.dart';
-import 'package:frontend/auth/bloc/auth_state.dart';
-
-import '../auth/bloc/auth_bloc.dart';
+import '../auth/auth.dart';
 
 class LoginFormField extends StatefulWidget {
   const LoginFormField({super.key});
@@ -16,6 +13,7 @@ class LoginFormFieldState extends State<LoginFormField> {
   final GlobalKey<FormState> _loginformKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  String roleSelection = 'trainer';
 
   @override
   void dispose() {
@@ -28,7 +26,6 @@ class LoginFormFieldState extends State<LoginFormField> {
     if (_emailController.text.isEmpty) {
       return 'Please enter your email';
     }
-    // You can add more validation logic for the email format if needed
     return null;
   }
 
@@ -36,7 +33,6 @@ class LoginFormFieldState extends State<LoginFormField> {
     if (_passwordController.text.isEmpty) {
       return 'Please enter your password';
     }
-    // You can add more validation logic for the password if needed
     return null;
   }
 
@@ -47,6 +43,7 @@ class LoginFormFieldState extends State<LoginFormField> {
       bloc.add(AuthLoginEvent(
         email: _emailController.text,
         password: _passwordController.text,
+        role: roleSelection,
       ));
     }
   }
@@ -61,22 +58,19 @@ class LoginFormFieldState extends State<LoginFormField> {
           key: _loginformKey,
           child: Column(
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(bottom: 15, left: 20),
-                child: Row(
-                  children: const <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(right: 21),
-                      child: Icon(Icons.info),
-                    ),
-                    // make the text wrap to the next line if it is too long
-                
-                    Text(
+              Row(
+                children: const <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(right: 10),
+                    child: Icon(Icons.info),
+                  ),
+                  Expanded(
+                    child: Text(
                       "Fill the following information to Login.",
                       softWrap: true,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
               TextFormField(
                 controller: _emailController,
@@ -87,6 +81,8 @@ class LoginFormFieldState extends State<LoginFormField> {
                   return _validateEmail();
                 },
               ),
+
+              // password input
               TextFormField(
                 controller: _passwordController,
                 obscureText: true,
@@ -97,6 +93,37 @@ class LoginFormFieldState extends State<LoginFormField> {
                   return _validatePassword();
                 },
               ),
+
+              // Role selection dropdown
+              Container(
+                margin: const EdgeInsets.only(top: 20.0),
+                child: DropdownButton<String>(
+                  value: roleSelection,
+                  icon: const Icon(Icons.arrow_downward),
+                  iconSize: 24,
+                  elevation: 16,
+                  style: const TextStyle(color: Colors.deepPurple),
+                  underline: Container(
+                    height: 2,
+                    color: Colors.deepPurpleAccent,
+                  ),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      roleSelection = newValue!;
+                    });
+                  },
+                  // I removed the admin from the signup roles
+                  // only trainer and trainee roles are allowed to signup now
+                  items: <String>['trainee', 'trainer', 'admin']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value.toUpperCase()),
+                    );
+                  }).toList(),
+                ),
+              ),
+
               const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () => _submitForm(),

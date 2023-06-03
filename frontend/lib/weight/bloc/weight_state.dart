@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
-abstract class WeightState extends Equatable {}
+abstract class WeightState extends Equatable {
+}
 
 class WeightInitial extends WeightState {
   @override
@@ -25,6 +26,11 @@ class WeightLoadingError extends WeightState {
   final String error;
 
   WeightLoadingError({required this.error});
+  @override
+  List<Object?> get props => [];
+}
+
+class WeightOperationSuccess extends WeightState {
   @override
   List<Object?> get props => [];
 }

@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/UI/common/loading_paragraph.dart';
+import 'package:frontend/custom_widgets/bottom_navigation_trainer.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:frontend/auth/auth.dart';
 import 'package:frontend/trainee/trainee.dart';
 import 'package:frontend/Theme/theme.dart';
 
-import '../../Custom_Widgets/header_banner.dart';
-import '../../weight/weight.dart';
+import '../../custom_widgets/header_banner.dart';
 
-// import 'package:fl_chart/fl_chart.dart' as charts;
 class TrainerHomePage extends StatelessWidget {
   const TrainerHomePage({super.key});
 
@@ -19,30 +18,82 @@ class TrainerHomePage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthBloc>(create: (context) => AuthBloc()),
-        // BlocProvider<ThemeBloc>(create: (context) => ThemeBloc()),
         BlocProvider<TraineeBloc>(create: (context) => TraineeBloc()),
-        // BlocProvider<WeightBloc>(create: (context) => WeightBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: "Workout Warrior",
+        theme: context.watch<ThemeBloc>().state.theme,
         home: Scaffold(
+          appBar: AppBar(
+            title: const Text("Workout Warrior"),
+            actions: <Widget>[
+              IconButton(
+                icon: const Icon(Icons.notifications),
+                onPressed: () {
+                  GoRouter.of(context).push('/notifications');
+                },
+              ),
+            ],
+            leading: PopupMenuButton(
+              child: const Icon(Icons.person_2_outlined),
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  child: BlocBuilder<AuthBloc, AuthState>(
+                      builder: (context, state) {
+                    final authBloc = BlocProvider.of<AuthBloc>(context);
+                    if (state is AuthLoginSuccess ||
+                        state is AuthSignupSuccess ||
+                        state is AuthInitial) {
+                      return TextButton(
+                        onPressed: () {
+                          authBloc.add(AuthLogoutEvent());
+                        },
+                        child: const Text("Logout"),
+                      );
+                    } else if (state is AuthLogoutSuccess) {
+                      // Navigate to the login screen when the user has logged out
+                      // Delay the navigation to the login screen
+                      Future.delayed(Duration.zero, () {
+                        GoRouter.of(context).go('/login');
+                      });
+                      return const Text("Logout");
+                    } else {
+                      return const Text("Unexpected error occurred!");
+                    }
+                  }),
+                ),
+              ],
+            ),
+          ),
           body: SingleChildScrollView(
             child: Column(
               children: const <Widget>[
                 HeaderBanner(),
-                ListOfTrainees(),
+                // list of trainees indicaiting text
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    "List of Trainees",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                _ListOfTrainees(),
               ],
             ),
           ),
+          bottomNavigationBar: TrainerBottomNavigation(selectedIndex: 0),
         ),
       ),
     );
   }
 }
 
-class ListOfTrainees extends StatelessWidget {
-  const ListOfTrainees({super.key});
+class _ListOfTrainees extends StatelessWidget {
+  const _ListOfTrainees();
 
   @override
   Widget build(BuildContext context) {
@@ -51,11 +102,17 @@ class ListOfTrainees extends StatelessWidget {
         final traineeBloc = BlocProvider.of<TraineeBloc>(context);
         print(traineeBloc.state);
 
+        if (state is TraineeInitial) {
+          traineeBloc.add(TraineesListLoadEvent());
+          return Text("init");
+        }
         // if the state is loading, show a progress indicator
         if (state is TraineeLoading) {
-          print("Trainees loading");
           return const Center(
-            child: LoadingParagraphWidget(numberOfLines: 13, message: "Loading your list of trainees... ",),
+            child: LoadingParagraphWidget(
+              numberOfLines: 13,
+              message: "Loading your list of trainees... ",
+            ),
           );
         }
         // if the trainees are loaded successfully
@@ -66,10 +123,11 @@ class ListOfTrainees extends StatelessWidget {
             itemCount: state.trainees.length,
             itemBuilder: (context, index) {
               return ListTile(
-                title: Text(state.trainees[index].name),
+                title: Text(state.trainees[index].fullName),
                 subtitle: Text(state.trainees[index].email),
                 onTap: () {
-                  context.push('/traineedetail/${state.trainees[index].id}');
+                  GoRouter.of(context).push(
+                      '/trainer/traineeProfile/${state.trainees[index].id.toString()}');
                 },
               );
             },
@@ -81,7 +139,9 @@ class ListOfTrainees extends StatelessWidget {
           return const Center(
             child: Text('👀 Failed to load trainees'),
           );
-        } else if (state is TraineeListEmpty) {
+        }
+        
+        else if (state is TraineeListEmpty) {
           print("Trainees list empty");
           return Center(
             // no trainees
@@ -115,4 +175,3 @@ class ListOfTrainees extends StatelessWidget {
     );
   }
 }
-

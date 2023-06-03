@@ -21,6 +21,9 @@ class AuthLogoutSuccess extends AuthState {
 
 // logout Erroe
 class AuthLogoutError extends AuthState {
+  final String error;
+
+  AuthLogoutError({required this.error});
   @override
   List<Object?> get props => [];
 }

@@ -11,6 +11,10 @@ export class CreateTaskDto{
     description: string
 
     @IsNotEmpty()
+    @IsString()
+    assignedDate: string
+
+    @IsNotEmpty()
     @IsNumber()
     traineeId: number
 }

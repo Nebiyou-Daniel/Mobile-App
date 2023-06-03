@@ -4,7 +4,30 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class TaskService {
+    
     constructor(private prisma: PrismaService){}
+    
+    getTaskByDateTrainee(traineeId: number, date: string) {
+        // let Date = date.split(':');
+        // let assignedDate = `${Date[0]}/${Date[1]}/${Date[2]}`;        
+        return this.prisma.task.findFirst({
+            where: {
+                traineeId: traineeId,
+                assignedDate: date
+            }
+        }) ;
+    }
+    getTaskByDate(trainerId: number, traineeId: number, date: string ) {
+        // let Date = date.split(':');
+        // let assignedDate = `${Date[0]}/${Date[1]}/${Date[2]}`;
+        return this.prisma.task.findFirst({
+            where: {
+                trainerId: trainerId,
+                traineeId: traineeId,
+                assignedDate: date
+            }
+        })  
+    }
 
     async createTask(trainerId: number, dto: CreateTaskDto){
         const task = await this.prisma.task.create({
@@ -44,7 +67,9 @@ export class TaskService {
         if (!task || task.trainerId !== trainerId){
             throw new ForbiddenException('Access to resource denied')
         }
-
+        if (task.taskDone){
+            throw new ForbiddenException('You can not change a task that is done by the trainee. Create new task for the trainee.')
+        }
         return this.prisma.task.update({
             where: {
                 id: taskId

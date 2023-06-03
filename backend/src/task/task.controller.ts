@@ -23,7 +23,23 @@ export class TaskController {
     // ){
     //     return this.taskService.getAllTasks(traineeId);
     // }
+    @Get('trainer/:id/:date')
+    getTaskByDateForTrainer(
+        @GetTrainer('id') trainerId: number,
+        @Param('date') date: string,
+        @Param('id', ParseIntPipe) traineeId: number
+    ){
+        return this.taskService.getTaskByDate(trainerId, traineeId, date)
+    }
 
+    @Get('trainee/:date')
+    getTaskByDateForTrainee(
+        @GetTrainee('id') traineeId: number,
+        @Param('date') date: string
+    ){
+        return this.taskService.getTaskByDateTrainee(traineeId, date)
+    }
+    
     @Get(':id')
     getTaskById(
         @GetTrainer('id') trainerId: number,
@@ -31,6 +47,7 @@ export class TaskController {
     ){
         return this.taskService.getTaskById(trainerId, taskId);
     }
+
 
     @Patch(':id')
     editTaskById(

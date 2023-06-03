@@ -1,62 +1,30 @@
-import 'dart:async';
-
 import 'package:frontend/auth/bloc/auth_event.dart';
 import 'package:frontend/auth/bloc/auth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../serviceLocator.dart';
 import '../data_provider/api_data_providor.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthInitial()) {
     ApiDataProvider apiDataProvider = ApiDataProvider();
+    SharedPreferences preferences = ServiceLocator().preferences;
 
+    // login event ...
     on<AuthLoginEvent>((event, emit) async {
-      // ...loggin in ...
       emit(AuthLoggingIn());
-      // ... try logging in
       try {
-        // wait 1 second
-        await Future.delayed(const Duration(seconds: 1));
-        // send a mock data
-        emit(AuthLoginSuccess(role: "trainee"));
 
-        // await apiDataProvider.login(email: event.email, password: event.password);
+        String accessToken;
+        accessToken = await apiDataProvider.login(
+            email: event.email, password: event.password, role: event.role);
+
+        preferences.setString("access_token", accessToken);
+        preferences.setString("role", event.role);
+        emit(AuthLoginSuccess(role: event.role));
       } catch (error) {
         emit(AuthLoginError(error: error.toString()));
       }
-    });
-
-    // login success
-    on<AuthLoginSuccessEvent>((event, emit) {
-      emit(AuthLoginSuccess(role: event.role));
-    });
-
-    // login Error
-    on<AuthLoginErrorEvent>((event, emit) {
-      emit(AuthLoginError(error: event.error));
-    });
-
-    // logging out ...
-    on<AuthLogoutEvent>((event, emit) {
-      emit(AuthLoggingOut());
-      // get the id of the currently loggedin user from the shared preferences
-      // String? userId = await sharedPrefDataProvider.getUserId();
-      // if (userId != null) {
-      // send a request to the server to logout the user
-      // await apiDataProvider.logout(userId: userId);
-      // emit(AuthLogoutSuccess());
-      // } else {
-      // emit(AuthLogoutError());
-      // }
-    });
-
-    // logout Error
-    on<AuthLogoutErrorEvent>((event, emit) {
-      emit(AuthLoggingOut());
-    });
-
-    // logout success
-    on<AuthLogoutSuccessEvent>((event, emit) {
-      emit(AuthLoggingOut());
     });
 
     // signing up ...
@@ -64,48 +32,81 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthSigningUp());
 
       try {
-        String token = "None";
-        if (event.role == "trainee") {
-          token = await apiDataProvider.traineeSignUp(
-              email: event.email,
-              password: event.password,
-              name: event.name,
-              role: "trainee");
-        }
-        // else {
-        // token = await apiDataProvider.
-        // }
+        dynamic accessToken;
+        accessToken = await apiDataProvider.signUp(
+            name: event.name,
+            email: event.email,
+            password: event.password,
+            role: event.role);
+        await preferences.setString("access_token", accessToken);
+        await preferences.setString("role", event.role);
         emit(AuthSignupSuccess(role: event.role));
-
-        print(token);
       } catch (error) {
         emit(AuthSignupError(error: error.toString()));
       }
     });
 
-    // signup Success
-    on<AuthSignUpSuccessEvent>((event, emit) {
-      emit(AuthSignupSuccess(role: event.role));
-    });
-
-    // signup Error
-    on<AuthSignUpErrorEvent>((event, emit) {
-      emit(AuthSignupError(error: event.error));
+    // logout event ...
+    on<AuthLogoutEvent>((event, emit) async {
+      try {
+        _print(preferences);
+        await preferences.remove("access_token");
+        await preferences.remove("role");
+        emit(AuthLogoutSuccess());
+      } catch (error) {
+        emit(AuthLogoutError(
+            error: "An error occurred while logging out. Please try again."));
+      }
     });
 
     // delete account ...
-    on<AuthDeleteAccountEvent>((event, emit) {
+    on<AuthDeleteSelfAccountEvent>((event, emit) {
+      // get access token
+      String accessToken = preferences.getString("access_token")!;
+      String role = preferences.getString("role")!;
       emit(AuthDeletingAccount());
+      try {
+        bool accountDeleted = apiDataProvider.deleteSelfAccount(
+            accessToken: accessToken, role: role);
+        if (accountDeleted) {
+          emit(AuthDeleteAccountSuccess());
+        } else {
+          emit(AuthDeleteAccountError(
+              error:
+                  "An error occurred while deleting your account. Please try again."));
+        }
+      } catch (error) {
+        emit(AuthDeleteAccountError(
+            error:
+                "An error occurred while deleting your account. Please try again."));
+      }
     });
 
-    // delete account success
-    on<AuthDeleteAccountSuccessEvent>((event, emit) {
-      emit(AuthDeleteAccountSuccess());
+    on<AuthDeleteAccountByIdEvent>((event, emit) {
+      // get access token
+      String accessToken = preferences.getString("access_token")!;
+      emit(AuthDeletingAccount());
+      try {
+        // try deleting the account of the person with the given id
+        bool accountDeleted = apiDataProvider.deleteAccountById(
+            accessToken: accessToken, role: event.role, id: event.id);
+        if (accountDeleted) {
+          emit(AuthDeleteAccountSuccess());
+        } else {
+          emit(AuthDeleteAccountError(
+              error:
+                  "An error occurred while deleting your account. Please try again."));
+        }
+      } catch (error) {
+        emit(AuthDeleteAccountError(
+            error: "An error occurred while deleting your account. Please try again."));
+      }
     });
+  }
 
-    // delete account error
-    on<AuthDeleteAccountErrorEvent>((event, emit) {
-      emit(AuthDeleteAccountError(error: event.error));
+  _print(preferences) {
+    preferences.getKeys().forEach((key) {
+      print('$key: ${preferences.get(key)}');
     });
   }
 }

@@ -47,3 +47,4 @@ export class WeightController {
         @Param('id', ParseIntPipe) weightId: number
     ){}
 }
+

@@ -10,6 +10,11 @@ import { NewTrainerDto } from './dto/new-trainer.dto';
 export class TraineeService {
     constructor(private prisma: PrismaService){}
 
+    async getTrainers() {
+        const trainers = await this.prisma.trainer.findMany();
+        return trainers;
+    }
+    
     async updateTrainee(traineeId: number, dto: EditTraineeDto){
         const trainee = await this.prisma.trainee.update({
             where: {

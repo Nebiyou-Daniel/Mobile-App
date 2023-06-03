@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frontend/trainee/views/trainee_personal_information.dart';
 import 'package:go_router/go_router.dart';
-import '../../Reviews/views/list_of_reviews.dart';
+
+import '../../Reviews/views/trainerListOfReviews.dart';
+import '../../trainee/views/trainee_personal_information.dart';
 import '../../trainerHiring/trainer_hiring.dart';
 import '../trainer.dart';
+import 'trainerPersonalInformationPage.dart';
 
-class TraineeDetail extends StatelessWidget {
-  final String id;
+class TrainerDetailForTrainee extends StatelessWidget {
+  final int id;
 
-  const TraineeDetail({Key? key, required this.id}) : super(key: key);
+  const TrainerDetailForTrainee({Key? key, required this.id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +24,8 @@ class TraineeDetail extends StatelessWidget {
         return const Center(
           child: Text('Error'),
         );
-      }
-      return Scaffold(
+      } else if (state is TrainerLoadSuccess) {
+        return Scaffold(
           appBar: AppBar(
             leading: IconButton(
               icon: const Icon(Icons.arrow_back),
@@ -35,10 +37,14 @@ class TraineeDetail extends StatelessWidget {
           ),
           body: SingleChildScrollView(
               child: Column(children: [
-            TraineePersonalInformation(id: int.parse(id)),
-            ReviewList(trainerId: int.parse(id)),
-            TrainerHiringButton(id: int.parse(id)),
-          ])));
+            TrainerPersonalInformation(trainer: state.trainer),
+            // ReviewList(trainerId: id),
+          ])),
+          // bottomNavigationBar: TrainerHiringButton(id: id),
+        );
+      } else {
+        return const Text("Unexpected stae incurred");
+      }
     });
   }
 }
@@ -79,12 +85,12 @@ class TrainerHiringButton extends StatelessWidget {
                   .read<TrainerHiringBloc>()
                   .add(TrainerHiringHireEvent(id: id));
             },
-            child: const Text('Hire as Trainer'),
+            child: const Text('Hire Trainer'),
           );
         }
       }
       return const Center(
-        child: Text('Error'),
+        child: Text('Error loading the button'),
       );
     });
   }

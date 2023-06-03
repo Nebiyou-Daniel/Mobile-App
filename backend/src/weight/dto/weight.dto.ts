@@ -7,6 +7,7 @@ export class CreateWeightDto{
     weight: string
     
     @IsString()
+    @IsOptional()
     height: string
 
     @IsNumber()

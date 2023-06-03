@@ -1,13 +1,17 @@
+import '../Model/weight_mode.dart';
+
 abstract class WeightEvent {}
 
 class WeightLoadingEvent extends WeightEvent {
-  final int userId;
-
-  WeightLoadingEvent({this.userId = -1});
+  WeightLoadingEvent();
 }
 
 class WeightLoadedSuccessfullyEvent extends WeightEvent {}
 
 class WeightLoadingErrorEvent extends WeightEvent {}
 
-class WeightAddEvent extends WeightEvent {}
+class WeightAddEvent extends WeightEvent {
+  final Weight weightData;
+
+  WeightAddEvent({required this.weightData});
+}
