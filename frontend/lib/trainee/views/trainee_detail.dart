@@ -8,7 +8,7 @@ import '../trainee.dart';
 
 // a trainee detail page that takes the trainee id as a constuctor
 class TraineeDetail extends StatelessWidget {
-  final String id;
+  final int id;
   const TraineeDetail({super.key, required this.id});
 
   @override
@@ -57,12 +57,12 @@ class TraineeDetail extends StatelessWidget {
           ),
           body: SingleChildScrollView(
             child: Column(children: [
-              TraineePersonalInformation(id: int.parse(id)),
+              TraineePersonalInformation(id: id),
               SizedBox(
                 height: 200,
-                child: WeightChartHandeler(id: int.parse(id)),
+                child: WeightChartHandeler(id: id),
               ),
-              TrainerTask(id: int.parse(id)),
+              TrainerTask(id: id),
             ]),
           ),
         );

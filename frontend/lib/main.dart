@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
         pageBuilder: (context, state) {
           final id = state.params['id'];
           return MaterialPage<void>(
-            child: TraineeDetail(id: id!),
+            child: TraineeDetail(id: int.parse(id!)),
           );
         },
       ),

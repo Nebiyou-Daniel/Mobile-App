@@ -91,12 +91,6 @@ class TraineeBloc extends Bloc<TraineeEvent, TraineeState> {
       ));
     });
 
-    on<TraineeDeleteEvent> ((event, emit) async {
-      emit(TraineeLoading());
-      await Future.delayed(const Duration(seconds: 3));
-
-      // emit(TraineeOperationSuccess());
-    });
 
   }
 }

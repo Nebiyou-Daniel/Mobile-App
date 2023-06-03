@@ -68,6 +68,7 @@ class TrainerBloc extends Bloc<TrainerEvent, TrainerState> {
       // emit a fake list of trainers
       final List<Trainer> trainers = [
         Trainer(
+          id: 1,
           name: "Ahmed",
           speciality: "Fitness",
           rating: 4.5,
@@ -76,6 +77,7 @@ class TrainerBloc extends Bloc<TrainerEvent, TrainerState> {
           phoneNumber: "+123456789"
         ),
         Trainer(
+          id: 1,
           name: "Asmaa",
           speciality: "Fitness",
           rating: 4.5,
@@ -84,6 +86,7 @@ class TrainerBloc extends Bloc<TrainerEvent, TrainerState> {
           phoneNumber: "+123456789"
         ),
         Trainer(
+          id: 1,
           name: "Ahmed",
           speciality: "Fitness",
           rating: 4.5,
@@ -92,6 +95,7 @@ class TrainerBloc extends Bloc<TrainerEvent, TrainerState> {
           phoneNumber: "+123456789"
         ),
         Trainer(
+          id: 1,
           name: "Abdulaziz",
           speciality: "Fitness",
           rating: 4.5,
@@ -100,6 +104,7 @@ class TrainerBloc extends Bloc<TrainerEvent, TrainerState> {
           phoneNumber: "+123456789"
         ),
         Trainer(
+          id: 1,
           name: "Asmaa",
           speciality: "Fitness",
           rating: 4.5,
@@ -137,6 +142,7 @@ class TrainerBloc extends Bloc<TrainerEvent, TrainerState> {
       await Future.delayed(const Duration(seconds: 3));
       final List<Trainer> trainers = [
         Trainer(
+          id: 2,
           name: "Ahmed",
           speciality: "Fitness",
           rating: 4.5,
@@ -145,6 +151,7 @@ class TrainerBloc extends Bloc<TrainerEvent, TrainerState> {
           phoneNumber: "+123456789"
         ),
         Trainer(
+          id: 2,
           name: "Asmaa",
           speciality: "Fitness",
           rating: 4.5,
@@ -153,6 +160,7 @@ class TrainerBloc extends Bloc<TrainerEvent, TrainerState> {
           phoneNumber: "+123456789"
         ),
         Trainer(
+          id: 2,
           name: "Ahmed",
           speciality: "Fitness",
           rating: 4.5,
@@ -161,6 +169,7 @@ class TrainerBloc extends Bloc<TrainerEvent, TrainerState> {
           phoneNumber: "+123456789"
         ),
         Trainer(
+          id: 2,
           name: "Abdulaziz",
           speciality: "Fitness",
           rating: 4.5,
@@ -169,6 +178,7 @@ class TrainerBloc extends Bloc<TrainerEvent, TrainerState> {
           phoneNumber: "+123456789"
         ),
         Trainer(
+          id: 2,
           name: "Asmaa",
           speciality: "Fitness",
           rating: 4.5,
